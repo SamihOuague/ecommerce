@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  db:
+    image: mongo
+    ports:
+      - "27017:27017"
+  client:
+    build: ./palaisauxherbes
+    ports:
+      - "3000:3000"
+  auth:
+    build: ./NodeAuthService
+    ports:
+      - "3001:3001"
+  imgs:
+    build: ./NodeImageService
+    ports:
+      - "3002:3002"
+  product:
+    build: ./NodeProductService
+    ports:
+      - "3003:3003"
+  order:
+    build: ./NodeOrderService
+    ports:
+      - "3004:3004"
+  reviews:
+    build: ./NodeReviewService
+    ports:
+      - "3005:3005"
+  

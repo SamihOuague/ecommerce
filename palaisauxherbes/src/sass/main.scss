@@ -1,0 +1,15 @@
+body {
+    height: 100vh;
+}
+@import "./pages/_header";
+@import "./pages/_shop";
+@import "./pages/_footer";
+@import "./pages/_cart";
+@import "./pages/_product";
+@import "./pages/_checkout";
+@import "./pages/_order";
+@import "./pages/_contact";
+@import "./pages/_auth";
+@import "./pages//_cgu";
+@import "./pages/_user";
+@import "./components/_button";

@@ -1,0 +1,16 @@
+.order {
+    min-height: 50vh;
+    &--title {
+        font-size: 40px;
+        font-weight: 300;
+        text-align: center;
+        color: #1a3b2ae8;
+    }
+    &__container {
+        display: flex;
+        justify-content: center;
+        .paypal-button-container {
+            min-width: 420px;
+        }
+    }
+}
