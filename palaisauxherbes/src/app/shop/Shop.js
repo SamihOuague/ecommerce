@@ -5,7 +5,7 @@ import { addToCart } from "../cart/cartSlice";
 import { Link, useSearchParams, useParams } from "react-router-dom";
 
 export const Shop = () => {
-    const { products, categories, availableCheckBox, availableCount, priceInterval, rates } = useSelector((state) => state.shop);
+    const { products, categories, availableCheckBox, availableCount, priceInterval, rates, loading } = useSelector((state) => state.shop);
     const dispatch = useDispatch();
     const [ URLSearchParams ] = useSearchParams();
     const { name } = useParams();
@@ -27,9 +27,13 @@ export const Shop = () => {
         getPage();
     }, [getPage]);
     
-    if (categories === null || products === null) {
+    if (categories === null || products === null || loading) {
         return (
-            <p>Loading...</p>
+            <div className="shop">
+                <div className="spinner-container">
+                    <i className="fa-solid fa-spinner"></i>
+                </div>
+            </div>
         );
     }
     return (

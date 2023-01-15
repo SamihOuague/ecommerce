@@ -20,6 +20,16 @@ export const loginThunk = createAsyncThunk("auth/login", async (data) => {
     })).json();
 });
 
+export const forgotPwdThunk = createAsyncThunk("auth/forgotPwd", async (data) => {
+    return await (await fetch(`https://${process.env.REACT_APP_API_URL}:3001/forgot-password`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    })).json();
+});
+
 export const pingThunk = createAsyncThunk("auth/ping", async (data) => {
     return await (await fetch(`https://${process.env.REACT_APP_API_URL}:3001/ping`, {
         method: "GET",
@@ -37,6 +47,8 @@ const authSlice = createSlice({
         register: false,
         token: localStorage.getItem("token"),
         loading: false,
+        resetPwd: false,
+        reset_url: null,
     },
     reducers: {
         setRegister: (state, action) => {
@@ -45,6 +57,9 @@ const authSlice = createSlice({
         logout: (state) => {
             state.token = null;
             localStorage.removeItem("token");
+        },
+        setResetPwd: (state, action) => {
+            state.resetPwd = action.payload;
         }
     },
     extraReducers: (builder) => {
@@ -53,6 +68,8 @@ const authSlice = createSlice({
             if (token) state.token = token;
             localStorage.setItem("token", token);
             state.loading = false;
+        }).addCase(registerThunk.pending, (state) => {
+            state.loading = true;
         });
 
         builder.addCase(loginThunk.fulfilled, (state, action) => {
@@ -60,6 +77,8 @@ const authSlice = createSlice({
             if (token) state.token = token;
             localStorage.setItem("token", token);
             state.loading = false;
+        }).addCase(loginThunk.pending, (state) => {
+            state.loading = true;
         });
 
         builder.addCase(pingThunk.fulfilled, (state, action) => {
@@ -68,9 +87,13 @@ const authSlice = createSlice({
                 state.token = null;
             }
         });
+
+        builder.addCase(forgotPwdThunk.fulfilled, (state, action) => {
+            if (action.payload && action.payload.resetId) state.reset_url = action.payload.resetId;
+        });
     }
 });
 
-export const { setRegister, logout } = authSlice.actions;
+export const { setRegister, logout, setResetPwd } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -48,7 +48,7 @@ module.exports = {
                 }
 
             }); 
-            return res.send({ clientSecret: paymentIntent.client_secret, amount });
+            return res.send({ clientSecret: paymentIntent.client_secret, amount, cart });
         } catch (e) {
             return res.status(400).send({ 
                 error: {

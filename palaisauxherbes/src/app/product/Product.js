@@ -32,7 +32,13 @@ export const Product = () => {
     }
     
 
-    if (!product) return (<p>Loading...</p>);
+    if (!product) return (
+        <div className="product">
+            <div className="spinner-container">
+                <i className="fa-solid fa-spinner"></i>
+            </div>
+        </div>
+    );
     return(
         <div className="product">
             <div className="product__container">

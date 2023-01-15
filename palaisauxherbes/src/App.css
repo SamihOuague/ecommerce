@@ -138,6 +138,14 @@ body {
     display: none;
   }
 }
+@keyframes spinner {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 .shop {
   display: flex;
 }
@@ -753,7 +761,7 @@ body {
 }
 
 .order {
-  min-height: 50vh;
+  padding: 48px;
 }
 .order--title {
   font-size: 40px;
@@ -765,32 +773,118 @@ body {
   display: flex;
   justify-content: center;
 }
-.order__container .paypal-button-container {
-  min-width: 420px;
+.order__container__form {
+  max-width: 640px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.order__container__form .button {
+  margin: 16px 0;
+}
+.order__container__form__contact {
+  display: flex;
+}
+.order__container__form__contact input {
+  height: 40px;
+  flex: 1;
+}
+.order__container__form__contact input:nth-child(1) {
+  margin-right: 16px;
+}
+.order__container__form__shipping div {
+  margin-bottom: 16px;
+}
+.order__container__form__shipping__fullname {
+  display: flex;
+}
+.order__container__form__shipping__fullname input {
+  height: 40px;
+  flex: 1;
+}
+.order__container__form__shipping__fullname input:nth-child(1) {
+  margin-right: 16px;
+}
+.order__container__form__shipping__address {
+  display: flex;
+}
+.order__container__form__shipping__address input {
+  height: 40px;
+  flex: 1;
+}
+.order__container__form__shipping__address input:nth-child(1) {
+  margin-right: 16px;
+}
+.order__container__form__shipping__city {
+  display: flex;
+}
+.order__container__form__shipping__city input {
+  height: 40px;
+  flex: 1;
+}
+.order__container__form__shipping__city input:nth-child(1) {
+  margin-right: 16px;
+}
+.order__bill {
+  display: flex;
+  justify-content: center;
+}
+.order__bill__container {
+  max-width: 640px;
+  flex: 1;
+}
+.order__bill__container__product {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 2px solid rgba(26, 59, 42, 0.9098039216);
+}
+.order__bill__container__total {
+  display: flex;
+  justify-content: space-between;
+  color: rgba(26, 59, 42, 0.9098039216);
+  font-size: 18px;
 }
 
 .contact {
-  height: 50vh;
   padding: 48px;
 }
 .contact--title {
   font-size: 40px;
   font-weight: 300;
   color: rgba(26, 59, 42, 0.9098039216);
-  text-align: center;
 }
 .contact__container {
   display: flex;
-  justify-content: center;
+  flex-wrap: wrap-reverse;
 }
 .contact__container__form {
   display: flex;
   flex-direction: column;
-  min-width: 500px;
+  flex: 1;
 }
 .contact__container__form input, .contact__container__form textarea, .contact__container__form button {
   margin: 8px 0;
   min-height: 48px;
+}
+.contact__container__informations {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+.contact__container__informations div {
+  flex: 1;
+}
+.contact__container__informations--title {
+  font-weight: 300;
+  color: rgba(26, 59, 42, 0.9098039216);
+  text-align: center;
+}
+.contact__container__informations p {
+  font-size: 17px;
+}
+.contact__container__informations p span {
+  display: inline-block;
+  width: 40px;
 }
 
 .auth--title {
@@ -813,6 +907,10 @@ body {
 .auth__container__form div {
   min-width: 300px;
 }
+.auth__container__form__linkgroup {
+  display: flex;
+  justify-content: space-between;
+}
 
 .CGU {
   padding: 48px;
@@ -827,6 +925,10 @@ body {
 }
 .user--title {
   text-align: center;
+}
+.user .button {
+  margin-right: 8px;
+  margin-top: 8px;
 }
 
 .button {
@@ -852,6 +954,19 @@ body {
   margin: 8px 0;
   display: flex;
   flex-direction: column;
+}
+
+.spinner-container {
+  height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  font-size: 64px;
+  color: #1a3b2a;
+}
+.spinner-container i {
+  animation: spinner 4s linear infinite;
 }
 
 /*# sourceMappingURL=App.css.map */

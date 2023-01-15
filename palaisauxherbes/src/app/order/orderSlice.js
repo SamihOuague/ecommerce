@@ -34,6 +34,7 @@ const orderSlice = createSlice({
         loading: false,
         publishableKey: null,
         clientSecret: "",
+        amount: 0,
     },
     extraReducers: (builder) => {
         builder.addCase(postOrderThunk.fulfilled, (state, action) => {
@@ -52,8 +53,12 @@ const orderSlice = createSlice({
         });
 
         builder.addCase(paymentIntentThunk.fulfilled, (state, action) => {
-            const { clientSecret } = action.payload;
-            if (clientSecret) state.clientSecret = clientSecret;
+            const { clientSecret, cart, amount } = action.payload;
+            if (clientSecret && cart && amount) {
+                state.clientSecret = clientSecret;
+                state.amount = amount;
+                state.cart = cart;
+            }
         });
     }
 });

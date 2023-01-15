@@ -46,7 +46,8 @@ const shopSlice = createSlice({
             min: "",
             max: ""
         },
-        rates: {}
+        rates: {},
+        loading: true,
     },
     reducers: {
         showcat: (state, action) => {
@@ -82,19 +83,31 @@ const shopSlice = createSlice({
             state.products = action.payload.prods;
             state.availableCount = action.payload.nb_prod;
             state.rates = action.payload.rates;
+            state.loading = false;
+        }).addCase(getMainThunk.pending, (state) => {
+            state.loading = true;
         });
          
         builder.addCase(getByCatThunk.fulfilled, (state, action) => {
             state.categories = action.payload.cat;
             state.products = action.payload.prods;
+            state.loading = false;
+        }).addCase(getByCatThunk.pending, (state) => {
+            state.loading = true;
         });
 
         builder.addCase(fetchAvailableThunk.fulfilled, (state, action) => {
             state.products = action.payload.prods;
+            state.loading = false;
+        }).addCase(fetchAvailableThunk.pending, (state) => {
+            state.loading = true;
         });
 
         builder.addCase(fetchPriceIntervalThunk.fulfilled, (state, action) => {
             state.products = action.payload.prods;
+            state.loading = false;
+        }).addCase(fetchPriceIntervalThunk.pending, (state) => {
+            state.loading = false;
         });
     }
 });

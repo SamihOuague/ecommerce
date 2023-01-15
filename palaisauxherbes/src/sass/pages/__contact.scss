@@ -1,22 +1,40 @@
 .contact {
-    height: 50vh;
     padding: 48px;
     &--title {
         font-size: 40px;
         font-weight: 300;
         color: #1a3b2ae8;
-        text-align: center;
     }
     &__container {
         display: flex;
-        justify-content: center;
+        flex-wrap: wrap-reverse;
         &__form {
             display: flex;
             flex-direction: column;
-            min-width: 500px;
+            flex: 1;
             input, textarea, button {
                 margin: 8px 0;
                 min-height: 48px;
+            }
+        }
+        &__informations {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            div {
+                flex: 1;
+            }
+            &--title {
+                font-weight: 300;
+                color: #1a3b2ae8;
+                text-align: center;
+            }
+            p {
+                font-size: 17px;
+                span {
+                    display: inline-block;
+                    width: 40px;
+                }
             }
         }
     }
