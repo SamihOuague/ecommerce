@@ -5,6 +5,7 @@ export const postOrderThunk = createAsyncThunk("order/post", async (data) => {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+            "Authorization": `Barear ${localStorage.getItem("token")}`,
         },
         body: JSON.stringify(data),
     })).json();
@@ -12,7 +13,13 @@ export const postOrderThunk = createAsyncThunk("order/post", async (data) => {
 });
 
 export const getConfigThunk = createAsyncThunk("order/getConfig", async () => {
-    return await (await fetch(`https://${process.env.REACT_APP_API_URL}:3004/config`)).json();
+    return await (await fetch(`https://${process.env.REACT_APP_API_URL}:3004/config`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Barear ${localStorage.getItem("token")}`,
+        }
+    })).json();
 });
 
 export const paymentIntentThunk = createAsyncThunk("order/paymentIntent", async (data) => {
@@ -20,6 +27,7 @@ export const paymentIntentThunk = createAsyncThunk("order/paymentIntent", async 
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+            "Authorization": `Barear ${localStorage.getItem("token")}`,
         },
         body: JSON.stringify(data),
     })).json();

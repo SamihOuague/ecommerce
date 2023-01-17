@@ -31,15 +31,41 @@ export const deleteInfosThunk = createAsyncThunk("user/deleteInfos", async () =>
     })).json();
 });
 
+export const confirmEmailThunk = createAsyncThunk("user/getConfirmation", async () => {
+    return await (await fetch(`https://${process.env.REACT_APP_API_URL}:3001/confirm-email`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Barear ${localStorage.getItem("token")}`
+        }
+    })).json();
+});
+
+export const getUserOrdersThunk = createAsyncThunk("user/getUserOrders", async () => {
+    return await (await fetch(`https://${process.env.REACT_APP_API_URL}:3004/user-orders`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Barear ${localStorage.getItem("token")}`
+        }
+    })).json();
+});
+
 const userSlice = createSlice({
     name: "user",
     initialState: {
         infos: null,
         edit: false,
+        confirmToken: null,
+        popOpen: true,
+        orders: [],
     },
     reducers: {
         setEditMode: (state, action) => {
             state.edit = action.payload;
+        },
+        setPopOpen: (state, action) => {
+            state.popOpen = action.payload;
         }
     },
     extraReducers: (builder) => {
@@ -57,9 +83,19 @@ const userSlice = createSlice({
         builder.addCase(deleteInfosThunk.fulfilled, () => {
             localStorage.removeItem("token");
         });
+
+        builder.addCase(confirmEmailThunk.fulfilled, (state, action) => {
+            if (action.payload && action.payload.token) state.confirmToken = action.payload.token;
+            state.popOpen = false;
+        });
+
+        builder.addCase(getUserOrdersThunk.fulfilled, (state, action) => {
+            if (action.payload && action.payload.length) state.orders = action.payload;
+            console.log(action.payload);
+        });
     }
 });
 
-export const { setEditMode } = userSlice.actions;
+export const { setEditMode, setPopOpen } = userSlice.actions;
 
 export default userSlice.reducer;

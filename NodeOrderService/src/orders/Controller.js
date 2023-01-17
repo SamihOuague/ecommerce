@@ -1,26 +1,37 @@
+const { jwtVerify } = require("../utils/jwt");
 let Model = require("./Model");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+
 module.exports = {
     newOrder: async (req, res) => {
-        const { firstname, lastname, email, phoneNumber, address, zipcode, city } = req.body;
-        if (!firstname && !lastname && !email && !phoneNumber && !address && !zipcode && !city) return res.sendStatus(400);
-        let order = new Model({
-            firstname,
-            lastname,
-            email,
-            phoneNumber,
-            address,
-            zipcode,
-            city,
-        });
-        order = await order.save();
-        if (!order) return res.sendStatus(500);
-        return res.status(201).send(order);
+        const { firstname, lastname, email, phoneNumber, address, zipcode, city, bill } = req.body;
+        try {
+            let token = req.headers.authorization.split(" ")[1];
+            let decoded = jwtVerify(token);
+            if (!firstname || !lastname || !email || !phoneNumber || !address || !zipcode || !city || !bill) return res.sendStatus(400);
+            let order = new Model({
+                firstname,
+                lastname,
+                email,
+                phoneNumber,
+                address,
+                zipcode,
+                city,
+                bill,
+                user_id: decoded.sub,
+                created_at: Date.now(),
+            });
+            order = await order.save();
+            if (!order) return res.sendStatus(400);
+            return res.status(201).send(order);
+        } catch(e) {
+            return res.sendStatus(500);
+        }
     },
     getOrders: async (req, res) => {
         let orders = await Model.find({});
         if (!orders) return res.sendStatus(500); 
-        return res.send({});
+        return res.send(orders);
     },
     getOrder: async (req, res) => {
         const { order_id } = req.params;
@@ -32,6 +43,12 @@ module.exports = {
         return res.send({
             publishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
         });
+    },
+    deleteOrder: async (req, res) => {
+        const { order_id } = req.body;
+        let order = await Model.findOneAndDelete({_id: order_id});
+        if (!order) return res.sendStatus(404);
+        return res.send(order);
     },
     createPayment: async (req, res) => {
         const { cart } = req.body;
@@ -55,6 +72,19 @@ module.exports = {
                     message: e.message,
                 }
             });
+        }
+    },
+    getUserOrders: async (req, res) => {
+        try {
+            let token = req.headers.authorization.split(" ")[1];
+            let decoded = jwtVerify(token);
+            if (!decoded) return res.sendStatus(401);
+            let orders = await Model.find({user_id: decoded.sub});
+            if (!orders) return res.send(404);
+            return res.send(orders);
+        } catch(e) {
+            console.log(e);
+            return res.sendStatus(400);
         }
     }
 }

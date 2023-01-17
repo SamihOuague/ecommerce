@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const { upload } = require("./Controller");
-const { isAuth } = require("../utils/allowedUser");
+const { isAdmin } = require("../utils/allowedUser");
 
-router.post("/upload", isAuth, upload);
+router.post("/upload", isAdmin, upload);
 
 module.exports = router;

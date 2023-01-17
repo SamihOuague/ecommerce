@@ -76,8 +76,8 @@ module.exports = {
         return res.send({prod, recommended: prods, rates});
     },
     addProduct: async (req, res) => {
-        const { title, weight, categoryTag, price, img, description } = req.body;
-        if (!(title && weight && categoryTag && price)) return res.sendStatus(400);
+        const { title, weight, categoryTag, price, img, description, aroma } = req.body;
+        if (!(title && weight && categoryTag && price && description)) return res.sendStatus(400);
         try {
             let prod = new ProductModel({
                 title,
@@ -86,6 +86,7 @@ module.exports = {
                 price: Number(price),
                 img,
                 describ: description,
+                aroma,
             });
             prod = await prod.save();
             return res.status(201).send(prod);

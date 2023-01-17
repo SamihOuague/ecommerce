@@ -55,7 +55,7 @@ const Register = () => {
 
 const ForgotPwd = () => {
     const dispatch = useDispatch();
-    const { reset_url } = useSelector((state) => state.auth);
+    const { msg } = useSelector((state) => state.auth);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -64,11 +64,11 @@ const ForgotPwd = () => {
 
     return (
         <form className="auth__container__form" onSubmit={(e) => handleSubmit(e)}>
-            {(reset_url && reset_url.url_id) && `https://localhost:3001/reset-pwd?url_id=${reset_url.url_id}`}
             <input type="email" placeholder="Votre email" name="email" required/>
             <div>
                 <Link onClick={() => dispatch(setResetPwd(false))}>Se connecter</Link>
             </div>
+            {msg && <p>{msg}</p>}
             <button className="button">Reset Password</button>
         </form>
     )

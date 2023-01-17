@@ -1,11 +1,21 @@
 const router = require("express").Router();
-const { newOrder, getOrders, getOrder, getConfig, createPayment } = require("./Controller");
-const { isAuth } = require("../utils/allowedUser");
+const { 
+    newOrder, 
+    getOrders, 
+    getOrder, 
+    getConfig,
+    getUserOrders,
+    createPayment, 
+    deleteOrder,
+} = require("./Controller");
+const { isAuth, isAdmin } = require("../utils/allowedUser");
 
-router.get("/", isAuth, getOrders);
+router.get("/", isAdmin, getOrders);
 router.get("/order/:order_id", isAuth, getOrder);
-router.get("/config", getConfig);
-router.post("/", newOrder);
-router.post("/create-payment-intent", createPayment);
+router.get("/config", isAuth, getConfig);
+router.get("/user-orders", isAuth, getUserOrders);
+router.post("/", isAuth, newOrder);
+router.post("/create-payment-intent", isAuth, createPayment);
+router.delete("/delete-order", isAdmin, deleteOrder);
 
 module.exports = router;

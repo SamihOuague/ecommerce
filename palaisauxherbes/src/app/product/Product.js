@@ -49,20 +49,18 @@ export const Product = () => {
                     <h3 className="product__container__details--title">{product.title}</h3>
                     <div className="product__container__details__values">
                         <div className="product__container__details__values__labels">
-                            <p className="product__container__details__values__labels--text">Price :</p>
-                            <p className="product__container__details__values__labels--text">Weight :</p>
-                            <p className="product__container__details__values__labels--text">Aroma :</p>
-                            <p className="product__container__details__values__labels--text">Vendor :</p>
-                            <p className="product__container__details__values__labels--text">Type :</p>
-                            <p className="product__container__details__values__labels--text">Availability :</p>
-                            <p className="product__container__details__values__labels--text">Quantity :</p>
+                            <p className="product__container__details__values__labels--text">Price</p>
+                            <p className="product__container__details__values__labels--text">Weight</p>
+                            {(product.aroma) && <p className="product__container__details__values__labels--text">Aroma</p>}
+                            <p className="product__container__details__values__labels--text">Vendor</p>
+                            <p className="product__container__details__values__labels--text">Availability</p>
+                            <p className="product__container__details__values__labels--text">Quantity</p>
                         </div>
                         <div className="product__container__details__values__val">
                             <p className="product__container__details__values__val--text">{product.price} $</p>
                             <p className="product__container__details__values__val--text"><span>{product.weight}gr.</span></p>
-                            <p className="product__container__details__values__val--text"><span>Ginger</span></p>
+                            {(product.aroma) && <p className="product__container__details__values__val--text"><span>{product.aroma}</span></p>}
                             <p className="product__container__details__values__val--text">{product.categoryTag}</p>
-                            <p className="product__container__details__values__val--text">Tea bag</p>
                             <p className="product__container__details__values__val--text green">In Stock!</p>
                             <div className="product__container__details__values__val__btngroup">
                                 <div className="button" onClick={() => dispatch(removeQt())}>
@@ -118,7 +116,7 @@ export const Product = () => {
                                 {comments.map((value, key) => (
                                     <div className="product__infos__body__reviews__review" key={key}>
                                         <div className="product__infos__body__reviews__review__group">
-                                            <h5>{value.name}</h5>
+                                            <h5 style={{marginRight: "8px"}}>{value.username}</h5>
                                             <div>
                                                 {[1, 2, 3, 4, 5].map((v, k) => (
                                                     <i className={`${(v <= value.rate) ? 'fa-solid' : 'fa-regular'} fa-star`} key={k}></i>
@@ -140,7 +138,7 @@ export const Product = () => {
                     {recommended.map((value, key) => (
                         <div className="box" key={key}>                            
                             <div className="product__recommended__container__card">
-                                <Link to="/product" className="shop__overview__container__card__info">
+                                <Link to={`/product/${value.categoryTag.replaceAll(" ", "-").toLowerCase()}/${value.title.replaceAll(" ", "-").toLowerCase()}`} className="shop__overview__container__card__info">
                                     <img className="product__recommended__container__card__info--pic" src={`https://${process.env.REACT_APP_API_URL}:3002/images/${value.img}`} alt="Product pic"/>
                                     <p className="product__recommended__container__card__info--tag"></p>
                                     <h3 className="product__recommended__container__card__info--title">{value.title}</h3>

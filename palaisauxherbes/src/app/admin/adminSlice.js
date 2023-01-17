@@ -103,11 +103,35 @@ export const deleteProductThunk = createAsyncThunk("admin/deleteProduct", async 
     })).json();
 });
 
+export const getOrdersThunk = createAsyncThunk("admin/getOrders", async () => {
+    return await (await fetch(`https://${process.env.REACT_APP_API_URL}:3004/`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Barear ` + localStorage.getItem("token"),
+        }
+    })).json();
+});
+
+export const deleteOrderThunk = createAsyncThunk("admin/deleteOrder", async (data) => {
+    const response = await (await fetch(`https://${process.env.REACT_APP_API_URL}:3004/delete-order`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Barear ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify(data),
+    })).json();
+    return response;
+});
+
 export const adminSlice = createSlice({
     name: "admin",
     initialState: {
         categories: null,
         products: null,
+        orders: [],
+        notAdmin: false,
     },
     extraReducers: (builder) => {
         builder.addCase(getMainThunk.fulfilled, (state, action) => {
@@ -134,16 +158,28 @@ export const adminSlice = createSlice({
             if (action.payload && action.payload._id) state.products.push(action.payload);
         });
 
+        builder.addCase(getOrdersThunk.fulfilled, (state, action) => {
+            if (action.payload) state.orders = action.payload;
+        });
+
+        builder.addCase(deleteOrderThunk.fulfilled, (state, action) => {
+            if (action.payload && action.payload._id) state.orders = state.orders.filter((v) => v._id !== action.payload._id);
+            else if (action.payload.is_admin === false) state.notAdmin = true;
+        });
+
         builder.addCase(deleteCategoryThunk.fulfilled, (state, action) => {
-            console.log(action.payload);
+            if (action.payload && action.payload._id) state.categories = state.categories.filter((v) => v._id !== action.payload._id);
         });
 
         builder.addCase(deleteSubCategoryThunk.fulfilled, (state, action) => {
-            console.log(action.payload);
+            if (action.payload && action.payload._id) {
+                let t = state.categories.find((v) => v._id === action.payload._id);
+                t.subcategory = action.payload.subcategory;
+            }
         });
 
         builder.addCase(deleteProductThunk.fulfilled, (state, action) => {
-            console.log(action.payload);
+            if (action.payload && action.payload._id) state.products = state.products.filter((v) => v._id !== action.payload._id);
         });
     }
 });

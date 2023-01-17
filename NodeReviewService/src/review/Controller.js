@@ -1,4 +1,5 @@
-const Model = require("./Model");
+const { Model, UserModel } = require("./Model");
+const { jwtVerify } = require("../utils/jwt");
 
 module.exports = {
     getComments: async (req, res) => {
@@ -8,15 +9,24 @@ module.exports = {
         return res.send(comments);
     },
     postComment: async (req, res) => {
-        let { comment, rate, product_id } = req.body;
-        if (!comment || !rate || !product_id) return res.sendStatus(400);
-        let review = new Model({
-            comment,
-            rate,
-            product_id,
-        });
-        review = await review.save();
-        return res.status(201).send(review);
+        try {
+            let { comment, rate, product_id } = req.body;
+            let decoded = jwtVerify(req.headers.authorization.split(" ")[1]);
+            if (!comment || !rate || !product_id) return res.sendStatus(400);
+            else if (!decoded) return res.sendStatus(401);
+            let user = await UserModel.findOne({_id: decoded.sub});
+            if (!user) return res.sendStatus(404);
+            let review = new Model({
+                comment,
+                rate,
+                product_id,
+                username: `${user.firstname} ${user.lastname.toUpperCase()[0]}`
+            });
+            review = await review.save();
+            return res.status(201).send(review);
+        } catch(e) {
+            return res.sendStatus(500);
+        }
     },
     deleteComment: async (req, res) => {
         let { id } = req.params;

@@ -11,17 +11,17 @@ const {
     deleteProduct,
     productsByCategory,
 } = require("./Controller");
-const { isAuth } = require("../utils/allowedUser");
+const { isAdmin } = require("../utils/allowedUser");
 
 router.get('/', mainPage);
 router.get('/categories', listCategories);
 router.get('/category/:categoryTag', productsByCategory);
 router.get('/:category/:product', getProduct);
-router.post('/', isAuth, addProduct);
-router.post('/category', isAuth, addCategory);
-router.post('/category/:name', isAuth, addSubCategory);
-router.delete('/category', isAuth, deleteCategory);
-router.delete('/category/:name', isAuth, deleteSubCat)
-router.delete('/', isAuth, deleteProduct);
+router.post('/', isAdmin, addProduct);
+router.post('/category', isAdmin, addCategory);
+router.post('/category/:name', isAdmin, addSubCategory);
+router.delete('/category', isAdmin, deleteCategory);
+router.delete('/category/:name', isAdmin, deleteSubCat)
+router.delete('/', isAdmin, deleteProduct);
 
 module.exports = router;

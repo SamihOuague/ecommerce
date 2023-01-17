@@ -32,7 +32,13 @@ const OrderSchema = new mongoose.Schema({
     confirmed: {
         type: String,
         default: false,
-    }
+    },
+    user_id: {
+        type: String,
+        required: true,
+    },
+    created_at: Date,
+    bill: [],
 });
 
 module.exports = mongoose.model("order", OrderSchema);

@@ -8,6 +8,7 @@ import Order from "./app/order/Order";
 import Auth from "./app/auth/Auth";
 import CGU from "./app/CGU/CGU";
 import User from "./app/user/User";
+import ResetPwd from "./app/auth/ResetPwd";
 
 import { useDispatch, useSelector } from "react-redux";
 import { showCart } from "./app/cart/cartSlice";
@@ -52,6 +53,7 @@ function App() {
                 <Route path="/login" element={<Auth/>}/>
                 <Route path="/user" element={<User/>}/>
                 <Route path="/CGU" element={<CGU/>}/>
+                <Route path="/reset-password" element={<ResetPwd/>}/>
             </Routes>
             <Cart/>
             <footer className="footer">

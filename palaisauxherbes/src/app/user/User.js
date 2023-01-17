@@ -1,18 +1,38 @@
-import React, { useEffect } from "react";
-//eslint-disable-next-line
-import { getInfosThunk, setEditMode, updateInfosThunk, deleteInfosThunk } from "./userSlice";
+import React, { useEffect, useCallback } from "react";
+import { 
+    getInfosThunk, 
+    setEditMode, 
+    updateInfosThunk, 
+    deleteInfosThunk, 
+    confirmEmailThunk, 
+    setPopOpen,
+    getUserOrdersThunk
+} from "./userSlice";
 import { logout, pingThunk } from "../auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
+const PopUp = () => {
+    const dispatch = useDispatch();
+    return (
+        <div className="popup">
+            <div className="popup__container">
+                <h2 className="popup__container--title">Confirm your Email</h2>
+                <button onClick={() => dispatch(confirmEmailThunk())} className="button">Resend Confirmation</button>
+            </div>
+        </div>
+    );
+}
+
 const User = () => {
     const dispatch = useDispatch();
-    const { infos, edit } = useSelector((state) => state.user);
+    const { infos, edit, confirmToken, popOpen, orders } = useSelector((state) => state.user);
     const { token } = useSelector((state) => state.auth);
 
     useEffect(() => {
         dispatch(getInfosThunk());
         dispatch(pingThunk());
+        dispatch(getUserOrdersThunk());
     }, [dispatch]);
 
     const handleSubmit = (e) => {
@@ -31,8 +51,24 @@ const User = () => {
         if (u.payload._id) dispatch(logout());
     }
 
-    if (!token) return <Navigate to={"/login"} />
-    if (!infos) return <p>Loading...</p>
+    const openPopUp = useCallback(() => {
+        if (infos && !infos.confirmed) dispatch(setPopOpen(true));
+        else dispatch(setPopOpen(false));
+    }, [dispatch, infos]);
+
+    useEffect(() => {
+        openPopUp()
+    }, [openPopUp]);
+    if (!token) return (<Navigate to={"/login"} />);
+    if (!infos) {
+        return (
+            <div className="user">
+                <div className="spinner-container">
+                    <i className="fa-solid fa-spinner"></i>
+                </div>
+            </div>
+        );
+    }
     if (!edit) {
         return (
             <div className="user">
@@ -41,6 +77,7 @@ const User = () => {
                         <div className="user__container__infos__elt">
                             <h1 className="user--title">Dashboard</h1>
                             <h2>Informations</h2>
+                            {(confirmToken) && <p style={{maxWidth: "200px", overflowWrap: "break-word"}}>{confirmToken}</p>}
                             <div className="user__container__infos__elt__box">
                                 <div className="user__container__infos__elt__box--info">
                                     <p><span><b>Firstname</b></span> {infos.firstname}</p>
@@ -50,6 +87,7 @@ const User = () => {
                                 </div>
                                 <div className="user__container__infos__elt__box--info">
                                     <p><span><b>Email</b></span> {infos.email}</p>
+                                    {(!infos.confirmed && !confirmToken) && <button onClick={() => dispatch(confirmEmailThunk())} className="button">Confirm</button>}
                                 </div>
                                 <div className="user__container__infos__elt__box--info">
                                     <p><span><b>City</b></span> {infos.city}</p>
@@ -66,6 +104,23 @@ const User = () => {
                         <button className="button" onClick={() => handleDelete()}>Delete profil</button>
                     </div>
                 </div>
+                <div className="user__container">
+                    <div className="user__container__orders">
+                        {orders.map((value, key) => (
+                            <div className="user__container__orders__order" key={key}>
+                                <h3>{value.created_at.split("T")[0]}</h3>
+                                {value.bill.map((v, k) => (
+                                    <div key={key} className="user__container__orders__order__bill">
+                                        <h3>{v.title} - {v.price} x{v.qt}</h3>
+                                    </div>
+                                ))}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                {(popOpen) &&
+                    <PopUp/>
+                }
             </div>
         );
     } else {
@@ -116,17 +171,8 @@ const User = () => {
                     </form>
                 </div>
             </div>
-        )
+        );
     }
 }
-//<form className="user__form" onSubmit={(e) => handleSubmit(e)}>
-//    <input type="text" name="firstname" placeholder="Your firstname" defaultValue={infos.firstname} />
-//    <input type="text" name="lastname" placeholder="Your lastname" defaultValue={infos.lastname} />
-//    <input type="email" name="email" placeholder="Your email" defaultValue={infos.email} />
-//    <input type="text" name="city" placeholder="Your city" defaultValue={infos.city} />
-//    <input type="text" name="zipcode" placeholder="Your zipcode" defaultValue={infos.zipcode} />
-//    <button className="button" type="submit">Edit</button>
-//    <button className="button" onClick={() => dispatch(setEditMode(false))}>Cancel</button>
-//</form>
 
 export default User;

@@ -1,6 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getMainThunk, addCategoryThunk, addSubCategoryThunk, addProductThunk, deleteCategoryThunk, deleteSubCategoryThunk, deleteProductThunk } from "./adminSlice";
+import { 
+    getMainThunk, 
+    addCategoryThunk, 
+    addSubCategoryThunk, 
+    addProductThunk, 
+    deleteCategoryThunk, 
+    deleteSubCategoryThunk, 
+    deleteProductThunk,
+    getOrdersThunk,
+    deleteOrderThunk,
+} from "./adminSlice";
 import { convertToRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
@@ -8,7 +18,7 @@ import { Navigate } from "react-router-dom";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 export const Admin = () => {
-    const { categories, products } = useSelector((state) => state.admin);
+    const { categories, products, orders } = useSelector((state) => state.admin);
     const { token } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     const [ editorState, setEditorState ] = useState(null);
@@ -30,7 +40,7 @@ export const Admin = () => {
     };
     
     const handleProduct = (e) => {
-        let { title, weight, price, categorytag } = e.target;
+        let { title, weight, price, categorytag, aroma } = e.target;
         let reader = new FileReader();
         reader.readAsDataURL(e.target.img.files[0]);
         reader.onload = () => {
@@ -40,9 +50,10 @@ export const Admin = () => {
                 price: price.value,
                 categoryTag: categorytag.value,
                 img: reader.result,
-                description: draftToHtml(convertToRaw(editorState.getCurrentContent())),
+                description: (editorState) ? draftToHtml(convertToRaw(editorState.getCurrentContent())) : "",
+                aroma: aroma.value,
             }));
-            title.value = weight.value = price.value = "";
+            title.value = weight.value = price.value = aroma.value = "";
         }
         e.preventDefault();
     }
@@ -53,6 +64,7 @@ export const Admin = () => {
 
     useEffect(() => {
         dispatch(getMainThunk());
+        dispatch(getOrdersThunk());
     }, [dispatch]);
 
     if (!token) return <Navigate to={"/login"}/>
@@ -66,6 +78,7 @@ export const Admin = () => {
                     <form onSubmit={(e) => handleProduct(e)}>
                         <input type="text" placeholder="Product title" name="title"/>
                         <input type="number" placeholder="Product weight" name="weight"/>
+                        <input type="text" placeholder="Product aroma*" name="aroma"/>
                         <input type="number" placeholder="Product price" name="price" step={0.01}/>
                         <input type="file" name="img"/>
                         <select name="categorytag">
@@ -114,6 +127,21 @@ export const Admin = () => {
                 </div>
                 <div className="admin__container">
                         <h2>Orders List</h2>
+                        <div>
+                            {(orders && orders.length > 0) && orders.map((value, key) => (
+                                <div key={key}>
+                                    <p>{value.firstname} {value.lastname}</p>
+                                    <p>{value.address}, {value.zipcode}, {value.city}</p>
+                                    <p>{value.email} - {value.phoneNumber}</p>
+                                    <ul>
+                                        {value.bill.map((v, k) => (
+                                            <li key={k}>{v.title} - x{v.qt}</li>
+                                        ))}
+                                    </ul>
+                                    <button onClick={() => dispatch(deleteOrderThunk({order_id: value._id}))}>delete</button>
+                                </div>
+                            ))}
+                        </div>
                 </div>
             </div>
         );

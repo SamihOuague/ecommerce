@@ -30,7 +30,17 @@ export const forgotPwdThunk = createAsyncThunk("auth/forgotPwd", async (data) =>
     })).json();
 });
 
-export const pingThunk = createAsyncThunk("auth/ping", async (data) => {
+export const resetPwdThunk = createAsyncThunk("auth/resetPwd", async (data) => {
+    return await (await fetch(`https://${process.env.REACT_APP_API_URL}:3001/reset-pwd`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    })).json();
+});
+
+export const pingThunk = createAsyncThunk("auth/ping", async () => {
     return await (await fetch(`https://${process.env.REACT_APP_API_URL}:3001/ping`, {
         method: "GET",
         headers: {
@@ -40,7 +50,6 @@ export const pingThunk = createAsyncThunk("auth/ping", async (data) => {
     })).json();
 });
 
-
 const authSlice = createSlice({
     name: "auth",
     initialState: {
@@ -48,7 +57,9 @@ const authSlice = createSlice({
         token: localStorage.getItem("token"),
         loading: false,
         resetPwd: false,
-        reset_url: null,
+        reset_token: null,
+        msg: "",
+        redirect: false,
     },
     reducers: {
         setRegister: (state, action) => {
@@ -89,7 +100,12 @@ const authSlice = createSlice({
         });
 
         builder.addCase(forgotPwdThunk.fulfilled, (state, action) => {
-            if (action.payload && action.payload.resetId) state.reset_url = action.payload.resetId;
+            if (action.payload && action.payload.msg) state.msg = "Email sent, check also in the spam mails.";
+        });
+
+        builder.addCase(resetPwdThunk.fulfilled, (state, action) => {
+            if (action.payload && action.payload.id)
+                state.redirect = true;
         });
     }
 });
