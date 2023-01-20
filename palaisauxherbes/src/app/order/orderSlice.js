@@ -33,16 +33,28 @@ export const paymentIntentThunk = createAsyncThunk("order/paymentIntent", async 
     })).json();
 });
 
+export const confirmOrderThunk = createAsyncThunk("order/confirmOrder", async (data) => {
+    return await (await fetch(`https://${process.env.REACT_APP_API_URL}:3004/confirm-order/${data.order_id}`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Barear ${localStorage.getItem("token")}`
+        },
+        body: JSON.stringify(data),
+    })).json();
+});
+
 const orderSlice = createSlice({
     name: "order",
     initialState: {
         cart: [],
         redirect: false,
         msg: "",
-        loading: false,
+        loading: true,
         publishableKey: null,
         clientSecret: "",
         amount: 0,
+        orderStatus: null,
     },
     extraReducers: (builder) => {
         builder.addCase(postOrderThunk.fulfilled, (state, action) => {
@@ -50,7 +62,6 @@ const orderSlice = createSlice({
             else if (action.payload._id) { 
                 state.redirect = true;
             };
-            state.loading = false;
         }).addCase(postOrderThunk.pending, (state) => {
             state.loading = true;
         });
@@ -58,6 +69,9 @@ const orderSlice = createSlice({
         builder.addCase(getConfigThunk.fulfilled, (state, action) => {
             const { publishableKey } = action.payload;
             if (publishableKey) state.publishableKey = publishableKey;
+            state.loading = false;
+        }).addCase(getConfigThunk.pending, (state) => {
+            state.loading = true;
         });
 
         builder.addCase(paymentIntentThunk.fulfilled, (state, action) => {
@@ -67,6 +81,16 @@ const orderSlice = createSlice({
                 state.amount = amount;
                 state.cart = cart;
             }
+            state.loading = false;
+        }).addCase(paymentIntentThunk.pending, (state) => {
+            state.loading = true;
+        });
+
+        builder.addCase(confirmOrderThunk.fulfilled, (state, action) => {
+            if (action.payload && action.payload.confirmed) state.orderStatus = action.payload.confirmed;
+            state.loading = false;
+        }).addCase(confirmOrderThunk.pending, (state) => {
+            state.loading = true;
         });
     }
 });

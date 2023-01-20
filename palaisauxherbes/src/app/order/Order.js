@@ -11,7 +11,7 @@ const CheckoutForm = () => {
     const stripe = useStripe();
     const elements = useElements();
     const dispatch = useDispatch();
-    const cart = useSelector((state) => state.order.cart);
+    const { cart, loading } = useSelector((state) => state.order);
     const { infos } = useSelector((state) => state.user);
 
     useEffect(() => {
@@ -40,17 +40,19 @@ const CheckoutForm = () => {
                 const result = await stripe.confirmPayment({
                     elements,
                     confirmParams: {
-                        return_url: `http://localhost:3000/order/${payload._id}`,
-                    }
+                        return_url: `http://localhost:3000/success/order/${payload._id}`,
+                    },
                 });
-            
                 if (result.error) {
                     console.log(result.error.message);
-                } else {
-                    localStorage.removeItem("cart");
                 }
+                localStorage.removeItem("cart");
             }
         }
+    }
+
+    const handleAddressChange = (e) => {
+        console.log(e);
     }
 
     return (
@@ -58,7 +60,7 @@ const CheckoutForm = () => {
             <h3>Contact information</h3>
             <div className="order__container__form__contact">
                 <input type="email" placeholder="Enter your email" name="email" defaultValue={(infos && infos.email) ? infos.email : ""} required/>
-                <input type="tel" placeholder="Enter your phone number" name="tel" required/>
+                <input type="tel" placeholder="Enter your phone number" name="tel" defaultValue={(infos && infos.phoneNumber) ? infos.phoneNumber : ""}  required/>
             </div>
             <h3>Shipping information</h3>
             <div className="order__container__form__shipping">
@@ -67,8 +69,8 @@ const CheckoutForm = () => {
                     <input type="text" placeholder="Lastname" name="lastname" defaultValue={(infos && infos.lastname) ? infos.lastname : ""} required/>
                 </div>
                 <div className="order__container__form__shipping__address">
-                    <input type="text" placeholder="Address" name="address" required/>
-                    <input type="text" placeholder="Appartment, suit .. (Optional)" name="option" required/>
+                    <input type="text" onChange={(e) => handleAddressChange(e)} placeholder="Address" name="address" defaultValue={(infos && infos.address) ? infos.address : ""}  required/>
+                    <input type="text" placeholder="Appartment, suit .. (Optional)" name="option"/>
                 </div>
                 <div className="order__container__form__shipping__city">
                     <input type="text" placeholder="Postal Code" name="postal" defaultValue={(infos && infos.zipcode) ? infos.zipcode : ""} required/>
@@ -76,14 +78,14 @@ const CheckoutForm = () => {
                 </div>
             </div>
             <PaymentElement />
-            <button className="button">Pay Now</button>
+            <button className="button" disabled={loading}>{(loading) ? "Loading..." : "Pay Now"}</button>
         </form>
     );
 }
 
 const Order = () => {
     const dispatch = useDispatch();
-    const { publishableKey, clientSecret, cart, amount } = useSelector((state) => state.order);
+    const { publishableKey, clientSecret, cart, amount, loading } = useSelector((state) => state.order);
     const c = useSelector((state) => state.cart.cart);
     const token = useSelector((state) => state.auth.token);
     const { infos } = useSelector((state) => state.user);

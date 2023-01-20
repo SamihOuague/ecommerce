@@ -37,7 +37,8 @@ export const productSlice = createSlice({
         score: 0,
         comments: [],
         recommended: [],
-        rates: []
+        rates: [],
+        buyNow: false,
     },
     reducers: {
         addQt: (state) => {
@@ -55,19 +56,25 @@ export const productSlice = createSlice({
         },
         postReview: (state, action) => {
             if (action.payload) state.comments.unshift(action.payload);
+        },
+        setBuyNow: (state, action) => {
+            state.buyNow = action.payload;
         }
     },
     extraReducers: (builder) => {
         builder.addCase(getProductThunk.fulfilled, (state, action) => {
-            if (action.payload && action.payload.prod) state.product = action.payload.prod;
-            if (action.payload && action.payload.recommended) state.recommended = action.payload.recommended;
-            if (action.payload && action.payload.rates) state.rates = action.payload.rates;
+            if (action.payload && action.payload.prod) {
+                const { prod, recommended, rates } = action.payload;
+                state.product = prod;
+                state.recommended = recommended;
+                state.rates = rates;
+            }
         }).addCase(getProductThunk.pending, (state) => {
             state.product = null;
         });
 
         builder.addCase(postReviewThunk.fulfilled, (state, action) => {
-            if (action.payload && action.payload._id) state.comments.unshift(action.payload); 
+            if (action.payload && action.payload._id) state.comments.unshift(action.payload);
         });
 
         builder.addCase(getReviewsThunk.fulfilled, (state, action) => {
@@ -79,6 +86,6 @@ export const productSlice = createSlice({
     }
 });
 
-export const { addQt, removeQt, setShowReviews, setScore, postReview } = productSlice.actions;
+export const { addQt, removeQt, setShowReviews, setScore, postReview, setBuyNow } = productSlice.actions;
 
 export default productSlice.reducer;

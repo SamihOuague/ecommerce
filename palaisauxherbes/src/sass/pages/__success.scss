@@ -1,0 +1,10 @@
+.success {
+    padding: 48px;
+    &--title {
+        font-weight: 300;
+        color: #1a3b2a;
+    }
+    &__container {
+        min-height: 100vh;
+    }
+}

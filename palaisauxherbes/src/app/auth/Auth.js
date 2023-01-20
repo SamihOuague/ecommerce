@@ -55,7 +55,7 @@ const Register = () => {
 
 const ForgotPwd = () => {
     const dispatch = useDispatch();
-    const { msg } = useSelector((state) => state.auth);
+    const { msg, loading } = useSelector((state) => state.auth);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -69,7 +69,7 @@ const ForgotPwd = () => {
                 <Link onClick={() => dispatch(setResetPwd(false))}>Se connecter</Link>
             </div>
             {msg && <p>{msg}</p>}
-            <button className="button">Reset Password</button>
+            <button className="button" disabled={loading}>Reset Password</button>
         </form>
     )
 }

@@ -999,6 +999,27 @@ body {
   margin: 8px 0;
 }
 
+.success {
+  padding: 48px;
+}
+.success--title {
+  font-weight: 300;
+  color: #1a3b2a;
+}
+.success__container {
+  min-height: 100vh;
+}
+
+.verify {
+  height: 100vh;
+  padding: 48px;
+}
+.verify--title {
+  font-weight: 300;
+  color: #1a3b2a;
+  font-size: 36px;
+}
+
 .button {
   background: none;
   border-radius: none;
@@ -1046,7 +1067,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(0, 0, 0, 0.8);
 }
 .popup__container {
   border: 2px solid #1a3b2a;
@@ -1055,6 +1076,51 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 0 24px;
+}
+.popup__container--title {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.popup__container--title span {
+  cursor: pointer;
+}
+
+.autocomplete {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 48px;
+}
+.autocomplete__form {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  max-width: 640px;
+}
+.autocomplete__form__container {
+  display: flex;
+  flex-direction: column;
+}
+.autocomplete__form__container__box {
+  border: 1px solid black;
+}
+.autocomplete__form__container__box--elt {
+  border-bottom: 1px solid black;
+  padding: 8px;
+  cursor: pointer;
+  transition-property: background-color;
+  transition-duration: 200ms;
+}
+.autocomplete__form__container__box--elt:hover {
+  background-color: bisque;
+}
+.autocomplete__form input {
+  height: 36px;
+}
+.autocomplete__form input, .autocomplete__form button {
+  margin: 8px 0;
 }
 
 /*# sourceMappingURL=App.css.map */

@@ -1,6 +1,26 @@
 const { jwtVerify } = require("../utils/jwt");
-let Model = require("./Model");
+const Model = require("./Model");
+const mongoose = require("mongoose")
+const User = mongoose.model("member", (new mongoose.Schema({ email: {type: String, required: true} }, {collection: "members"})));
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const nodemailer = require("nodemailer");
+
+const sendEmail = async (data) => {
+	let transporter = nodemailer.createTransport({
+		host: "smtp.gmail.com",
+		port: 465,
+		secure: true,
+		auth: {
+			user: "souaguen96@gmail.com",
+			pass: "",
+		},
+	});
+	let infos = await transporter.sendMail(data);
+
+	return infos;
+};
+
+
 
 module.exports = {
     newOrder: async (req, res) => {
@@ -85,6 +105,34 @@ module.exports = {
         } catch(e) {
             console.log(e);
             return res.sendStatus(400);
+        }
+    },
+    confirmOrder: async (req, res) => {
+        try {
+            const { order_id } = req.params;
+            const { paymentIntent, paymentClientSecret } = req.body;
+            let token = req.headers.authorization.split(" ")[1];
+            let decoded = jwtVerify(token);
+            if (!decoded) return res.sendStatus(401);
+            else if (!paymentIntent || !paymentClientSecret) return res.sendStatus(400);
+            let p = await stripe.paymentIntents.retrieve(paymentIntent);
+            if (!p) return res.sendStatus(404);
+            else if (p.status != "succeeded") return res.send({confirmed: p.status});
+            let order = await Model.findOneAndUpdate({ _id: order_id, user_id: decoded.sub }, { confirmed: true }, {new: true});
+            let user = await User.findOne({_id: decoded.sub});
+            if (!order || !user) return res.sendStatus(404);
+            let msg = await sendEmail({
+				from: "souaguen96@gmail.com",
+				to: user.email,
+				subject: "Checkout confirmation",
+				text: `Congratulation ! Your payment order is confirmed.`,
+				html: `<p>Congratulation ! Your payment order is confirmed.</p>`,
+			});
+			if (!msg || !msg.messageId) return res.sendStatus(500);
+            return res.send(order);
+
+        } catch(e) {
+            return res.status(500).send({e});
         }
     }
 }

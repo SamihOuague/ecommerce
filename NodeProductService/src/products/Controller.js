@@ -13,7 +13,7 @@ module.exports = {
         const nb_prod = {
             in: await ProductModel.find({available: true}).countDocuments(),
             out: await ProductModel.find({available: false}).countDocuments(),
-        }
+        };
         if (f.available == "out") filter.available = false;
         else if (f.available == "in") filter.available = true;
         if (f.priceMin && Number(f.priceMin)) filter.price = { "$gte": Number(f.priceMin) };
@@ -25,32 +25,39 @@ module.exports = {
         let prods = await ProductModel.find(filter).skip(page).limit(6);
         let reviews = await ReviewsModel.find({product_id: {"$in": prods.map((v) => v._id)}});
         let rates = {};
+        let highestPrice = await ProductModel.find(filter, {price: 1}).sort({ price: -1 }).limit(1);
         for (let i = 0; i < prods.length; i++) {
             let f = reviews.filter((v) => v.product_id == prods[i]._id).map((v) => v.rate);
             if (f.length) rates[prods[i]._id] = (f.reduce((a, c) => a + c, 0) / f.length);
             else rates[prods[i]._id] = 0;
         }
-        return res.send({prods, cat, nb_prod, rates});
+        return res.send({prods, cat, nb_prod, rates, highestPrice: (highestPrice.length > 0) ? highestPrice[0] : {price: 0}});
     },
     productsByCategory: async (req, res) => {
         let { categoryTag } = req.params;
         const cat = await CategoriesModel.find({});
         let page = 0;
         categoryTag = categoryTag.replaceAll("-", " ").toLowerCase();
+        const nb_prod = {
+            in: await ProductModel.find({available: true}).countDocuments(),
+            out: await ProductModel.find({available: false}).countDocuments(),
+        };
         if (req.query.page && Number(req.query.page) && Number(req.query.page) > 0) page = (Number(req.query.page) - 1) * 6;
-        const prods = await ProductModel.find({
+        const filter = {
             categoryTag: {
                 $regex: new RegExp(`^${categoryTag}$`, "i")
             }
-        }).skip(page).limit(6);
+        };
+        const prods = await ProductModel.find(filter).skip(page).limit(6);
         let reviews = await ReviewsModel.find({product_id: {"$in": prods.map((v) => v._id)}});
+        let highestPrice = await ProductModel.find(filter, {price: 1}).sort({ price: -1 }).limit(1);
         let rates = {};
         for (let i = 0; i < prods.length; i++) {
             let f = reviews.filter((v) => v.product_id == prods[i]._id).map((v) => v.rate);
             if (f.length) rates[prods[i]._id] = (f.reduce((a, c) => a + c, 0) / f.length);
             else rates[prods[i]._id] = 0;
         }
-        return res.send({prods, cat, rates});
+        return res.send({prods, cat, rates, nb_prod, highestPrice: (highestPrice.length > 0) ? highestPrice[0] : {price: 0}});
     },
     getProduct: async (req, res) => {
         let { category, product } = req.params;

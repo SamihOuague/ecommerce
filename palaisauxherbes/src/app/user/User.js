@@ -6,19 +6,41 @@ import {
     deleteInfosThunk, 
     confirmEmailThunk, 
     setPopOpen,
-    getUserOrdersThunk
+    getUserOrdersThunk,
+    setPopDelOpen,
 } from "./userSlice";
 import { logout, pingThunk } from "../auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
-const PopUp = () => {
+const PopUpConfirm = () => {
     const dispatch = useDispatch();
     return (
         <div className="popup">
             <div className="popup__container">
-                <h2 className="popup__container--title">Confirm your Email</h2>
+                <h2 className="popup__container--title">Confirm your Email<span onClick={() => dispatch(setPopOpen(false))}><i className="fa-regular fa-circle-xmark"></i></span></h2>
                 <button onClick={() => dispatch(confirmEmailThunk())} className="button">Resend Confirmation</button>
+                <button className="button" onClick={() => dispatch(setPopOpen(false))}>Cancel</button>
+            </div>
+        </div>
+    );
+}
+
+const PopUpDelete = () => {
+    const dispatch = useDispatch();
+
+    const handleDelete = async () => {
+        let u = await dispatch(deleteInfosThunk());
+        if (u.payload._id) dispatch(logout());
+    }
+
+    return (
+        <div className="popup">
+            <div className="popup__container">
+                <h2 className="popup__container--title">Delete Account <span onClick={() => dispatch(setPopDelOpen(false))}><i className="fa-regular fa-circle-xmark"></i></span></h2>
+                <p>This action is irreversible, are you sure to want continue ?</p>
+                <button onClick={() => handleDelete()} className="button">Delete Account</button>
+                <button className="button" onClick={() => dispatch(setPopDelOpen(false))}>Cancel</button>
             </div>
         </div>
     );
@@ -26,7 +48,7 @@ const PopUp = () => {
 
 const User = () => {
     const dispatch = useDispatch();
-    const { infos, edit, confirmToken, popOpen, orders } = useSelector((state) => state.user);
+    const { infos, edit, confirmToken, popOpen, orders, popDelOpen } = useSelector((state) => state.user);
     const { token } = useSelector((state) => state.auth);
 
     useEffect(() => {
@@ -43,14 +65,15 @@ const User = () => {
         if (e.target.email.value) data.email = e.target.email.value;
         if (e.target.city.value) data.city = e.target.city.value;
         if (e.target.zipcode.value) data.zipcode = e.target.zipcode.value;
+        if (e.target.phoneNumber.value) data.phoneNumber = e.target.phoneNumber.value;
+        if (e.target.address.value) data.address = e.target.address.value;
         dispatch(updateInfosThunk(data));
     }
 
-    const handleDelete = async () => {
-        let u = await dispatch(deleteInfosThunk());
-        if (u.payload._id) dispatch(logout());
-    }
-
+    const handleChangeAddress = (e) => {
+        console.log(e.target.value);
+    };
+    
     const openPopUp = useCallback(() => {
         if (infos && !infos.confirmed) dispatch(setPopOpen(true));
         else dispatch(setPopOpen(false));
@@ -90,6 +113,12 @@ const User = () => {
                                     {(!infos.confirmed && !confirmToken) && <button onClick={() => dispatch(confirmEmailThunk())} className="button">Confirm</button>}
                                 </div>
                                 <div className="user__container__infos__elt__box--info">
+                                    <p><span><b>Phone </b></span> {infos.phoneNumber}</p>
+                                </div>
+                                <div className="user__container__infos__elt__box--info">
+                                    <p><span><b>Address</b></span> {infos.address}</p>
+                                </div>
+                                <div className="user__container__infos__elt__box--info">
                                     <p><span><b>City</b></span> {infos.city}</p>
                                 </div>
                                 <div className="user__container__infos__elt__box--info">
@@ -101,7 +130,7 @@ const User = () => {
                             <button className="button" onClick={() => dispatch(logout())}>Log out</button>
                             <button className="button" onClick={() => dispatch(setEditMode(true))}>Edit</button>
                         </div>
-                        <button className="button" onClick={() => handleDelete()}>Delete profil</button>
+                        <button className="button" onClick={() => dispatch(setPopDelOpen(true))}>Delete profil</button>
                     </div>
                 </div>
                 <div className="user__container">
@@ -110,7 +139,7 @@ const User = () => {
                             <div className="user__container__orders__order" key={key}>
                                 <h3>{value.created_at.split("T")[0]}</h3>
                                 {value.bill.map((v, k) => (
-                                    <div key={key} className="user__container__orders__order__bill">
+                                    <div key={k} className="user__container__orders__order__bill">
                                         <h3>{v.title} - {v.price} x{v.qt}</h3>
                                     </div>
                                 ))}
@@ -119,7 +148,10 @@ const User = () => {
                     </div>
                 </div>
                 {(popOpen) &&
-                    <PopUp/>
+                    <PopUpConfirm/>
+                }
+                {(popDelOpen && !popOpen) &&
+                    <PopUpDelete/>
                 }
             </div>
         );
@@ -152,14 +184,26 @@ const User = () => {
                                 </div>
                                 <div className="user__container__infos__elt__box--info">
                                     <div>
+                                        <span><b>Phone</b></span> 
+                                        <input type="tel" name="phoneNumber" placeholder="Your Phone Number" defaultValue={infos.phoneNumber} />
+                                    </div>
+                                </div>
+                                <div className="user__container__infos__elt__box--info">
+                                    <div>
+                                        <span><b>Address</b></span>
+                                        <input type="text" onChange={(e) => handleChangeAddress(e)} list="address" name="address" placeholder="Your Address" defaultValue={infos.address} />
+                                    </div>
+                                </div>
+                                <div className="user__container__infos__elt__box--info">
+                                    <div>
                                         <span><b>City</b></span> 
-                                        <input type="text" name="city" placeholder="Your City" defaultValue={infos.city} />
+                                        <input type="text" name="city" placeholder="Your City" defaultValue={infos.city} disabled/>
                                     </div>
                                 </div>
                                 <div className="user__container__infos__elt__box--info">
                                     <div>
                                         <span><b>Zipcode</b></span> 
-                                        <input type="text" name="zipcode" placeholder="Your zipcode" defaultValue={infos.zipcode} />
+                                        <input type="text" name="zipcode" placeholder="Your zipcode" defaultValue={infos.zipcode} disabled/>
                                     </div>
                                 </div>
                             </div>

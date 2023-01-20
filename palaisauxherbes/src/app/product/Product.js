@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import { getProductThunk, addQt, removeQt, setShowReviews, setScore, postReviewThunk, getReviewsThunk } from "./productSlice";
+import { getProductThunk, addQt, removeQt, setShowReviews, setScore, postReviewThunk, getReviewsThunk, setBuyNow } from "./productSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../cart/cartSlice";
 
 export const Product = () => {
     const { category, name } = useParams();
     const dispatch = useDispatch();
-    const { product, qt, showReviews, score, comments, recommended, rates } = useSelector((state) => state.product);
+    const { product, qt, showReviews, score, comments, recommended, rates, buyNow } = useSelector((state) => state.product);
     useEffect(() => {
         dispatch(getProductThunk({category, name}));
         dispatch(setShowReviews(false));
@@ -31,7 +31,15 @@ export const Product = () => {
         dispatch(setScore(score));
     }
     
+    const handleBuyNow = () => {
+        dispatch(addToCart({...product, qt}));
+        dispatch(setBuyNow(true));
+    }
 
+    if (buyNow) { 
+        dispatch(setBuyNow(false));
+        return <Navigate to={"/order"}/>
+    }
     if (!product) return (
         <div className="product">
             <div className="spinner-container">
@@ -77,7 +85,7 @@ export const Product = () => {
                         <div className="button" onClick={() => dispatch(addToCart({...product, qt}))}>
                             <span>ADD TO CART</span>
                         </div>
-                        <div className="button">
+                        <div className="button" onClick={() => handleBuyNow()}>
                             <span>BUY IT NOW</span>
                         </div>
                     </div>

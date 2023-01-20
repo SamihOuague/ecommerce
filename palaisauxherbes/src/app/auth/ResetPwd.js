@@ -7,7 +7,7 @@ const ResetPwd = () => {
     const [ URLSearchParams ] = useSearchParams();
     const url_token = URLSearchParams.get("url_token");
     const dispatch = useDispatch();
-    const { redirect } = useSelector((state) => state.auth);
+    const { redirect, loading} = useSelector((state) => state.auth);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -28,7 +28,7 @@ const ResetPwd = () => {
                 <form onSubmit={(e) => handleSubmit(e)} className="reset__container__form">
                     <input type="password" placeholder="New password" name="password"/>
                     <input type="password" placeholder="Confirm password" name="c_password"/>
-                    <button className="button" type="submit">Change password</button>
+                    <button className="button" type="submit" disabled={loading}>{(loading)? "Loading..." : "Change password"}</button>
                 </form>
             </div>
         </div>

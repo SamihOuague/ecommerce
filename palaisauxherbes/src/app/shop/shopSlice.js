@@ -48,6 +48,7 @@ const shopSlice = createSlice({
         },
         rates: {},
         loading: true,
+        highestPrice: 0,
     },
     reducers: {
         showcat: (state, action) => {
@@ -60,12 +61,16 @@ const shopSlice = createSlice({
             }
         },
         availableIn: (state) => {
-            state.availableCheckBox.in = !state.availableCheckBox.in;
-            state.availableCheckBox.out = !state.availableCheckBox.in;
+            if (!state.availableCheckBox.in) {
+                state.availableCheckBox.in = !state.availableCheckBox.in;
+                state.availableCheckBox.out = !state.availableCheckBox.in;
+            }
         },
         availableOut: (state) => {
-            state.availableCheckBox.out = !state.availableCheckBox.out;
-            state.availableCheckBox.in = !state.availableCheckBox.out;
+            if (!state.availableCheckBox.out) {
+                state.availableCheckBox.out = !state.availableCheckBox.out;
+                state.availableCheckBox.in = !state.availableCheckBox.out;
+            }
         },
         availableClear: (state) => {
             state.availableCheckBox = {
@@ -83,6 +88,7 @@ const shopSlice = createSlice({
             state.products = action.payload.prods;
             state.availableCount = action.payload.nb_prod;
             state.rates = action.payload.rates;
+            state.highestPrice = action.payload.highestPrice.price;
             state.loading = false;
         }).addCase(getMainThunk.pending, (state) => {
             state.loading = true;
@@ -91,6 +97,7 @@ const shopSlice = createSlice({
         builder.addCase(getByCatThunk.fulfilled, (state, action) => {
             state.categories = action.payload.cat;
             state.products = action.payload.prods;
+            state.highestPrice = action.payload.highestPrice.price;
             state.loading = false;
         }).addCase(getByCatThunk.pending, (state) => {
             state.loading = true;

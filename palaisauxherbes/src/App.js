@@ -7,9 +7,10 @@ import { Contact } from "./app/contact/Contact";
 import Order from "./app/order/Order";
 import Auth from "./app/auth/Auth";
 import CGU from "./app/CGU/CGU";
-import User from "./app/user/User";
+import User from "./app/user/AutoComplete";
 import ResetPwd from "./app/auth/ResetPwd";
-
+import SuccessOrder from "./app/order/Success"; 
+import EmailConfirm from "./app/auth/EmailConfirm";
 import { useDispatch, useSelector } from "react-redux";
 import { showCart } from "./app/cart/cartSlice";
 import { Routes, Route, Link } from "react-router-dom";
@@ -54,6 +55,8 @@ function App() {
                 <Route path="/user" element={<User/>}/>
                 <Route path="/CGU" element={<CGU/>}/>
                 <Route path="/reset-password" element={<ResetPwd/>}/>
+                <Route path="/success/order/:id" element={<SuccessOrder/>}/>
+                <Route path="/verify-email" element={<EmailConfirm/>}/>
             </Routes>
             <Cart/>
             <footer className="footer">

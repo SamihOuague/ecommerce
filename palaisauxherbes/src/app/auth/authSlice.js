@@ -50,6 +50,15 @@ export const pingThunk = createAsyncThunk("auth/ping", async () => {
     })).json();
 });
 
+export const verifyEmailThunk = createAsyncThunk("auth/verify", async (url_token) => {
+    return await (await fetch(`https://${process.env.REACT_APP_API_URL}:3001/verify-email?url_token=${url_token}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    })).json();
+});
+
 const authSlice = createSlice({
     name: "auth",
     initialState: {
@@ -101,11 +110,32 @@ const authSlice = createSlice({
 
         builder.addCase(forgotPwdThunk.fulfilled, (state, action) => {
             if (action.payload && action.payload.msg) state.msg = "Email sent, check also in the spam mails.";
+            state.loading = false;
+        }).addCase(forgotPwdThunk.pending, (state) => {
+            state.loading = true;
         });
 
         builder.addCase(resetPwdThunk.fulfilled, (state, action) => {
-            if (action.payload && action.payload.id)
+            if (action.payload && action.payload._id)
                 state.redirect = true;
+            state.loading = false;
+        }).addCase(resetPwdThunk.pending, (state) => {
+            state.loading = true;
+        });
+
+        builder.addCase(verifyEmailThunk.fulfilled, (state, action) => {
+            if (action.payload) {
+                if (action.payload.confirmed) {
+                    state.loading = false;
+                    state.redirect = true;
+                } else if (action.payload.msg) state.msg = action.payload.msg;
+                else state.msg = "Confirmation failed !"
+            }
+        }).addCase(verifyEmailThunk.pending, (state) => {
+            state.loading = true;
+        }).addCase(verifyEmailThunk.rejected, (state) => {
+            state.loading = false;
+            state.msg = "Error 500 - Confirmation failed"
         });
     }
 });

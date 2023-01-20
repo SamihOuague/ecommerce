@@ -5,7 +5,7 @@ import { addToCart } from "../cart/cartSlice";
 import { Link, useSearchParams, useParams } from "react-router-dom";
 
 export const Shop = () => {
-    const { products, categories, availableCheckBox, availableCount, priceInterval, rates, loading } = useSelector((state) => state.shop);
+    const { products, categories, availableCheckBox, availableCount, priceInterval, rates, loading, highestPrice } = useSelector((state) => state.shop);
     const dispatch = useDispatch();
     const [ URLSearchParams ] = useSearchParams();
     const { name } = useParams();
@@ -95,7 +95,7 @@ export const Shop = () => {
                 <div className="shop__filter__section">
                     <h5 className="shop__filter__section--title">Price</h5>
                     <div className="shop__filter__section__body">
-                        <p className="shop__filter__section__body--highest">The highest price is 29.95$</p>
+                        <p className="shop__filter__section__body--highest">The highest price is {highestPrice}$</p>
                         <div className="shop__filter__section__body__input">
                             <p className="shop__filter__section__body__input--label">From <b>$</b></p>
                             <input className="shop__filter__section__body__input--field" name="from" min={0} type="number" onChange={(e) => dispatch(setIntervalPrice({...priceInterval, min: e.target.value}))}/>

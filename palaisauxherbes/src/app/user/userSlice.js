@@ -59,6 +59,7 @@ const userSlice = createSlice({
         confirmToken: null,
         popOpen: true,
         orders: [],
+        popDelOpen: false,
     },
     reducers: {
         setEditMode: (state, action) => {
@@ -66,6 +67,9 @@ const userSlice = createSlice({
         },
         setPopOpen: (state, action) => {
             state.popOpen = action.payload;
+        },
+        setPopDelOpen: (state, action) => {
+            state.popDelOpen = action.payload;
         }
     },
     extraReducers: (builder) => {
@@ -91,11 +95,10 @@ const userSlice = createSlice({
 
         builder.addCase(getUserOrdersThunk.fulfilled, (state, action) => {
             if (action.payload && action.payload.length) state.orders = action.payload;
-            console.log(action.payload);
         });
     }
 });
 
-export const { setEditMode, setPopOpen } = userSlice.actions;
+export const { setEditMode, setPopOpen, setPopDelOpen } = userSlice.actions;
 
 export default userSlice.reducer;
