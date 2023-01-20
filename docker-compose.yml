@@ -5,10 +5,10 @@ services:
     image: mongo
     ports:
       - "27017:27017"
-  client:
-    build: ./palaisauxherbes
-    ports:
-      - "3000:3000"
+#  client:
+#    build: ./palaisauxherbes
+#    ports:
+#      - "3000:3000"
   auth:
     build: ./NodeAuthService
     ports:
