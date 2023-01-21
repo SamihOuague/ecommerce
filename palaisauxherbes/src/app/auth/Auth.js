@@ -86,7 +86,7 @@ const Auth = () => {
     )
     return (
         <div className="auth">
-            <h2 className="auth--title">{(register) ? 'S\'Inscrire' : 'Se Connecter'}</h2>
+            {(!resetPwd) ? <h2 className="auth--title">{(register) ? 'S\'Inscrire' : 'Se Connecter'}</h2> : <h2 className="auth--title">Reset Password</h2>}
             <div className="auth__container">
                 {(!resetPwd) ?
                     <>{(register) ?

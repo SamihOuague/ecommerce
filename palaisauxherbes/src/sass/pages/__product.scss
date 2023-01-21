@@ -28,14 +28,6 @@
                 &--title {
                     display: none;
                 }
-                &__values__val__btngroup {
-                    margin-top: 24px;
-                    .button {
-                        font-size: 12px;
-                        display: flex;
-                        align-items: center;
-                    }
-                }
                 &__btngroup {
                     margin-top: 24px;
                     .button {
@@ -117,14 +109,14 @@
             &__img {
                 margin-right: 48px;
             }
-
             &__details {
                 &__btngroup {
                     display: flex;
                     margin-top: 24px;
                     .button {
                         margin-right: 32px;
-                        padding: 16px 48px;
+                        padding: 12px 26px;
+                        font-size: 12px;
                     }
                 }
             }

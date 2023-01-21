@@ -7,10 +7,11 @@ import { Contact } from "./app/contact/Contact";
 import Order from "./app/order/Order";
 import Auth from "./app/auth/Auth";
 import CGU from "./app/CGU/CGU";
-import User from "./app/user/AutoComplete";
+import User from "./app/user/User";
 import ResetPwd from "./app/auth/ResetPwd";
 import SuccessOrder from "./app/order/Success"; 
 import EmailConfirm from "./app/auth/EmailConfirm";
+import AutoComplete from "./app/order/AutoComplete";
 import { useDispatch, useSelector } from "react-redux";
 import { showCart } from "./app/cart/cartSlice";
 import { Routes, Route, Link } from "react-router-dom";
@@ -50,6 +51,7 @@ function App() {
                 <Route path="/product/:category/:name" element={<Product/>}/>
                 <Route path="/admin" element={<Admin/>}/>
                 <Route path="/order" element={<Order/>}/>
+                <Route path="/checkout" element={<AutoComplete/>}/>
                 <Route path="/contact" element={<Contact/>}/>
                 <Route path="/login" element={<Auth/>}/>
                 <Route path="/user" element={<User/>}/>

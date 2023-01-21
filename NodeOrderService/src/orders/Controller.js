@@ -11,7 +11,7 @@ const sendEmail = async (data) => {
 		port: 465,
 		secure: true,
 		auth: {
-			user: "souaguen96@gmail.com",
+			user: "",
 			pass: "",
 		},
 	});

@@ -55,6 +55,20 @@ const orderSlice = createSlice({
         clientSecret: "",
         amount: 0,
         orderStatus: null,
+        shippingInfos: null,
+    },
+    reducers: {
+        setShippingInfos: (state, action) => {
+            const { firstname, lastname, phoneNumber, address, zipcode, city } = action.payload;
+            if (firstname && lastname && phoneNumber && address && zipcode && city) {
+                state.shippingInfos = action.payload;
+            }
+        },
+        resetShippingInfos: (state) => {
+            state.shippingInfos = null;
+            state.publishableKey = null;
+            state.clientSecret = null;
+        }
     },
     extraReducers: (builder) => {
         builder.addCase(postOrderThunk.fulfilled, (state, action) => {
@@ -94,5 +108,7 @@ const orderSlice = createSlice({
         });
     }
 });
+
+export const { setShippingInfos, resetShippingInfos } = orderSlice.actions;
 
 export default orderSlice.reducer;

@@ -4,14 +4,14 @@
         display: flex;
     }
     to {
-        right: -350px;
+        right: -360px;
         display: none;
     }
 }
 
 @keyframes showcart {
     from {
-        right: -350px;
+        right: -360px;
         display: none;
     }
     to {
@@ -25,7 +25,8 @@
     top: 0;
     height: 100vh;
     display: flex;
-    right: -350px;
+    right: -360px;
+    z-index: 999;
     &__filter {
         background-color: #00000090;
         flex: 1;

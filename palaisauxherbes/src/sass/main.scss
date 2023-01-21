@@ -1,5 +1,7 @@
-body {
-    height: 100vh;
+.main {
+    position: absolute;
+    margin: 0;
+    min-width: 100%;
 }
 @import "./pages/_header";
 @import "./pages/_shop";
@@ -15,7 +17,8 @@ body {
 @import "./pages/_reset";
 @import "./pages/_success";
 @import "./pages/_verify";
+@import "./pages/_admin";
+@import "./pages/_autocomplete";
 @import "./components/_button";
 @import "./components/_spinner";
 @import "./components/_popup";
-@import "./components/_address-box";

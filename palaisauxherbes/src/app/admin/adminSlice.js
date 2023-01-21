@@ -143,6 +143,7 @@ export const adminSlice = createSlice({
 
         builder.addCase(addCategoryThunk.fulfilled, (state, action) => {
             if (action.payload && action.payload._id && state.categories) state.categories.push(action.payload); 
+            else if (action.payload.is_admin === false) state.notAdmin = true;
         });
 
         builder.addCase(addSubCategoryThunk.fulfilled, (state, action) => {
@@ -151,15 +152,17 @@ export const adminSlice = createSlice({
                     return v.category === action.payload.category;
                 });
                 c.subcategory = action.payload.subcategory;
-            }
+            } else if (action.payload.is_admin === false) state.notAdmin = true;
         });
         
         builder.addCase(addProductThunk.fulfilled, (state, action) => {
             if (action.payload && action.payload._id) state.products.push(action.payload);
+            else if (action.payload.is_admin === false) state.notAdmin = true;
         });
 
         builder.addCase(getOrdersThunk.fulfilled, (state, action) => {
-            if (action.payload) state.orders = action.payload;
+            if (action.payload) state.orders = action.payload; 
+            state.notAdmin = action.payload.is_admin === false;
         });
 
         builder.addCase(deleteOrderThunk.fulfilled, (state, action) => {
@@ -169,17 +172,19 @@ export const adminSlice = createSlice({
 
         builder.addCase(deleteCategoryThunk.fulfilled, (state, action) => {
             if (action.payload && action.payload._id) state.categories = state.categories.filter((v) => v._id !== action.payload._id);
+            else if (action.payload.is_admin === false) state.notAdmin = true;
         });
 
         builder.addCase(deleteSubCategoryThunk.fulfilled, (state, action) => {
             if (action.payload && action.payload._id) {
                 let t = state.categories.find((v) => v._id === action.payload._id);
                 t.subcategory = action.payload.subcategory;
-            }
+            } else if (action.payload.is_admin === false) state.notAdmin = true;
         });
 
         builder.addCase(deleteProductThunk.fulfilled, (state, action) => {
             if (action.payload && action.payload._id) state.products = state.products.filter((v) => v._id !== action.payload._id);
+            else if (action.payload.is_admin === false) state.notAdmin = true;
         });
     }
 });

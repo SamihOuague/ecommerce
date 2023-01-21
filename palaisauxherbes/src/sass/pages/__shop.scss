@@ -32,6 +32,9 @@
                     }
                 }
             }
+            &__navbar__btngroup--button {
+                display: flex;
+            }
         }
     }   
 }
@@ -54,6 +57,9 @@
                     }
                 }
             }
+            &__navbar__btngroup--button {
+                display: flex;
+            }
         }
     }
 }
@@ -74,6 +80,12 @@
                     }
                 }
             }
+            &__navbar__btngroup--button {
+                display: none;
+            }
+            &__mobile-category {
+                display: none;
+            }
         }
     }
 }
@@ -90,6 +102,7 @@
 
 .shop {
     display: flex;
+    min-height: 100vh;
     &__filter {
         flex: 2;
         margin-right: 32px;
@@ -189,6 +202,37 @@
     }
     &__overview {
         flex: 5;
+        &__mobile-category {
+            border: 1px solid #1a3b2a27;
+            padding: 0px 8px;
+            &__section {
+                &__category {
+                    list-style-type: none;
+                    &__elt {
+                        &__title {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            height: 36px;
+                            cursor: pointer;
+                        }
+                        &__list {
+                            overflow: hidden;
+                            max-height: 0px;
+                            &--item {
+                                cursor: pointer;
+                                margin: 8px 0;
+                                a {
+                                    text-decoration: none;
+                                    color: black;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         &__pagination {
             display: flex;
             justify-content: center;
@@ -222,16 +266,11 @@
                     border: 1px solid #1a3b2a27;
                     height: 34px;
                     width: 34px;
-                    display: flex;
                     align-items: center;
                     justify-content: center;
                     cursor: pointer;
                     font-size: 16px;
                     overflow: hidden;
-                    &:nth-child(1) {
-                        background-color: #1a3b2a;
-                        color: white;
-                    }
                 }
             }
             &__sort {
@@ -283,4 +322,12 @@
     animation-name: hidecat;
     animation-duration: 300ms;
     animation-fill-mode: forwards;
+}
+
+.show {
+    display: block;
+}
+
+.hide {
+    display: none;
 }

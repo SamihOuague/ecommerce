@@ -63,16 +63,9 @@ const User = () => {
         if (e.target.firstname.value) data.firstname = e.target.firstname.value;
         if (e.target.lastname.value) data.lastname = e.target.lastname.value;
         if (e.target.email.value) data.email = e.target.email.value;
-        if (e.target.city.value) data.city = e.target.city.value;
-        if (e.target.zipcode.value) data.zipcode = e.target.zipcode.value;
         if (e.target.phoneNumber.value) data.phoneNumber = e.target.phoneNumber.value;
-        if (e.target.address.value) data.address = e.target.address.value;
         dispatch(updateInfosThunk(data));
     }
-
-    const handleChangeAddress = (e) => {
-        console.log(e.target.value);
-    };
     
     const openPopUp = useCallback(() => {
         if (infos && !infos.confirmed) dispatch(setPopOpen(true));
@@ -113,16 +106,7 @@ const User = () => {
                                     {(!infos.confirmed && !confirmToken) && <button onClick={() => dispatch(confirmEmailThunk())} className="button">Confirm</button>}
                                 </div>
                                 <div className="user__container__infos__elt__box--info">
-                                    <p><span><b>Phone </b></span> {infos.phoneNumber}</p>
-                                </div>
-                                <div className="user__container__infos__elt__box--info">
-                                    <p><span><b>Address</b></span> {infos.address}</p>
-                                </div>
-                                <div className="user__container__infos__elt__box--info">
-                                    <p><span><b>City</b></span> {infos.city}</p>
-                                </div>
-                                <div className="user__container__infos__elt__box--info">
-                                    <p><span><b>Zipcode</b></span> {infos.zipcode}</p>
+                                    <p><span><b>Phone</b></span> {infos.phoneNumber}</p>
                                 </div>
                             </div>
                         </div>
@@ -137,12 +121,16 @@ const User = () => {
                     <div className="user__container__orders">
                         {orders.map((value, key) => (
                             <div className="user__container__orders__order" key={key}>
-                                <h3>{value.created_at.split("T")[0]}</h3>
+                                <h3 className="user__container__orders__order--title">{value.created_at.split("T")[0]}</h3>
                                 {value.bill.map((v, k) => (
                                     <div key={k} className="user__container__orders__order__bill">
-                                        <h3>{v.title} - {v.price} x{v.qt}</h3>
+                                        <p className="user__container__orders__order__bill--elt">{v.title}</p>
+                                        <p className="user__container__orders__order__bill--elt">{v.price}$ (x{v.qt})</p>
                                     </div>
                                 ))}
+                                <div className="user__container__orders__order__bill__total">
+
+                                </div>
                             </div>
                         ))}
                     </div>
@@ -186,24 +174,6 @@ const User = () => {
                                     <div>
                                         <span><b>Phone</b></span> 
                                         <input type="tel" name="phoneNumber" placeholder="Your Phone Number" defaultValue={infos.phoneNumber} />
-                                    </div>
-                                </div>
-                                <div className="user__container__infos__elt__box--info">
-                                    <div>
-                                        <span><b>Address</b></span>
-                                        <input type="text" onChange={(e) => handleChangeAddress(e)} list="address" name="address" placeholder="Your Address" defaultValue={infos.address} />
-                                    </div>
-                                </div>
-                                <div className="user__container__infos__elt__box--info">
-                                    <div>
-                                        <span><b>City</b></span> 
-                                        <input type="text" name="city" placeholder="Your City" defaultValue={infos.city} disabled/>
-                                    </div>
-                                </div>
-                                <div className="user__container__infos__elt__box--info">
-                                    <div>
-                                        <span><b>Zipcode</b></span> 
-                                        <input type="text" name="zipcode" placeholder="Your zipcode" defaultValue={infos.zipcode} disabled/>
                                     </div>
                                 </div>
                             </div>

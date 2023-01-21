@@ -18,7 +18,7 @@ import { Navigate } from "react-router-dom";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 export const Admin = () => {
-    const { categories, products, orders } = useSelector((state) => state.admin);
+    const { categories, products, orders, notAdmin } = useSelector((state) => state.admin);
     const { token } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     const [ editorState, setEditorState ] = useState(null);
@@ -67,7 +67,8 @@ export const Admin = () => {
         dispatch(getOrdersThunk());
     }, [dispatch]);
 
-    if (!token) return <Navigate to={"/login"}/>
+    if (!token) return <Navigate to={"/login"}/>;
+    else if (notAdmin) return <Navigate to={"/"}/>;
     if (categories === null || products === null) {
         return (<p>Loading...</p>);
     } else {

@@ -22,8 +22,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "REACT_APP_API_URL=localhost react-scripts start",
-    "build": "REACT_APP_API_URL=192.168.1.31 react-scripts build",
+    "start": "REACT_APP_API_URL=192.168.1.128 react-scripts start",
+    "build": "REACT_APP_API_URL=192.168.1.128 react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prod": "node server.js"

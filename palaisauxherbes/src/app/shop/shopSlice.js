@@ -29,6 +29,10 @@ export const fetchPriceIntervalThunk = createAsyncThunk("shop/getPriceInterval",
     return await (await fetch(`https://${process.env.REACT_APP_API_URL}:3003/${params}`)).json();
 });
 
+export const fetchSortBy = createAsyncThunk("shop/sortBy", async (data) => {
+    return await (await fetch(`https://${process.env.REACT_APP_API_URL}:3003/?page=${data.page}&sortby=${data.sortby}`)).json();
+});
+
 const shopSlice = createSlice({
     name: "shop",
     initialState: {
@@ -49,6 +53,7 @@ const shopSlice = createSlice({
         rates: {},
         loading: true,
         highestPrice: 0,
+        openNav: false,
     },
     reducers: {
         showcat: (state, action) => {
@@ -80,6 +85,9 @@ const shopSlice = createSlice({
         },
         setIntervalPrice: (state, action) => {
             state.priceInterval = action.payload;
+        },
+        setOpenNav: (state, action) => {
+            state.openNav = action.payload;
         }
     },
     extraReducers: (builder) => {
@@ -114,11 +122,18 @@ const shopSlice = createSlice({
             state.products = action.payload.prods;
             state.loading = false;
         }).addCase(fetchPriceIntervalThunk.pending, (state) => {
+            state.loading = true;
+        });
+
+        builder.addCase(fetchSortBy.fulfilled, (state, action) => {
+            state.products = action.payload.prods;
             state.loading = false;
+        }).addCase(fetchSortBy.pending, (state) => {
+            state.loading = true;
         });
     }
 });
 
-export const { showcat, availableIn, availableOut, availableClear, setIntervalPrice } = shopSlice.actions;
+export const { showcat, availableIn, availableOut, availableClear, setIntervalPrice, setOpenNav } = shopSlice.actions;
 
 export default shopSlice.reducer;

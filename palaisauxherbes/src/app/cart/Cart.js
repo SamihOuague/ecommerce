@@ -43,7 +43,7 @@ export const Cart = () => {
                     <div className="button" onClick={() => dispatch(showCart())}>
                         CONTINUE SHOPPING
                     </div>
-                    <Link to="/order" onClick={() => dispatch(showCart())} className="button">
+                    <Link to="/checkout" onClick={() => dispatch(showCart())} className="button">
                         ORDER
                     </Link>
                 </div>

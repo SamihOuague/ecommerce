@@ -3,6 +3,7 @@ import { Elements, PaymentElement, useStripe, useElements } from "@stripe/react-
 import { useDispatch, useSelector } from "react-redux";
 import { getConfigThunk, paymentIntentThunk, postOrderThunk } from "./orderSlice";
 import { pingThunk } from "../auth/authSlice";
+import { setLocked } from "../cart/cartSlice";
 import { getInfosThunk } from "../user/userSlice";
 import { loadStripe } from "@stripe/stripe-js";
 import { Navigate } from "react-router-dom";
@@ -11,7 +12,7 @@ const CheckoutForm = () => {
     const stripe = useStripe();
     const elements = useElements();
     const dispatch = useDispatch();
-    const { cart, loading } = useSelector((state) => state.order);
+    const { cart, loading, shippingInfos } = useSelector((state) => state.order);
     const { infos } = useSelector((state) => state.user);
 
     useEffect(() => {
@@ -24,15 +25,7 @@ const CheckoutForm = () => {
             return;
         }
 
-        const data = {
-            email: event.target.email.value, 
-            firstname: event.target.firstname.value, 
-            lastname: event.target.lastname.value,
-            phoneNumber: event.target.tel.value,
-            address: event.target.address.value,
-            zipcode: event.target.postal.value,
-            city: event.target.city.value,
-        }
+        const data = {...shippingInfos, email: infos.email};
 
         if (data.email && data.firstname && data.lastname && data.phoneNumber && data.address && data.zipcode && data.city && cart) {
             let { payload } = await dispatch(postOrderThunk({...data, bill: cart}));
@@ -40,7 +33,7 @@ const CheckoutForm = () => {
                 const result = await stripe.confirmPayment({
                     elements,
                     confirmParams: {
-                        return_url: `http://localhost:3000/success/order/${payload._id}`,
+                        return_url: `https://${process.env.REACT_APP_API_URL}:3000/success/order/${payload._id}`,
                     },
                 });
                 if (result.error) {
@@ -51,32 +44,9 @@ const CheckoutForm = () => {
         }
     }
 
-    const handleAddressChange = (e) => {
-        console.log(e);
-    }
 
     return (
         <form className="order__container__form" onSubmit={handleSubmit}>
-            <h3>Contact information</h3>
-            <div className="order__container__form__contact">
-                <input type="email" placeholder="Enter your email" name="email" defaultValue={(infos && infos.email) ? infos.email : ""} required/>
-                <input type="tel" placeholder="Enter your phone number" name="tel" defaultValue={(infos && infos.phoneNumber) ? infos.phoneNumber : ""}  required/>
-            </div>
-            <h3>Shipping information</h3>
-            <div className="order__container__form__shipping">
-                <div className="order__container__form__shipping__fullname">
-                    <input type="text" placeholder="Firstname" name="firstname" defaultValue={(infos && infos.firstname) ? infos.firstname : ""} required/>
-                    <input type="text" placeholder="Lastname" name="lastname" defaultValue={(infos && infos.lastname) ? infos.lastname : ""} required/>
-                </div>
-                <div className="order__container__form__shipping__address">
-                    <input type="text" onChange={(e) => handleAddressChange(e)} placeholder="Address" name="address" defaultValue={(infos && infos.address) ? infos.address : ""}  required/>
-                    <input type="text" placeholder="Appartment, suit .. (Optional)" name="option"/>
-                </div>
-                <div className="order__container__form__shipping__city">
-                    <input type="text" placeholder="Postal Code" name="postal" defaultValue={(infos && infos.zipcode) ? infos.zipcode : ""} required/>
-                    <input type="text" placeholder="City" name="city" defaultValue={(infos && infos.city) ? infos.city : ""} required/>
-                </div>
-            </div>
             <PaymentElement />
             <button className="button" disabled={loading}>{(loading) ? "Loading..." : "Pay Now"}</button>
         </form>
@@ -85,21 +55,21 @@ const CheckoutForm = () => {
 
 const Order = () => {
     const dispatch = useDispatch();
-    const { publishableKey, clientSecret, cart, amount, loading } = useSelector((state) => state.order);
+    const { publishableKey, clientSecret, cart, amount, shippingInfos } = useSelector((state) => state.order);
     const c = useSelector((state) => state.cart.cart);
     const token = useSelector((state) => state.auth.token);
     const { infos } = useSelector((state) => state.user);
     const confirmed = (!infos) ? false : infos.confirmed;
     let stripePromise;
     const intentToPay = useCallback((c) => {
-        if (token) dispatch(paymentIntentThunk({cart: c}));
-    }, [dispatch, token]);
+        if (token && shippingInfos) dispatch(paymentIntentThunk({cart: c}));
+    }, [dispatch, token, shippingInfos]);
 
     useEffect(() => {
         dispatch(getConfigThunk());
         dispatch(getInfosThunk());
         dispatch(pingThunk());
-
+        dispatch(setLocked(true));
     }, [dispatch]);
 
     useEffect(() => {
@@ -107,6 +77,7 @@ const Order = () => {
     }, [intentToPay, c]);
 
     if (!token) return <Navigate to={"/login"}/>
+    else if (!shippingInfos) return <Navigate to={"/checkout"}/>
     else if (!infos) return (
         <div className="order">
             <div className="spinner-container">

@@ -1,5 +1,20 @@
 const { CategoriesModel, ProductModel, ReviewsModel } = require("./Model");
 
+const sortBySwitch = (sortby) => {
+    switch (sortby) {
+        case "pricelow":
+            return { price: 1 };
+        case "pricehigh":
+            return { price: -1 };
+        case "alphaz":
+            return { title: 1 };
+        case "zalpha":
+            return { title: -1 };
+        default:
+            return false;
+    }
+}
+
 module.exports = {
     mainPage: async (req, res) => {
         let page = 0;
@@ -7,6 +22,7 @@ module.exports = {
             available: req.query.available,
             priceMin: req.query.pricemin,
             priceMax: req.query.pricemax,
+            sortby: req.query.sortby
         };
         let filter = {};
         if (req.query.page && Number(req.query.page) && Number(req.query.page) > 0) page = (Number(req.query.page) - 1) * 6;
@@ -22,7 +38,11 @@ module.exports = {
             else filter.price = { "$lte": Number(f.priceMax) };
         }
         const cat = await CategoriesModel.find({});
-        let prods = await ProductModel.find(filter).skip(page).limit(6);
+        let prods = sortBySwitch(f.sortby);
+        if (prods) 
+            prods = await ProductModel.find(filter).sort(sortBySwitch(f.sortby)).skip(page).limit(6);
+        else
+            prods = await ProductModel.find(filter).skip(page).limit(6);
         let reviews = await ReviewsModel.find({product_id: {"$in": prods.map((v) => v._id)}});
         let rates = {};
         let highestPrice = await ProductModel.find(filter, {price: 1}).sort({ price: -1 }).limit(1);
