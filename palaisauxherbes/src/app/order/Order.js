@@ -33,7 +33,7 @@ const CheckoutForm = () => {
                 const result = await stripe.confirmPayment({
                     elements,
                     confirmParams: {
-                        return_url: `https://${process.env.REACT_APP_API_URL}:3000/success/order/${payload._id}`,
+                        return_url: `https://localhost:3000/success/order/${payload._id}`,
                     },
                 });
                 if (result.error) {
@@ -48,7 +48,7 @@ const CheckoutForm = () => {
     return (
         <form className="order__container__form" onSubmit={handleSubmit}>
             <PaymentElement />
-            <button className="button" disabled={loading}>{(loading) ? "Loading..." : "Pay Now"}</button>
+            <button className="button" disabled={loading}>{(loading) ? "Loading..." : "Proceder au Paiement"}</button>
         </form>
     );
 }
@@ -94,7 +94,7 @@ const Order = () => {
                     <i className="fa-solid fa-spinner"></i>
                 </div> :
                 <div>
-                    <h2 className="order--title">Proceed to order</h2>
+                    <h2 className="order--title">Proceder au Paiement</h2>
                     <div className="order__bill">
                         <div className="order__bill__container">
                             {cart.map((v, k) => (

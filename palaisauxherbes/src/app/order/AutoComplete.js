@@ -70,7 +70,7 @@ const AutoComplete = () => {
     );
     return (
         <div className="autocomplete">
-            <h2 className="autocomplete--title">Checkout</h2>
+            <h2 className="autocomplete--title">Enregistrement</h2>
             <div className="autocomplete__bill">
                 <div className="autocomplete__bill__container">
                     {cart.map((v, k) => (
@@ -86,26 +86,26 @@ const AutoComplete = () => {
                 </div>
             </div>
             <form className="autocomplete__form" onSubmit={(e) => handleSubmit(e)}>
-                <h3>Contact information</h3>
-                <label htmlFor="firstname">Firstname : </label>
-                <input name="firstname" placeholder="Your firstname" defaultValue={infos.firstname} required/>
-                <label htmlFor="lastname">Lastname : </label>
-                <input name="lastname" placeholder="Your firstname" defaultValue={infos.lastname} required/>
-                <label htmlFor="phoneNumber">Phone : </label>
-                <input name="phoneNumber" placeholder="Your firstname" defaultValue={infos.phoneNumber} required/>
-                <h3>Shipping information</h3>
+                <h3>Informations</h3>
+                <label htmlFor="firstname">Prenom : </label>
+                <input name="firstname" placeholder="Votre Prenom" defaultValue={infos.firstname} required/>
+                <label htmlFor="lastname">Nom : </label>
+                <input name="lastname" placeholder="Votre Nom" defaultValue={infos.lastname} required/>
+                <label htmlFor="phoneNumber">Tel. : </label>
+                <input name="phoneNumber" placeholder="Numero de telephone" defaultValue={infos.phoneNumber} required/>
+                <h3>Lieu De Livraison</h3>
                 <div className="autocomplete__form__container">
-                    <label htmlFor="phoneNumber">Address : </label>
-                    <input defaultValue={selectedAddress.name} onChange={(e) => setAddress(e.target.value)} name="address" placeholder="Your address" type="text" autoComplete="off" required />
+                    <label htmlFor="phoneNumber">Adresse : </label>
+                    <input defaultValue={selectedAddress.name} onChange={(e) => setAddress(e.target.value)} name="address" placeholder="Votre Adresse" type="text" autoComplete="off" required />
                     {(addresses.length > 0) && <div className="autocomplete__form__container__box">
                         {addresses.map((value, key) => (
                             <div key={key} onClick={(e) => handleSelectAddress(value, e)} className="autocomplete__form__container__box--elt">{value.label}</div>
                         ))}
                     </div>}
                 </div>
-                <input name="city" defaultValue={selectedAddress.city} placeholder="Your City" type="text" disabled />
-                <input name="zipcode" defaultValue={selectedAddress.postcode} placeholder="Your Postal Code" type="text" disabled />
-                <button className="button" type="submit">Checkout</button>
+                <input name="city" defaultValue={selectedAddress.city} placeholder="Votre Ville" type="text" disabled />
+                <input name="zipcode" defaultValue={selectedAddress.postcode} placeholder="Votre Code Postal" type="text" disabled />
+                <button className="button" type="submit">Continuer</button>
             </form>
         </div>
     );

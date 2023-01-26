@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 const getProduct = async (category, product) => {
     let c = category.replace(" ", "-").toLowerCase();
     let p = product.replace(" ", "-").toLowerCase();
-    return await (await fetch(`https://${process.env.REACT_APP_API_URL}:3003/${c}/${p}`)).json();
+    return await (await fetch(`${process.env.REACT_APP_API_URL}/product/${c}/${p}`)).json();
 }
 
 export const getProductThunk = createAsyncThunk("product/get", async (data) => {
@@ -12,7 +12,7 @@ export const getProductThunk = createAsyncThunk("product/get", async (data) => {
 });
 
 export const postReviewThunk = createAsyncThunk("product/review", async (data) => {
-    let response = await (await fetch(`https://${process.env.REACT_APP_API_URL}:3005/`, {
+    let response = await (await fetch(`${process.env.REACT_APP_API_URL}/reviews/`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -24,7 +24,7 @@ export const postReviewThunk = createAsyncThunk("product/review", async (data) =
 });
 
 export const getReviewsThunk = createAsyncThunk("product/getReview", async (id_product) => {
-    let response = await (await fetch(`https://${process.env.REACT_APP_API_URL}:3005/${id_product}`)).json();
+    let response = await (await fetch(`${process.env.REACT_APP_API_URL}/reviews/${id_product}`)).json();
     return response;
 });
 

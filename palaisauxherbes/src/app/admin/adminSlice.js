@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const getMain = async () => {
-    return await (await fetch(`https://${process.env.REACT_APP_API_URL}:3003/`)).json()
+    return await (await fetch(`${process.env.REACT_APP_API_URL}/product/`)).json()
 };
 
 const addCategory = async (data) => {
-    return await (await fetch(`https://${process.env.REACT_APP_API_URL}:3003/category`, {
+    return await (await fetch(`${process.env.REACT_APP_API_URL}/product/category`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -16,7 +16,7 @@ const addCategory = async (data) => {
 };
 
 const addSubCategory = async (url, data) => {
-    return await (await fetch(`https://${process.env.REACT_APP_API_URL}:3003/category/${url}`, {
+    return await (await fetch(`${process.env.REACT_APP_API_URL}/product/category/${url}`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -27,7 +27,7 @@ const addSubCategory = async (url, data) => {
 };
 
 const uploadPic = async (data) => {
-    return await (await fetch(`https://${process.env.REACT_APP_API_URL}:3002/upload`, {
+    return await (await fetch(`${process.env.REACT_APP_API_URL}/img/upload`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -40,7 +40,7 @@ const uploadPic = async (data) => {
 const addProduct = async (data) => {
     let response = await uploadPic({img: data.img});
     if (!response.message) return response; 
-    return await (await fetch(`https://${process.env.REACT_APP_API_URL}:3003/`, {
+    return await (await fetch(`${process.env.REACT_APP_API_URL}/product/`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -56,7 +56,7 @@ export const addProductThunk = createAsyncThunk("admin/addProduct", async (data)
 });
 
 export const addSubCategoryThunk = createAsyncThunk("admin/addSubCategory", async (data) => {
-    let response = await addSubCategory(data.url, data.body);
+    let response = await addSubCategory(data.url.replaceAll(" ", "-"), data.body);
     return response;
 });
 
@@ -71,7 +71,7 @@ export const addCategoryThunk = createAsyncThunk("admin/addCategory", async (dat
 });
 
 export const deleteCategoryThunk = createAsyncThunk("admin/deleteCategory", async (name) => {
-    return await (await fetch(`https://${process.env.REACT_APP_API_URL}:3003/category`, {
+    return await (await fetch(`${process.env.REACT_APP_API_URL}/product/category`, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
@@ -82,7 +82,7 @@ export const deleteCategoryThunk = createAsyncThunk("admin/deleteCategory", asyn
 });
 
 export const deleteSubCategoryThunk = createAsyncThunk("admin/deleteSubCategory", async (data) => {
-    return await (await fetch(`https://${process.env.REACT_APP_API_URL}:3003/category/${data.category}`, {
+    return await (await fetch(`${process.env.REACT_APP_API_URL}/product/category/${data.category.replaceAll(" ", "-")}`, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
@@ -93,7 +93,7 @@ export const deleteSubCategoryThunk = createAsyncThunk("admin/deleteSubCategory"
 });
 
 export const deleteProductThunk = createAsyncThunk("admin/deleteProduct", async (name) => {
-    return await (await fetch(`https://${process.env.REACT_APP_API_URL}:3003/`, {
+    return await (await fetch(`${process.env.REACT_APP_API_URL}/product/`, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
@@ -104,7 +104,7 @@ export const deleteProductThunk = createAsyncThunk("admin/deleteProduct", async 
 });
 
 export const getOrdersThunk = createAsyncThunk("admin/getOrders", async () => {
-    return await (await fetch(`https://${process.env.REACT_APP_API_URL}:3004/`, {
+    return await (await fetch(`${process.env.REACT_APP_API_URL}/order/`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -114,7 +114,7 @@ export const getOrdersThunk = createAsyncThunk("admin/getOrders", async () => {
 });
 
 export const deleteOrderThunk = createAsyncThunk("admin/deleteOrder", async (data) => {
-    const response = await (await fetch(`https://${process.env.REACT_APP_API_URL}:3004/delete-order`, {
+    const response = await (await fetch(`${process.env.REACT_APP_API_URL}/order/delete-order`, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",

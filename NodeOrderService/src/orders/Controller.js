@@ -1,23 +1,22 @@
 const { jwtVerify } = require("../utils/jwt");
 const Model = require("./Model");
 const mongoose = require("mongoose")
-const User = mongoose.model("member", (new mongoose.Schema({ email: {type: String, required: true} }, {collection: "members"})));
+const User = mongoose.model("member", (new mongoose.Schema({ email: { type: String, required: true } }, { collection: "members" })));
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const nodemailer = require("nodemailer");
 
 const sendEmail = async (data) => {
-	let transporter = nodemailer.createTransport({
-		host: "smtp.gmail.com",
-		port: 465,
-		secure: true,
-		auth: {
-			user: "",
-			pass: "",
-		},
-	});
-	let infos = await transporter.sendMail(data);
-
-	return infos;
+    let transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 465,
+        secure: true,
+        auth: {
+            user: "",
+            pass: "",
+        },
+    });
+    let infos = await transporter.sendMail(data);
+    return infos;
 };
 
 
@@ -28,7 +27,10 @@ module.exports = {
         try {
             let token = req.headers.authorization.split(" ")[1];
             let decoded = jwtVerify(token);
+            let r_email = /^([a-zA-Z0-9]+)\.{0,1}[a-zA-Z0-9_-]+@{1}([a-zA-Z0-9_-]{3,})(\.[a-zA-Z]{2,5})$/;
+            let r_zipcode = /^([0-9]{5})$/;
             if (!firstname || !lastname || !email || !phoneNumber || !address || !zipcode || !city || !bill) return res.sendStatus(400);
+            else if (!r_email.test(email) || !r_zipcode.test(zipcode)) return res.sendStatus(400);
             let order = new Model({
                 firstname,
                 lastname,
@@ -44,20 +46,31 @@ module.exports = {
             order = await order.save();
             if (!order) return res.sendStatus(400);
             return res.status(201).send(order);
-        } catch(e) {
+        } catch (e) {
+            console.error(e);
             return res.sendStatus(500);
         }
     },
     getOrders: async (req, res) => {
-        let orders = await Model.find({});
-        if (!orders) return res.sendStatus(500); 
-        return res.send(orders);
+        try {
+            let orders = await Model.find({});
+            if (!orders) return res.sendStatus(404);
+            return res.send(orders);
+        } catch (e) {
+            console.error(e);
+            return res.sendStatus(500);
+        }
     },
     getOrder: async (req, res) => {
-        const { order_id } = req.params;
-        let order = await Model.findOne({_id: order_id});
-        if (!order) return res.sendStatus(404);
-        return res.send(order);
+        try {
+            const { order_id } = req.params;
+            let order = await Model.findOne({ _id: order_id });
+            if (!order) return res.sendStatus(404);
+            return res.send(order);
+        } catch(e) {
+            console.error(e);
+            return res.sendStatus(500);
+        }
     },
     getConfig: (req, res) => {
         return res.send({
@@ -65,10 +78,15 @@ module.exports = {
         });
     },
     deleteOrder: async (req, res) => {
-        const { order_id } = req.body;
-        let order = await Model.findOneAndDelete({_id: order_id});
-        if (!order) return res.sendStatus(404);
-        return res.send(order);
+        try {
+            const { order_id } = req.body;
+            let order = await Model.findOneAndDelete({ _id: order_id });
+            if (!order) return res.sendStatus(404);
+            return res.send(order);
+        } catch(e) {
+            console.error(e);
+            return res.sendStatus(500);
+        }
     },
     createPayment: async (req, res) => {
         const { cart } = req.body;
@@ -84,14 +102,11 @@ module.exports = {
                     enabled: true,
                 }
 
-            }); 
+            });
             return res.send({ clientSecret: paymentIntent.client_secret, amount, cart });
         } catch (e) {
-            return res.status(400).send({ 
-                error: {
-                    message: e.message,
-                }
-            });
+            console.error(e);
+            return res.status(500);
         }
     },
     getUserOrders: async (req, res) => {
@@ -99,12 +114,12 @@ module.exports = {
             let token = req.headers.authorization.split(" ")[1];
             let decoded = jwtVerify(token);
             if (!decoded) return res.sendStatus(401);
-            let orders = await Model.find({user_id: decoded.sub});
+            let orders = await Model.find({ user_id: decoded.sub });
             if (!orders) return res.send(404);
             return res.send(orders);
-        } catch(e) {
+        } catch (e) {
             console.log(e);
-            return res.sendStatus(400);
+            return res.sendStatus(500);
         }
     },
     confirmOrder: async (req, res) => {
@@ -117,22 +132,22 @@ module.exports = {
             else if (!paymentIntent || !paymentClientSecret) return res.sendStatus(400);
             let p = await stripe.paymentIntents.retrieve(paymentIntent);
             if (!p) return res.sendStatus(404);
-            else if (p.status != "succeeded") return res.send({confirmed: p.status});
-            let order = await Model.findOneAndUpdate({ _id: order_id, user_id: decoded.sub }, { confirmed: true }, {new: true});
-            let user = await User.findOne({_id: decoded.sub});
+            else if (p.status != "succeeded") return res.send({ confirmed: p.status });
+            let order = await Model.findOneAndUpdate({ _id: order_id, user_id: decoded.sub }, { confirmed: true }, { new: true });
+            let user = await User.findOne({ _id: decoded.sub });
             if (!order || !user) return res.sendStatus(404);
-            let msg = await sendEmail({
-				from: "souaguen96@gmail.com",
-				to: user.email,
-				subject: "Checkout confirmation",
-				text: `Congratulation ! Your payment order is confirmed.`,
-				html: `<p>Congratulation ! Your payment order is confirmed.</p>`,
-			});
-			if (!msg || !msg.messageId) return res.sendStatus(500);
+            await sendEmail({
+                from: "souaguen96@gmail.com",
+                to: user.email,
+                subject: "Checkout confirmation",
+                text: `Congratulation ! Your payment order is confirmed.`,
+                html: `<p>Congratulation ! Your payment order is confirmed.</p>`,
+            });
             return res.send(order);
 
-        } catch(e) {
-            return res.status(500).send({e});
+        } catch (e) {
+            console.error(e);
+            return res.sendStatus(500);
         }
     }
 }

@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const postOrderThunk = createAsyncThunk("order/post", async (data) => {
-    const response = await (await fetch(`https://${process.env.REACT_APP_API_URL}:3004/`, {
+    const response = await (await fetch(`${process.env.REACT_APP_API_URL}/order/`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -13,7 +13,7 @@ export const postOrderThunk = createAsyncThunk("order/post", async (data) => {
 });
 
 export const getConfigThunk = createAsyncThunk("order/getConfig", async () => {
-    return await (await fetch(`https://${process.env.REACT_APP_API_URL}:3004/config`, {
+    return await (await fetch(`${process.env.REACT_APP_API_URL}/order/config`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -23,7 +23,7 @@ export const getConfigThunk = createAsyncThunk("order/getConfig", async () => {
 });
 
 export const paymentIntentThunk = createAsyncThunk("order/paymentIntent", async (data) => {
-    return await (await fetch(`https://${process.env.REACT_APP_API_URL}:3004/create-payment-intent`, {
+    return await (await fetch(`${process.env.REACT_APP_API_URL}/order/create-payment-intent`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -34,7 +34,7 @@ export const paymentIntentThunk = createAsyncThunk("order/paymentIntent", async 
 });
 
 export const confirmOrderThunk = createAsyncThunk("order/confirmOrder", async (data) => {
-    return await (await fetch(`https://${process.env.REACT_APP_API_URL}:3004/confirm-order/${data.order_id}`, {
+    return await (await fetch(`${process.env.REACT_APP_API_URL}/order/confirm-order/${data.order_id}`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

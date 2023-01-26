@@ -14,6 +14,7 @@
     }
 }
 
+
 @media screen and (max-width: 799px) {
     .shop {
         &__filter {
@@ -45,12 +46,13 @@
             display: none;
         }
         &__overview {
+            
             &__container {
                 display: grid;
-                grid-template-columns: repeat(3, 35%);
+                grid-template-columns: repeat(3, 33%);
                 &__card {
-                    margin: 0 64px;
                     display: flex;
+                    padding: 32px;
                     flex-direction: column;
                     .int {
                         display: none;
@@ -70,7 +72,7 @@
         &__overview {
             &__container {
                 display: grid;
-                grid-template-columns: repeat(3, 35%);
+                grid-template-columns: repeat(3, 33%);
                 &__card {
                     margin: 0 64px;
                     display: flex;
@@ -204,10 +206,12 @@
         flex: 5;
         &__mobile-category {
             border: 1px solid #1a3b2a27;
-            padding: 0px 8px;
+            overflow: hidden;
             &__section {
                 &__category {
                     list-style-type: none;
+                    margin: 0;
+                    padding: 0;
                     &__elt {
                         &__title {
                             display: flex;
@@ -215,6 +219,8 @@
                             align-items: center;
                             height: 36px;
                             cursor: pointer;
+                            padding: 8px 26px;
+                            color: #1a3b2a;
                         }
                         &__list {
                             overflow: hidden;
@@ -309,6 +315,22 @@
                 }
             }
         }
+    }
+}
+
+@keyframes showmobilecat {
+    from {
+        width: 0px;
+    } to {
+        width: 50px;
+    }
+}
+
+@keyframes hidemobilecat {
+    from {
+        width: 50px;
+    } to {
+        width: 0px;
     }
 }
 

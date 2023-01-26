@@ -3,7 +3,7 @@ let Model = require("./Model");
 module.exports = {
     getMessages: async (req, res) => {
         let messages = await Model.find({});
-        if (!messages) return res.sendStatus(500);
+        if (!messages) return res.sendStatus(404);
         return res.send(messages);
     },
     getMessage: async (req, res) => {

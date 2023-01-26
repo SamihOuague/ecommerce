@@ -3,10 +3,14 @@ const { jwtVerify } = require("../utils/jwt");
 
 module.exports = {
     getComments: async (req, res) => {
-        let { id } = req.params;
-        let comments = await Model.find({product_id: id});
-        if (!comments) return res.sendStatus(500);
-        return res.send(comments);
+        try {
+            let { id } = req.params;
+            let comments = await Model.find({ product_id: id });
+            if (!comments) return res.sendStatus(404);
+            return res.send(comments);
+        } catch (e) {
+            return res.sendStatus(500);
+        }
     },
     postComment: async (req, res) => {
         try {
@@ -14,7 +18,7 @@ module.exports = {
             let decoded = jwtVerify(req.headers.authorization.split(" ")[1]);
             if (!comment || !rate || !product_id) return res.sendStatus(400);
             else if (!decoded) return res.sendStatus(401);
-            let user = await UserModel.findOne({_id: decoded.sub});
+            let user = await UserModel.findOne({ _id: decoded.sub });
             if (!user) return res.sendStatus(404);
             let review = new Model({
                 comment,
@@ -24,13 +28,18 @@ module.exports = {
             });
             review = await review.save();
             return res.status(201).send(review);
-        } catch(e) {
+        } catch (e) {
             return res.sendStatus(500);
         }
     },
     deleteComment: async (req, res) => {
-        let { id } = req.params;
-        let comment = await Model.findOneAndDelete({_id: id});
-        return res.send(comment);
+        try {
+            let { id } = req.params;
+            let comment = await Model.findOneAndDelete({ _id: id });
+            return res.send(comment);
+        } catch (e) {
+            console.error(e);
+            return res.sendStatus(500);
+        }
     }
 }

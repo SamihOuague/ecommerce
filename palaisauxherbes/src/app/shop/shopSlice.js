@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const getMain = async (page = 1) => {
-    return await (await fetch(`https://${process.env.REACT_APP_API_URL}:3003/?page=${page}`)).json();
+    return await (await fetch(`${process.env.REACT_APP_API_URL}/product/?page=${page}`)).json();
 }
 
 const getByCat = async (tag, page = 1) => {
-    return await (await fetch(`https://${process.env.REACT_APP_API_URL}:3003/category/${tag}?page=${page}`)).json();
+    return await (await fetch(`${process.env.REACT_APP_API_URL}/product/category/${tag}?page=${page}`)).json();
 }
 
 export const getByCatThunk = createAsyncThunk("shop/getByCat", async (data) => {
@@ -19,18 +19,18 @@ export const getMainThunk = createAsyncThunk("shop/main", async (page = 1) => {
 });
 
 export const fetchAvailableThunk = createAsyncThunk("shop/getAvailable", async (data) => {
-    return await (await fetch(`https://${process.env.REACT_APP_API_URL}:3003/?page=${data.page}&available=${data.filter}`)).json();
+    return await (await fetch(`${process.env.REACT_APP_API_URL}/product/?page=${data.page}&available=${data.filter}`)).json();
 });
 
 export const fetchPriceIntervalThunk = createAsyncThunk("shop/getPriceInterval", async (data) => {
     let params = `?page=${data.page}`;
     if (data.filter.min) params += `&pricemin=${data.filter.min}`;
     if (data.filter.max) params += `&pricemax=${data.filter.max}`;
-    return await (await fetch(`https://${process.env.REACT_APP_API_URL}:3003/${params}`)).json();
+    return await (await fetch(`${process.env.REACT_APP_API_URL}/product/${params}`)).json();
 });
 
 export const fetchSortBy = createAsyncThunk("shop/sortBy", async (data) => {
-    return await (await fetch(`https://${process.env.REACT_APP_API_URL}:3003/?page=${data.page}&sortby=${data.sortby}`)).json();
+    return await (await fetch(`${process.env.REACT_APP_API_URL}/product/?page=${data.page}&sortby=${data.sortby}`)).json();
 });
 
 const shopSlice = createSlice({
@@ -54,6 +54,7 @@ const shopSlice = createSlice({
         loading: true,
         highestPrice: 0,
         openNav: false,
+        sortb: "main",
     },
     reducers: {
         showcat: (state, action) => {
@@ -88,6 +89,9 @@ const shopSlice = createSlice({
         },
         setOpenNav: (state, action) => {
             state.openNav = action.payload;
+        },
+        setSortB: (state, action) => {
+            state.sortb = action.payload; 
         }
     },
     extraReducers: (builder) => {
@@ -134,6 +138,6 @@ const shopSlice = createSlice({
     }
 });
 
-export const { showcat, availableIn, availableOut, availableClear, setIntervalPrice, setOpenNav } = shopSlice.actions;
+export const { showcat, availableIn, availableOut, availableClear, setIntervalPrice, setOpenNav, setSortB } = shopSlice.actions;
 
 export default shopSlice.reducer;

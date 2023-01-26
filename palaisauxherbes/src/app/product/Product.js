@@ -51,25 +51,25 @@ export const Product = () => {
         <div className="product">
             <div className="product__container">
                 <div className="product__container__img">
-                    <img src={`https://${process.env.REACT_APP_API_URL}:3002/images/${product.img}`} alt="product pic" className="product__container__img--img"/>
+                    <img src={`${process.env.REACT_APP_API_URL}/img/images/${product.img}`} alt="product pic" className="product__container__img--img"/>
                 </div>
                 <div className="product__container__details">
                     <h3 className="product__container__details--title">{product.title}</h3>
                     <div className="product__container__details__values">
                         <div className="product__container__details__values__labels">
-                            <p className="product__container__details__values__labels--text">Price</p>
-                            <p className="product__container__details__values__labels--text">Weight</p>
-                            {(product.aroma) && <p className="product__container__details__values__labels--text">Aroma</p>}
-                            <p className="product__container__details__values__labels--text">Vendor</p>
-                            <p className="product__container__details__values__labels--text">Availability</p>
-                            <p className="product__container__details__values__labels--text">Quantity</p>
+                            <p className="product__container__details__values__labels--text">Prix</p>
+                            <p className="product__container__details__values__labels--text">Poids</p>
+                            {(product.aroma) && <p className="product__container__details__values__labels--text">Arome</p>}
+                            <p className="product__container__details__values__labels--text">Type</p>
+                            <p className="product__container__details__values__labels--text">Disponibilite</p>
+                            <p className="product__container__details__values__labels--text">Quantite</p>
                         </div>
                         <div className="product__container__details__values__val">
                             <p className="product__container__details__values__val--text">{product.price} $</p>
                             <p className="product__container__details__values__val--text"><span>{product.weight}gr.</span></p>
                             {(product.aroma) && <p className="product__container__details__values__val--text"><span>{product.aroma}</span></p>}
                             <p className="product__container__details__values__val--text">{product.categoryTag}</p>
-                            <p className="product__container__details__values__val--text green">In Stock!</p>
+                            <p className="product__container__details__values__val--text green">En Stock!</p>
                             <div className="product__container__details__values__val__btngroup">
                                 <div className="button" onClick={() => dispatch(removeQt())}>
                                     <i className="fas fa-minus"></i>
@@ -83,10 +83,10 @@ export const Product = () => {
                     </div>
                     <div className="product__container__details__btngroup">
                         <div className="button" onClick={() => dispatch(addToCart({...product, qt}))}>
-                            <span>ADD TO CART</span>
+                            <span>AJOUTER AU PANIER</span>
                         </div>
                         <div className="button" onClick={() => handleBuyNow()}>
-                            <span>BUY IT NOW</span>
+                            <span>ACHETER</span>
                         </div>
                     </div>
                 </div>
@@ -95,10 +95,10 @@ export const Product = () => {
                 <div className="product__infos__nav">
                     <div className="product__infos__nav__btngroup">
                         <div className={`button ${(!showReviews) && 'active'}`} onClick={() => dispatch(setShowReviews(false))}>
-                            <span>PRODUCT DESCRIPTION</span>
+                            <span>DESCRIPTION PRODUIT</span>
                         </div>
                         <div className={`button ${(showReviews) && 'active'}`} onClick={() => dispatch(getReviewsThunk(product._id))}>
-                            <span>REVIEWS</span>
+                            <span>AVIS</span>
                         </div>
                     </div>
                 </div>
@@ -107,7 +107,7 @@ export const Product = () => {
                         <div dangerouslySetInnerHTML={{__html: (product.describ) ? product.describ : "<p>No description to show.</p>"}}></div>
                     </div> :
                     <div className="product__infos__body">
-                        <h5>Product reviews</h5>
+                        <h5 className="product__infos__body--title">Avis</h5>
                         <form className="product__infos__body__create-review" onSubmit={(e) => handlePostReview(e)}>
                             <textarea placeholder="Write your comment here" name="comment"></textarea>
                             <button className="product__infos__body__create-review__review-rate">
@@ -135,19 +135,19 @@ export const Product = () => {
                                     </div>
                                 ))}
                             </div>
-                            : <p>No reviews to show.</p>
+                            : <p>Pas d'avis pour le moment.</p>
                         }
                     </div>
                 }
             </div>
             <div className="product__recommended">
-                <h3 className="product__recommended--title">Recommended Products</h3>
+                <h3 className="product__recommended--title">Produits Recommandes</h3>
                 <div className="product__recommended__container">
                     {recommended.map((value, key) => (
                         <div className="box" key={key}>                            
                             <div className="product__recommended__container__card">
                                 <Link to={`/product/${value.categoryTag.replaceAll(" ", "-").toLowerCase()}/${value.title.replaceAll(" ", "-").toLowerCase()}`} className="shop__overview__container__card__info">
-                                    <img className="product__recommended__container__card__info--pic" src={`https://${process.env.REACT_APP_API_URL}:3002/images/${value.img}`} alt="Product pic"/>
+                                    <img className="product__recommended__container__card__info--pic" src={`${process.env.REACT_APP_API_URL}/img/images/${value.img}`} alt="Product pic"/>
                                     <p className="product__recommended__container__card__info--tag"></p>
                                     <h3 className="product__recommended__container__card__info--title">{value.title}</h3>
                                     <div className="product__recommended__container__card__info__stars">

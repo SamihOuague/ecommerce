@@ -36,9 +36,9 @@ const SuccessOrder = () => {
     )
     return (
         <div className="success">
-            <h1 className="success--title">Payment {(!orderStatus) ? "Failed" : "Succeeded"} !</h1>
+            <h1 className="success--title">Paiement {(!orderStatus) ? "Echouer " : "Reussi "} !</h1>
             <div className="success__container">
-                <Link to={"/"}>Redirect to mainpage</Link>
+                <Link to={"/"}>Retourner a la page d'accueil</Link>
             </div>
         </div>
     );

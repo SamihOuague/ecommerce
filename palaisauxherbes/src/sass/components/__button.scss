@@ -7,7 +7,7 @@
     display: inline;
     padding: 8px 16px;
     cursor: pointer;
-    transition-property: color, background-color;
+    transition-property: color, background-color, font-weight;
     transition-duration: 500ms;
     text-decoration: none;
     &:hover {
@@ -21,5 +21,16 @@
         margin: 8px 0;
         display: flex;
         flex-direction: column;
+    }
+}
+
+.btn-danger {
+    border: 1px solid red;
+    color: red;
+    transition-property: color, background-color;
+    transition-duration: 500ms;
+    &:hover {
+        background-color: red;
+        color: #eee6cf;
     }
 }

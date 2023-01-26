@@ -116,11 +116,11 @@
   }
   .shop__overview__container {
     display: grid;
-    grid-template-columns: repeat(3, 35%);
+    grid-template-columns: repeat(3, 33%);
   }
   .shop__overview__container__card {
-    margin: 0 64px;
     display: flex;
+    padding: 32px;
     flex-direction: column;
   }
   .shop__overview__container__card .int {
@@ -136,7 +136,7 @@
   }
   .shop__overview__container {
     display: grid;
-    grid-template-columns: repeat(3, 35%);
+    grid-template-columns: repeat(3, 33%);
   }
   .shop__overview__container__card {
     margin: 0 64px;
@@ -265,10 +265,12 @@
 }
 .shop__overview__mobile-category {
   border: 1px solid rgba(26, 59, 42, 0.1529411765);
-  padding: 0px 8px;
+  overflow: hidden;
 }
 .shop__overview__mobile-category__section__category {
   list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
 .shop__overview__mobile-category__section__category__elt__title {
   display: flex;
@@ -276,6 +278,8 @@
   align-items: center;
   height: 36px;
   cursor: pointer;
+  padding: 8px 26px;
+  color: #1a3b2a;
 }
 .shop__overview__mobile-category__section__category__elt__list {
   overflow: hidden;
@@ -362,6 +366,22 @@
   margin: 8px 0;
 }
 
+@keyframes showmobilecat {
+  from {
+    width: 0px;
+  }
+  to {
+    width: 50px;
+  }
+}
+@keyframes hidemobilecat {
+  from {
+    width: 50px;
+  }
+  to {
+    width: 0px;
+  }
+}
 .showcate {
   animation-name: showcat;
   animation-duration: 1s;
@@ -401,7 +421,7 @@
   width: 100%;
 }
 .footer--logo {
-  max-width: 380px;
+  max-width: 340px;
 }
 .footer__nav {
   width: 100%;
@@ -632,6 +652,8 @@
 .product__infos__body h5 {
   font-size: 21px;
   margin: 0;
+  font-weight: 400;
+  color: #1a3b2a;
 }
 .product__infos__body__create-review {
   display: flex;
@@ -954,7 +976,8 @@
 }
 
 .auth {
-  padding: 48px;
+  min-height: 50vh;
+  padding-top: 56px;
 }
 .auth--title {
   font-size: 40px;
@@ -970,11 +993,13 @@
 }
 .auth__container__form input, .auth__container__form button {
   min-height: 40px;
-  min-width: 300px;
+  max-width: 300px;
+  width: 100%;
   margin: 8px 0;
 }
 .auth__container__form div {
-  min-width: 300px;
+  max-width: 300px;
+  width: 100%;
 }
 .auth__container__form__linkgroup {
   display: flex;
@@ -1215,7 +1240,7 @@
   display: inline;
   padding: 8px 16px;
   cursor: pointer;
-  transition-property: color, background-color;
+  transition-property: color, background-color, font-weight;
   transition-duration: 500ms;
   text-decoration: none;
 }
@@ -1228,6 +1253,17 @@
   margin: 8px 0;
   display: flex;
   flex-direction: column;
+}
+
+.btn-danger {
+  border: 1px solid red;
+  color: red;
+  transition-property: color, background-color;
+  transition-duration: 500ms;
+}
+.btn-danger:hover {
+  background-color: red;
+  color: #eee6cf;
 }
 
 .spinner-container {
