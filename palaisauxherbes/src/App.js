@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import { Shop } from "./app/shop/Shop";
+import Shop from "./app/shop/Shop";
 import { Cart } from "./app/cart/Cart";
-import { Product } from "./app/product/Product";
+import Product from "./app/product/Product";
 import { Admin } from "./app/admin/Admin";
 import { Contact } from "./app/contact/Contact";
 import Order from "./app/order/Order";
