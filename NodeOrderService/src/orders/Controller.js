@@ -143,6 +143,15 @@ module.exports = {
                 text: `Congratulation ! Your payment order is confirmed.`,
                 html: `<p>Congratulation ! Your payment order is confirmed.</p>`,
             });
+            await sendEmail({
+                from: "souaguen96@gmail.com",
+                to: "souaguen96@gmail.com",
+                subject: "New Order",
+                text: `email : ${order.email}.\n
+                        fullname : ${order.firstname} ${order.lastname}\n`,
+                html: `<p>email : ${order.email}.</p>
+                        <p>fullname : ${order.firstname} ${order.lastname}</p>`,
+            });
             return res.send(order);
 
         } catch (e) {

@@ -16,6 +16,7 @@ const AutoComplete = () => {
     const { infos } = useSelector((state) => state.user);
     const { cart } = useSelector((state) => state.cart);
     const { shippingInfos } = useSelector((state) => state.order);
+    const { token } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
 
     const handleSubmit = async (e) => {
@@ -57,8 +58,8 @@ const AutoComplete = () => {
         getAddresses();
         dispatch(getInfosThunk());
     }, [dispatch, getAddresses]);
-
-    if (cart.length === 0) return <Navigate to={"/"}/>
+    if (!token) return <Navigate to={"/login"}/>;
+    else if (cart.length === 0) return <Navigate to={"/"}/>;
     const amount = cart.map((v) => (v.price*100) * v.qt).reduce((a, b) => a + b);
     if (shippingInfos) return <Navigate to={"/order"}/>
     else if (!infos) return (

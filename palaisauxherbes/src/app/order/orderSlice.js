@@ -76,8 +76,11 @@ const orderSlice = createSlice({
             else if (action.payload._id) { 
                 state.redirect = true;
             };
+            state.loading = false;
         }).addCase(postOrderThunk.pending, (state) => {
             state.loading = true;
+        }).addCase(postOrderThunk.rejected, (state) => {
+            state.loading = false;
         });
 
         builder.addCase(getConfigThunk.fulfilled, (state, action) => {
@@ -86,6 +89,8 @@ const orderSlice = createSlice({
             state.loading = false;
         }).addCase(getConfigThunk.pending, (state) => {
             state.loading = true;
+        }).addCase(getConfigThunk.rejected, (state) => {
+            state.loading = false;
         });
 
         builder.addCase(paymentIntentThunk.fulfilled, (state, action) => {
@@ -98,6 +103,8 @@ const orderSlice = createSlice({
             state.loading = false;
         }).addCase(paymentIntentThunk.pending, (state) => {
             state.loading = true;
+        }).addCase(paymentIntentThunk.rejected, (state) => {
+            state.loading = false;
         });
 
         builder.addCase(confirmOrderThunk.fulfilled, (state, action) => {
@@ -105,6 +112,8 @@ const orderSlice = createSlice({
             state.loading = false;
         }).addCase(confirmOrderThunk.pending, (state) => {
             state.loading = true;
+        }).addCase(confirmOrderThunk.rejected, (state) => {
+            state.loading = false;
         });
     }
 });

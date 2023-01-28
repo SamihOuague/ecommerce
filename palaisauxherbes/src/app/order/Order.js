@@ -33,7 +33,7 @@ const CheckoutForm = () => {
                 const result = await stripe.confirmPayment({
                     elements,
                     confirmParams: {
-                        return_url: `https://localhost:3000/success/order/${payload._id}`,
+                        return_url: `${process.env.REACT_APP_LOCAL_URL}/success/order/${payload._id}`,
                     },
                 });
                 if (result.error) {
@@ -75,7 +75,7 @@ const Order = () => {
     useEffect(() => {
         intentToPay(c);
     }, [intentToPay, c]);
-
+    console.log(token);
     if (!token) return <Navigate to={"/login"}/>
     else if (!shippingInfos) return <Navigate to={"/checkout"}/>
     else if (!infos) return (

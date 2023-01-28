@@ -76,6 +76,7 @@ const userSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(getInfosThunk.fulfilled, (state, action) => {
             if (action.payload && action.payload._id) state.infos = action.payload;
+            else if (!action.payload.logged) localStorage.removeItem("token");
         });
 
         builder.addCase(updateInfosThunk.fulfilled, (state, action) => {

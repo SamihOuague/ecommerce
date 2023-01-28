@@ -110,6 +110,7 @@ const authSlice = createSlice({
             state.loading = true;
         }).addCase(loginThunk.rejected, (state) => {
             state.msg = "Error 500 -";
+            state.loading = false;
         });
 
         builder.addCase(pingThunk.fulfilled, (state, action) => {
@@ -117,6 +118,9 @@ const authSlice = createSlice({
                 localStorage.removeItem("token");
                 state.token = null;
             }
+        }).addCase(pingThunk.rejected, (state) => {
+            state.token = null;
+            localStorage.removeItem("token");
         });
 
         builder.addCase(forgotPwdThunk.fulfilled, (state, action) => {
