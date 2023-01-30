@@ -1,0 +1,25 @@
+.main {
+    position: absolute;
+    margin: 0;
+    min-width: 100%;
+    min-height: 100vh;
+}
+@import "./pages/_header";
+@import "./pages/_shop";
+@import "./pages/_footer";
+@import "./pages/_cart";
+@import "./pages/_product";
+@import "./pages/_checkout";
+@import "./pages/_order";
+@import "./pages/_contact";
+@import "./pages/_auth";
+@import "./pages//_cgu";
+@import "./pages/_user";
+@import "./pages/_reset";
+@import "./pages/_success";
+@import "./pages/_verify";
+@import "./pages/_admin";
+@import "./pages/_autocomplete";
+@import "./components/_button";
+@import "./components/_spinner";
+@import "./components/_popup";

@@ -1,0 +1,12 @@
+.spinner-container {
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    font-size: 64px;
+    color: #1a3b2a;
+    i {
+        animation: spinner 4s linear infinite;
+    }
+}
