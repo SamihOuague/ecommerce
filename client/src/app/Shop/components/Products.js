@@ -1,9 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
-export const Products = ({ data, addToCart }) => {
+export const Products = ({ data, addToCart, name, category }) => {
     const { prods, rates } = data;
-
+    const [ URLSearchParams ] = useSearchParams();
+    const page = Number(URLSearchParams.get("page")) || 1;
     return (
         <div className="shop__overview">
             <div className="shop__overview__container">
@@ -28,28 +29,28 @@ export const Products = ({ data, addToCart }) => {
                     </div>
                 ))}
             </div>
-            <Pagination page={1} />
+            <Pagination page={page} nbProd={prods.length} name={name} category={category} />
         </div>
     );
 }
 
-const Pagination = ({ page }) => {
+const Pagination = ({ page, nbProd, name, category }) => {
     return (
         <div className="shop__overview__pagination">
             {(Number(page) <= 1) ?
                 <div className="disabled">
                     <i className="fas fa-chevron-left"></i>
                 </div> :
-                <Link to={`/?page=${Number(page) - 1}`} onClick={() => this.forceUpdate()} className="button">
+                <Link to={`${(name && category) ? `/category/${category}/${name}` : ''}/?page=${Number(page) - 1}`} className="button">
                     <i className="fas fa-chevron-left"></i>
                 </Link>
             }
-            <div className="button">1</div>
-            {(page < 6) ?
+            <div className="button">{page}</div>
+            {(nbProd !== 6) ?
                 <div className="disabled">
                     <i className="fas fa-chevron-right"></i>
                 </div> :
-                <Link to={`/?page=${Number(page) + 1}`} onClick={() => this.forceUpdate()} className="button">
+                <Link to={`${(name && category) ? `/category/${category}/${name}` : ''}/?page=${Number(page) + 1}`} className="button">
                     <i className="fas fa-chevron-right"></i>
                 </Link>
             }

@@ -8,6 +8,7 @@ import CGU from "./app/CGU/CGU";
 import Auth from "./app/Auth/Auth";
 import User from "./app/User/User";
 import Order from "./app/Order/Order";
+import Admin from "./app/Admin/Admin";
 import * as smoothscroll from "smoothscroll-polyfill";
 import './App.css';
 
@@ -68,6 +69,7 @@ function App() {
                 <Route path="/user" element={<User token={token} setToken={setToken} />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/CGU" element={<CGU />} />
+                <Route path="/admin" element={<Admin/>} />
             </Routes>
             <Cart cart={cart} show={show} setShow={setShow} addToCart={addToCart} />
             <footer className="footer">

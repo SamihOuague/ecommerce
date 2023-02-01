@@ -69,11 +69,24 @@ module.exports = {
                 out: await ProductModel.find({ available: false }).countDocuments(),
             };
             if (req.query.page && Number(req.query.page) && Number(req.query.page) > 0) page = (Number(req.query.page) - 1) * 6;
+            let f = {
+                available: req.query.available,
+                priceMin: req.query.pricemin,
+                priceMax: req.query.pricemax,
+                sortby: req.query.sortby
+            };
             const filter = {
                 categoryTag: {
                     $regex: new RegExp(`^${categoryTag}$`, "i")
-                }
+                },
             };
+            if (f.available == "out") filter.available = false;
+            else if (f.available == "in") filter.available = true;
+            if (f.priceMin && Number(f.priceMin)) filter.price = { "$gte": Number(f.priceMin) };
+            if (f.priceMax && Number(f.priceMax)) {
+                if (filter.price) filter.price = { ...filter.price, "$lte": Number(f.priceMax) };
+                else filter.price = { "$lte": Number(f.priceMax) };
+            }
             const prods = await ProductModel.find(filter).skip(page).limit(6);
             let reviews = await ReviewsModel.find({ product_id: { "$in": prods.map((v) => v._id) } });
             let highestPrice = await ProductModel.find(filter, { price: 1 }).sort({ price: -1 }).limit(1);

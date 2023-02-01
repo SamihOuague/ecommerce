@@ -2,18 +2,20 @@ import React, { useEffect, useState } from "react";
 import { Filter } from "./components/Filter";
 import { Products } from "./components/Products";
 import { Resources, Spinner } from "../Resources/Resources";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 
 function Shop({ addToCart }) {
     const { name, category } = useParams();
-    let initialUri = "https://orgde0n2gg.execute-api.eu-west-3.amazonaws.com/api/product/?page=1";
-    if (name && category) initialUri = `https://orgde0n2gg.execute-api.eu-west-3.amazonaws.com/api/product/category/${name}?page=1`;
+    const [ URLSearchParams ] = useSearchParams();
+    const page = URLSearchParams.get("page");
+    let initialUri = `https://orgde0n2gg.execute-api.eu-west-3.amazonaws.com/api/product/?page=${page}`;
+    if (name && category) initialUri = `https://orgde0n2gg.execute-api.eu-west-3.amazonaws.com/api/product/category/${name}?page=${page}`;
     const [ pathUri, setPathUri ] = useState(initialUri);
 
     useEffect(() => {
-        if (name) setPathUri(`https://orgde0n2gg.execute-api.eu-west-3.amazonaws.com/api/product/category/${name}?page=1`);
-        else setPathUri(initialUri);
-    }, [name, initialUri]);
+        if (name) setPathUri(`https://orgde0n2gg.execute-api.eu-west-3.amazonaws.com/api/product/category/${name}?page=${page}`);
+        else setPathUri(pathUri);
+    }, [name, pathUri, page]);
 
     return (
         <Resources path={pathUri} render={(data) => {
@@ -29,7 +31,7 @@ function Shop({ addToCart }) {
             return (
                 <div className="shop">
                     <Filter data={{cat, nb_prod, highestPrice}} setPathUri={setPathUri} pathUri={pathUri}/>
-                    <Products data={{prods, rates}} addToCart={addToCart}/>
+                    <Products data={{prods, rates}} addToCart={addToCart} name={name} category={category}/>
                 </div>
             );
         }} />

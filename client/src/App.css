@@ -366,6 +366,11 @@
 .shop__overview__container__card__info--tag, .shop__overview__container__card__info--title {
   margin: 8px 0;
 }
+.shop__overview__container__card__info--title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 @keyframes showmobilecat {
   from {

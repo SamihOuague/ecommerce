@@ -312,6 +312,12 @@
                     &--tag, &--title {
                         margin: 8px 0;
                     }
+
+                    &--title {
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
                 }
             }
         }

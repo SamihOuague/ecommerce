@@ -9,6 +9,11 @@ beforeEach(async () => {
 });
 
 describe("GET /category/:categoryTag", () => {
+    it("Should respond with filtred docs", async () => {
+        let response = await request(app).get("/category/green-tea");
+        console.log(response.body);
+    });
+
     it("Should respond with 200 status code", async () => {
         let response = await request(app).get("/category/green-tea");
         expect(response.statusCode).toBe(200);
