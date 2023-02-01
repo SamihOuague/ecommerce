@@ -11,7 +11,7 @@ function User({ token, setToken }) {
     }
 
     return (
-        <Resources path="https://orgde0n2gg.execute-api.eu-west-3.amazonaws.com/api/auth/get-user" render={(data) => {
+        <Resources path={`${process.env.REACT_APP_API_URL}/auth/get-user`} render={(data) => {
             if (data.loading) return <Spinner/>;
             else if (!data.payload || data.payload.logged === false) logOut();
             if (editMode) return <EditUser infosUser={data.payload} setEdit={setEdit} logOut={logOut}/>

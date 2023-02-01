@@ -6,9 +6,9 @@ services:
     ports:
       - "27017:27017"
   client:
-    build: ./palaisauxherbes
+    build: ./client
     ports:
-      - "3000:3000"
+      - "443:443"
   auth:
     build: ./NodeAuthService
     ports:

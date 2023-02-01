@@ -13,7 +13,7 @@ function Register({ setToken }) {
             lastname: e.target.lastname.value,
         }
         setLoading(true);
-        fetch("https://orgde0n2gg.execute-api.eu-west-3.amazonaws.com/api/auth/register", {
+        fetch(`${process.env.REACT_APP_API_URL}/auth/register`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

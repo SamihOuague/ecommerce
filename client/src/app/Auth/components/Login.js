@@ -13,7 +13,7 @@ function Login({ setToken }) {
         }
         if (!data.email || !data.password) return;
         setLoading(true);
-        fetch("https://orgde0n2gg.execute-api.eu-west-3.amazonaws.com/api/auth/login", {
+        fetch(`${process.env.REACT_APP_API_URL}/auth/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

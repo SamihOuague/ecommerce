@@ -40,7 +40,7 @@ function UserInfos({ infos, setEdit, logOut }) {
             <div className="user__container">
                 <div className="user__container__orders">
                     <h2>Vos Commandes</h2>
-                    <Resources path="https://orgde0n2gg.execute-api.eu-west-3.amazonaws.com/api/order/user-orders" render={(data) => {
+                    <Resources path={`${process.env.REACT_APP_API_URL}/order/user-orders`} render={(data) => {
                         if (data.loading) return <Spinner />
                         else if (data.payload.logged === false || !data.payload) {
                             logOut();
@@ -102,7 +102,7 @@ const PopUpConfirm = () => {
 
 const PopUpDelete = ({ setShowDelete, logOut }) => {
     const handleDeleteProfil = () => {
-        fetch("https://orgde0n2gg.execute-api.eu-west-3.amazonaws.com/api/auth/delete-user", {
+        fetch(`${process.env.REACT_APP_API_URL}/auth/delete-user`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",

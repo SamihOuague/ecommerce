@@ -11,7 +11,7 @@ const CategoryComponent = ({ categoryList }) => {
     const handleSubCat = (e, url) => {
         let v = e.target.subcategory.value;
         if (!v || !url) return;
-        fetch(`https://orgde0n2gg.execute-api.eu-west-3.amazonaws.com/api/product/category/${url.replaceAll(' ', '-')}`, {
+        fetch(`${process.env.REACT_APP_API_URL}/product/category/${url.replaceAll(' ', '-')}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -36,7 +36,7 @@ const CategoryComponent = ({ categoryList }) => {
     const handleCat = (e) => {
         let v = e.target.category.value;
         if (v !== '') {
-            fetch("https://orgde0n2gg.execute-api.eu-west-3.amazonaws.com/api/product/category", {
+            fetch(`${process.env.REACT_APP_API_URL}/product/category`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -54,7 +54,7 @@ const CategoryComponent = ({ categoryList }) => {
 
     const handleDeleteCat = (name) => {
         if (!name) return;
-        fetch("https://orgde0n2gg.execute-api.eu-west-3.amazonaws.com/api/product/category", {
+        fetch(`${process.env.REACT_APP_API_URL}/product/category`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -69,7 +69,7 @@ const CategoryComponent = ({ categoryList }) => {
 
     const handleDeleteSubCat = (name, url) => {
         if (!name) return;
-        fetch(`https://orgde0n2gg.execute-api.eu-west-3.amazonaws.com/api/product/category/${url.replaceAll(' ', '-')}`, {
+        fetch(`${process.env.REACT_APP_API_URL}/product/category/${url.replaceAll(' ', '-')}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -133,7 +133,7 @@ function ProductComponent({ productList, categoryList }) {
                 description: (editorState) ? draftToHtml(convertToRaw(editorState.getCurrentContent())) : "",
                 aroma: aroma.value,
             };
-            fetch("https://orgde0n2gg.execute-api.eu-west-3.amazonaws.com/api/img/upload", {
+            fetch(`${process.env.REACT_APP_API_URL}/img/upload`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -144,7 +144,7 @@ function ProductComponent({ productList, categoryList }) {
                 let imgRes = await response.json();
                 if (!imgRes || !imgRes.message) return;
                 data.img = imgRes.message;
-                await fetch("https://orgde0n2gg.execute-api.eu-west-3.amazonaws.com/api/product/", {
+                await fetch(`${process.env.REACT_APP_API_URL}/product/`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -168,7 +168,7 @@ function ProductComponent({ productList, categoryList }) {
     }
 
     const handleDeleteProduct = (name) => {
-        fetch("https://orgde0n2gg.execute-api.eu-west-3.amazonaws.com/api/product/", {
+        fetch(`${process.env.REACT_APP_API_URL}/product/`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",

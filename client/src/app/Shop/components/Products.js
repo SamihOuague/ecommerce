@@ -11,7 +11,7 @@ export const Products = ({ data, addToCart, name, category }) => {
                 {prods.map((value, key) => (
                     <div className="shop__overview__container__card" key={key}>
                         <Link to={`/product/${value.categoryTag.replaceAll(" ", "-").toLowerCase()}/${value.title.replaceAll(" ", "-").toLowerCase()}`} className="shop__overview__container__card__info">
-                            <img className="shop__overview__container__card__info--pic" src={`https://orgde0n2gg.execute-api.eu-west-3.amazonaws.com/api/img/images/${value.img}`} alt="Product pic" />
+                            <img className="shop__overview__container__card__info--pic" src={`${process.env.REACT_APP_API_URL}/img/images/${value.img}`} alt="Product pic" />
                             <div className="container_sec">
                                 <p className="shop__overview__container__card__info--tag">{value.categoryTag}</p>
                                 <h3 className="shop__overview__container__card__info--title">{value.title}</h3>

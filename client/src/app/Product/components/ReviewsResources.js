@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Resources, Spinner } from "../../Resources/Resources";
 
 export const ReviewsResource = ({ id }) => {
-    return <Resources path={`https://orgde0n2gg.execute-api.eu-west-3.amazonaws.com/api/reviews/${id}`} render={(data) => {
+    return <Resources path={`${process.env.REACT_APP_API_URL}/reviews/${id}`} render={(data) => {
         if (data.loading) return <Spinner />
         else if (!data.payload || data.errorCode) {
             return (
@@ -53,7 +53,7 @@ const ReviewsForm = ({id, setReviews, reviews}) => {
         if (!loading) {
             setLoading(true);
             if (e.target.comment.value && id && voteRate) {
-                let response = await (await fetch(`https://orgde0n2gg.execute-api.eu-west-3.amazonaws.com/api/reviews/`, {
+                let response = await (await fetch(`${process.env.REACT_APP_API_URL}/reviews/`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",

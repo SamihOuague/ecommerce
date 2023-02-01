@@ -11,7 +11,7 @@ const CheckoutForm = ({ infos }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         setLoading(true);
-        fetch("https://orgde0n2gg.execute-api.eu-west-3.amazonaws.com/api/order/", {
+        fetch(`${process.env.REACT_APP_API_URL}/order/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -24,7 +24,7 @@ const CheckoutForm = ({ infos }) => {
                 const result = await stripe.confirmPayment({
                     elements,
                     confirmParams: {
-                        return_url: `https://localhost:3000/order/success/${r._id}`,
+                        return_url: `${process.env.REACT_APP_LOCAL_URL}/order/success/${r._id}`,
                     }
                 });
                 if (result.error) console.log(result.error.message);
@@ -45,7 +45,7 @@ const StripeResources = ({ infos, pubKey }) => {
     let stripePromise;
     if (pubKey) stripePromise = loadStripe(pubKey);
     return (
-        <Resources path="https://orgde0n2gg.execute-api.eu-west-3.amazonaws.com/api/order/create-payment-intent" render={(data) => {
+        <Resources path="${process.env.REACT_APP_API_URL}/order/create-payment-intent" render={(data) => {
             if (data.loading) return <Spinner />
             else if (!data.payload || !data.payload.amount) return <Navigate to="/" />
             const { amount, cart, clientSecret } = data.payload;

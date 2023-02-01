@@ -18,7 +18,7 @@ function EditUser({ infosUser, setEdit, logOut }) {
             d = data[k[i]]
             if (d) nd.push(d);
         }
-        fetch("https://orgde0n2gg.execute-api.eu-west-3.amazonaws.com/api/auth/update-user", {
+        fetch(`${process.env.REACT_APP_API_URL}/auth/update-user`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",

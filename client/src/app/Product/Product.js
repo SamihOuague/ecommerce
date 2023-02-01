@@ -7,7 +7,7 @@ function Product({ addToCart }) {
     const { category, name } = useParams();
     
     return (
-        <Resources path={`https://orgde0n2gg.execute-api.eu-west-3.amazonaws.com/api/product/${category}/${name}`} render={(data) => {
+        <Resources path={`${process.env.REACT_APP_API_URL}/product/${category}/${name}`} render={(data) => {
             if (data.loading) return <Spinner />;
             else if (data.errorCode || !data.payload) {
                 return (

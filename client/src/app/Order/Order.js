@@ -7,7 +7,7 @@ import Success from "./components/Success";
 
 const CheckoutResources = ({setInfos}) => {
     return (
-        <Resources path="https://orgde0n2gg.execute-api.eu-west-3.amazonaws.com/api/auth/get-user" render={(data) => {
+        <Resources path={`${process.env.REACT_APP_API_URL}/auth/get-user`} render={(data) => {
             if (data.loading) return <Spinner/>;
             return <AutoComplete infos={data.payload} setInfos={setInfos}/>
         }} options={{
@@ -21,7 +21,7 @@ const CheckoutResources = ({setInfos}) => {
 }
 
 const PaymentResources = ({ infos }) => {
-    return <Resources path="https://orgde0n2gg.execute-api.eu-west-3.amazonaws.com/api/order/config" render={(data) => {
+    return <Resources path={`${process.env.REACT_APP_API_URL}/order/config`} render={(data) => {
         if (data.loading) return <Spinner />;
         return <OrderContainer infos={infos} pubKey={data.payload}/>;
     }} options={{
@@ -42,7 +42,7 @@ const ConfirmationResources = () => {
         status: URLSearchParams.get("redirect_status"),
         order_id: id,
     };
-    return <Resources path={`https://orgde0n2gg.execute-api.eu-west-3.amazonaws.com/api/order/confirm-order/${id}`} render={(data) => {
+    return <Resources path={`${process.env.REACT_APP_API_URL}/order/confirm-order/${id}`} render={(data) => {
         if (data.loading) return <Spinner />;
         return <Success orderStatus={d.status}/>
     }} options={{

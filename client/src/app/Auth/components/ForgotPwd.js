@@ -7,7 +7,7 @@ function ForgotPwd() {
     const handleSubmit = (e) => {
         e.preventDefault();
         setLoading(true);
-        fetch("https://orgde0n2gg.execute-api.eu-west-3.amazonaws.com/api/auth/forgot-password", {
+        fetch(`${process.env.REACT_APP_API_URL}/auth/forgot-password`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
