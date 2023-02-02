@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-const Categories = ({ cat }) => {
+const Categories = ({ cat, prodFilter, handleGetFilterUri }) => {
     const [categories, setCategories] = useState(cat);
 
     const handleShowCat = (id) => {
@@ -25,7 +25,7 @@ const Categories = ({ cat }) => {
                         <ul className={`shop__filter__section__body__category__elt__list ${(value.show) ? 'showcate' : 'hidecate'}`}>
                             {value.subcategory.map((v, k) => (
                                 <li className="shop__filter__section__body__category__elt__list--item" key={k}>
-                                    <Link to={`/category/${value.category.replaceAll(" ", "-").toLowerCase()}/${v.name.replaceAll(" ", "-").toLowerCase()}`}>
+                                    <Link to={`/category/${value.category.replaceAll(" ", "-").toLowerCase()}/${v.name.replaceAll(" ", "-").toLowerCase()}${handleGetFilterUri(prodFilter)}`}>
                                         {v.name}
                                     </Link>
                                 </li>
@@ -38,10 +38,12 @@ const Categories = ({ cat }) => {
     );
 }
 
-const Availability = ({ nb_prod, setProdFilter, prodFilter }) => {
-    const [availableCheckBox, setAvailableCheckBox] = useState({ in: false, out: false });
+const Availability = ({ nb_prod, prodFilter, handleGetFilterUri }) => {
+    const [availableCheckBox, setAvailableCheckBox] = useState({ in: prodFilter.available === "in", out: prodFilter.available === "out" });
     const availableCount = nb_prod;
-
+    useEffect(() => {
+        setAvailableCheckBox({in: prodFilter.available === "in", out: prodFilter.available === "out"});
+    }, [setAvailableCheckBox, prodFilter]);
     return (
         <div className="shop__filter__section__body">
             <div className="shop__filter__section__body__availability" onClick={() => {
@@ -68,96 +70,66 @@ const Availability = ({ nb_prod, setProdFilter, prodFilter }) => {
             </div>
             <div className="shop__filter__section__body__btngroup">
                 <div className="button" onClick={() => setAvailableCheckBox({ in: false, out: false })}>EFFACER</div>
-                <div className="button"
-                    onClick={() => {
-                        if (availableCheckBox.in || availableCheckBox.out) {
-                            setProdFilter({
-                                ...prodFilter,
-                                available: (availableCheckBox.in) ? "in" : "out",
-                            });
-                        } else setProdFilter({ ...prodFilter, available: null });
-
-                    }}>APPLIQUER</div>
+                <Link className="button" to={handleGetFilterUri({
+                    ...prodFilter,
+                    available: (availableCheckBox.in || availableCheckBox.out) ? (availableCheckBox.in) ? "in" : "out" : null,
+                })}>APPLIQUER</Link>
             </div>
         </div>
     );
 }
 
-const PriceFilter = ({ highestPrice, setProdFilter, prodFilter }) => {
-    const [priceInterval, setPriceInterval] = useState({ min: 0, max: 0 });
+const PriceFilter = ({ highestPrice, handleGetFilterUri, prodFilter }) => {
+    const [priceInterval, setPriceInterval] = useState({ pricemin: prodFilter.pricemax, pricemax: prodFilter.pricemin });
+    useEffect(() => {
+        setPriceInterval({pricemin: prodFilter.pricemin, pricemax: prodFilter.pricemax});
+    }, [setPriceInterval, prodFilter]);
     return (
         <div className="shop__filter__section__body">
             <p className="shop__filter__section__body--highest">Prix le plus elever <b>{highestPrice.price}$</b></p>
             <div className="shop__filter__section__body__input">
                 <p className="shop__filter__section__body__input--label">Prix min <b>$</b></p>
                 <input className="shop__filter__section__body__input--field"
-                    value={(priceInterval.min) ? priceInterval.min : ""}
+                    value={(priceInterval.pricemin) ? priceInterval.pricemin : ""}
                     name="from" min={0}
                     type="number"
-                    onChange={(e) => setPriceInterval({ ...priceInterval, min: Number(e.target.value) })}
+                    onChange={(e) => setPriceInterval({ ...priceInterval, pricemin: Number(e.target.value) })}
                 />
             </div>
             <div className="shop__filter__section__body__input">
                 <p className="shop__filter__section__body__input--label">Prix max <b>$</b></p>
                 <input className="shop__filter__section__body__input--field"
-                    value={(priceInterval.max) ? priceInterval.max : ""}
+                    value={(priceInterval.pricemax) ? priceInterval.pricemax : ""}
                     name="to" min={0}
                     max={highestPrice.price}
                     type="number"
-                    onChange={(e) => setPriceInterval({ ...priceInterval, max: Number(e.target.value) })}
+                    onChange={(e) => setPriceInterval({ ...priceInterval, pricemax: Number(e.target.value) })}
                 />
             </div>
             <div className="shop__filter__section__body__btngroup">
-                <div className="button" onClick={() => setPriceInterval({ min: 0, max: 0 })}>EFFACER</div>
-                <div className="button" onClick={() => {
-                    if (priceInterval.min || priceInterval.max) {
-                        setProdFilter({
-                            ...prodFilter,
-                            pricemin: (priceInterval.min) ? priceInterval.min : null,
-                            pricemax: (priceInterval.max) ? priceInterval.max : null,
-                        });
-                    } else setProdFilter({ ...prodFilter, pricemin: null, pricemax: null });
-                }}>APPLIQUER</div>
+                <div className="button" onClick={() => setPriceInterval({ pricemax: 0, pricemin: 0 })}>EFFACER</div>
+                <Link className="button" to={handleGetFilterUri({ ...prodFilter, ...priceInterval })}>APPLIQUER</Link>
             </div>
         </div>
     );
 }
 
-export const Filter = ({ data, setPathUri, pathUri }) => {
+export const Filter = ({ data, handleGetFilterUri, prodFilter }) => {
     const { cat, nb_prod, highestPrice } = data;
-    const [prodFilter, setProdFilter] = useState({ page: 1 });
-
-    const handleSetFilter = useCallback((f) => {
-        let filterUriArray = [];
-        let filterUri = "";
-        for (let i = 0, filterKeys = Object.keys(f); i < filterKeys.length; i++)
-            if (f[filterKeys[i]]) filterUriArray.push(`${filterKeys[i]}=${f[filterKeys[i]]}`);
-        for (let i = 0; i < filterUriArray.length; i++) {
-            if (i === 0) filterUri += "?"
-            filterUri += filterUriArray[i];
-            if (i !== filterUriArray.length - 1) filterUri += "&";
-        }
-        setPathUri(`${pathUri.split("?")[0]}${filterUri}`);
-
-    }, [setPathUri, pathUri]);
-
-    useEffect(() => {
-        handleSetFilter(prodFilter);
-    }, [prodFilter, handleSetFilter]);
 
     return (
         <div className="shop__filter">
             <div className="shop__filter__section">
                 <h5 className="shop__filter__section--title">Categories</h5>
-                <Categories cat={cat} setPathUri={setPathUri} pathUri={pathUri} />
+                <Categories cat={cat} prodFilter={prodFilter} handleGetFilterUri={handleGetFilterUri} />
             </div>
             <div className="shop__filter__section">
                 <h5 className="shop__filter__section--title">Disponibilite</h5>
-                <Availability setProdFilter={setProdFilter} prodFilter={prodFilter} nb_prod={nb_prod} />
+                <Availability prodFilter={prodFilter} nb_prod={nb_prod} handleGetFilterUri={handleGetFilterUri} />
             </div>
             <div className="shop__filter__section">
                 <h5 className="shop__filter__section--title">Price</h5>
-                <PriceFilter highestPrice={highestPrice} setProdFilter={setProdFilter} prodFilter={prodFilter} />
+                <PriceFilter highestPrice={highestPrice} handleGetFilterUri={handleGetFilterUri} prodFilter={prodFilter} />
             </div>
         </div>
     );

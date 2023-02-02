@@ -1,24 +1,35 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Filter } from "./components/Filter";
 import { Products } from "./components/Products";
 import { Resources, Spinner } from "../Resources/Resources";
 import { useParams, useSearchParams } from "react-router-dom";
 
 function Shop({ addToCart }) {
-    const { name, category } = useParams();
-    const [ URLSearchParams ] = useSearchParams();
-    const page = URLSearchParams.get("page");
-    let initialUri = `${process.env.REACT_APP_API_URL}/product/?page=${page}`;
-    if (name && category) initialUri = `${process.env.REACT_APP_API_URL}/product/category/${name}?page=${page}`;
-    const [ pathUri, setPathUri ] = useState(initialUri);
+    const { category } = useParams();
+    const [URLSearchParams] = useSearchParams();
+    const prodFilter = { 
+        page: URLSearchParams.get("page"), 
+        pricemin: URLSearchParams.get("pricemin"), 
+        pricemax: URLSearchParams.get("pricemax"),
+        available: URLSearchParams.get("available"),
+    };
 
-    useEffect(() => {
-        if (name) setPathUri(`${process.env.REACT_APP_API_URL}/product/category/${name}?page=${page}`);
-        else setPathUri(pathUri);
-    }, [name, pathUri, page]);
-
+    const handleFilterUri = (f) => {
+        let filterUriArray = [];
+        let filterUri = "";
+        for (let i = 0, filterKeys = Object.keys(f); i < filterKeys.length; i++)
+            if (f[filterKeys[i]]) filterUriArray.push(`${filterKeys[i]}=${f[filterKeys[i]]}`);
+        for (let i = 0; i < filterUriArray.length; i++) {
+            if (i === 0) filterUri += "?"
+            filterUri += filterUriArray[i];
+            if (i !== filterUriArray.length - 1) filterUri += "&";
+        }
+        return filterUri;
+    }
+    
+    const initialUri = `${process.env.REACT_APP_API_URL}/product${window.location.pathname.replace(`${category}/`, '')}${handleFilterUri(prodFilter)}`;
     return (
-        <Resources path={pathUri} render={(data) => {
+        <Resources path={initialUri} render={(data) => {
             if (data.loading) return <Spinner />;
             else if (data.errorCode || !data.payload) {
                 return (
@@ -30,8 +41,8 @@ function Shop({ addToCart }) {
             const { cat, prods, rates, nb_prod, highestPrice } = data.payload;
             return (
                 <div className="shop">
-                    <Filter data={{cat, nb_prod, highestPrice}} setPathUri={setPathUri} pathUri={pathUri}/>
-                    <Products data={{prods, rates}} addToCart={addToCart} name={name} category={category}/>
+                    <Filter data={{ cat, nb_prod, highestPrice }} prodFilter={prodFilter} handleGetFilterUri={handleFilterUri} />
+                    <Products data={{ prods, rates }} addToCart={addToCart} />
                 </div>
             );
         }} />

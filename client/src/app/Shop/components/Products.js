@@ -1,10 +1,11 @@
 import React from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams, useParams } from "react-router-dom";
 
-export const Products = ({ data, addToCart, name, category }) => {
+export const Products = ({ data, addToCart }) => {
     const { prods, rates } = data;
     const [ URLSearchParams ] = useSearchParams();
     const page = Number(URLSearchParams.get("page")) || 1;
+    const { name, category } = useParams();
     return (
         <div className="shop__overview">
             <div className="shop__overview__container">

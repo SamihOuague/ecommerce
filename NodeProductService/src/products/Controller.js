@@ -40,10 +40,8 @@ module.exports = {
             }
             const cat = await CategoriesModel.find({});
             let prods = sortBySwitch(f.sortby);
-            if (prods)
-                prods = await ProductModel.find(filter).sort(sortBySwitch(f.sortby)).skip(page).limit(6);
-            else
-                prods = await ProductModel.find(filter).skip(page).limit(6);
+            if (prods) prods = await ProductModel.find(filter).sort(sortBySwitch(f.sortby)).skip(page).limit(6);
+            else prods = await ProductModel.find(filter).skip(page).limit(6);
             let reviews = await ReviewsModel.find({ product_id: { "$in": prods.map((v) => v._id) } });
             let rates = {};
             let highestPrice = await ProductModel.find(filter, { price: 1 }).sort({ price: -1 }).limit(1);

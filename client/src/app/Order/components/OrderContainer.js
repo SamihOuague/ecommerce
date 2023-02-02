@@ -45,7 +45,7 @@ const StripeResources = ({ infos, pubKey }) => {
     let stripePromise;
     if (pubKey) stripePromise = loadStripe(pubKey);
     return (
-        <Resources path="${process.env.REACT_APP_API_URL}/order/create-payment-intent" render={(data) => {
+        <Resources path={`${process.env.REACT_APP_API_URL}/order/create-payment-intent`} render={(data) => {
             if (data.loading) return <Spinner />
             else if (!data.payload || !data.payload.amount) return <Navigate to="/" />
             const { amount, cart, clientSecret } = data.payload;
