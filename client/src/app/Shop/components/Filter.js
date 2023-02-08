@@ -13,6 +13,10 @@ const Categories = ({ cat, prodFilter, handleGetFilterUri }) => {
 
     return (
         <div className="shop__filter__section__body">
+            <Link to={"/"} className="shop__filter__section__body__category__elt__title">
+                <span>Tous Nos Produits</span>
+                <i className="fas fa-plus"></i>
+            </Link>
             <ul className="shop__filter__section__body__category">
                 {categories.map((value, key) => (
                     <li className="shop__filter__section__body__category__elt" key={key}>
@@ -42,7 +46,7 @@ const Availability = ({ nb_prod, prodFilter, handleGetFilterUri }) => {
     const [availableCheckBox, setAvailableCheckBox] = useState({ in: prodFilter.available === "in", out: prodFilter.available === "out" });
     const availableCount = nb_prod;
     useEffect(() => {
-        setAvailableCheckBox({in: prodFilter.available === "in", out: prodFilter.available === "out"});
+        setAvailableCheckBox({ in: prodFilter.available === "in", out: prodFilter.available === "out" });
     }, [setAvailableCheckBox, prodFilter]);
     return (
         <div className="shop__filter__section__body">
@@ -82,7 +86,7 @@ const Availability = ({ nb_prod, prodFilter, handleGetFilterUri }) => {
 const PriceFilter = ({ highestPrice, handleGetFilterUri, prodFilter }) => {
     const [priceInterval, setPriceInterval] = useState({ pricemin: prodFilter.pricemax, pricemax: prodFilter.pricemin });
     useEffect(() => {
-        setPriceInterval({pricemin: prodFilter.pricemin, pricemax: prodFilter.pricemax});
+        setPriceInterval({ pricemin: prodFilter.pricemin, pricemax: prodFilter.pricemax });
     }, [setPriceInterval, prodFilter]);
     return (
         <div className="shop__filter__section__body">

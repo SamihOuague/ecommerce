@@ -3,13 +3,17 @@
     border-radius: none;
     border: 1px solid #1a3b2a;
     color: #1a3b2a;
-    font-weight: 500;
     display: inline;
     padding: 8px 16px;
+    font-size: 14px;
+    margin: 16px 0;
     cursor: pointer;
     transition-property: color, background-color, font-weight;
     transition-duration: 500ms;
     text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     &:hover {
         background-color: #1a3b2a;
         color: #eee6cf;

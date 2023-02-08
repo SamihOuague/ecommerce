@@ -1,12 +1,19 @@
 import React, { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
+import { PKCEComponent, SubmitComponent } from "../../PKCE/PKCEComponents";
 import { Resources, Spinner } from "../../Resources/Resources";
 
-function UserInfos({ infos, setEdit, logOut }) {
+function UserInfos({ infos, setEdit }) {
     // eslint-disable-next-line
     const [loading] = useState(false);
     const [showDelete, setShowDelete] = useState(false);
-    if (!infos || !infos._id) return (<Navigate to={"/auth"} />);
+    const [redirect, setRedirect] = useState(false);
+    const logOut = () => {
+        localStorage.removeItem("token");
+        setRedirect(true);
+    };
+
+    if (!infos || !infos._id || redirect) return (<Navigate to={"/auth"} />);
     return (
         <div className="user">
             <div className="user__container">
@@ -32,7 +39,7 @@ function UserInfos({ infos, setEdit, logOut }) {
                     </div>
                     <div className="user__container__infos__btngroup">
                         <button className="button" onClick={() => logOut()}>Se Deconnecter</button>
-                        <button className="button" onClick={() => setEdit(true)}>Editer</button>
+                        <Link className="button" to="/user?edit_mode=on">Editer</Link>
                     </div>
                     <button className="button btn-danger" onClick={() => setShowDelete(true)}>Supprimer</button>
                 </div>
@@ -40,11 +47,11 @@ function UserInfos({ infos, setEdit, logOut }) {
             <div className="user__container">
                 <div className="user__container__orders">
                     <h2>Vos Commandes</h2>
-                    <Resources path={`${process.env.REACT_APP_API_URL}/order/user-orders`} render={(data) => {
+                    <Resources path={`${process.env.REACT_APP_API_URL}:3004/user-orders`} render={(data) => {
                         if (data.loading) return <Spinner />
                         else if (data.payload.logged === false || !data.payload) {
                             logOut();
-                            return <Navigate to="/auth"/>;
+                            return <Navigate to="/auth" />;
                         }
                         return (
                             <div>
@@ -70,14 +77,14 @@ function UserInfos({ infos, setEdit, logOut }) {
                             "Content-Type": "application/json",
                             "Authorization": `Barear ${localStorage.getItem("token")}`,
                         }
-                    }}/>
+                    }} />
                 </div>
             </div>
             {(false) &&
                 <PopUpConfirm />
             }
             {(showDelete) &&
-                <PopUpDelete setShowDelete={setShowDelete} logOut={logOut}/>
+                <PopUpDelete setShowDelete={setShowDelete} logOut={logOut} />
             }
         </div>
     );
@@ -100,29 +107,30 @@ const PopUpConfirm = () => {
     );
 }
 
-const PopUpDelete = ({ setShowDelete, logOut }) => {
-    const handleDeleteProfil = () => {
-        fetch(`${process.env.REACT_APP_API_URL}/auth/delete-user`, {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Barear ${localStorage.getItem("token")}`
-            }
-        }).then(async (res) => {
-            let r = await res.json();
-            if (r._id) logOut();
-        }).catch((e) => {
-            console.log(e);
+const PopUpDelete = ({ setShowDelete }) => {
+    const [dataForm, setDataForm] = useState();
+    const handleDeleteProfil = (e) => {
+        e.preventDefault();
+        const { nonce, token } = e.target
+        setDataForm({
+            nonce: nonce.value,
+            token: token.value,
         });
     }
     return (
         <div className="popup">
-            <div className="popup__container">
+            <form className="popup__container" onSubmit={(e) => handleDeleteProfil(e)}>
                 <h2 className="popup__container--title">Supprimer votre compte <span onClick={() => setShowDelete(false)}><i className="fa-regular fa-circle-xmark"></i></span></h2>
                 <p>Cette action est irreversible, voulez vous continuer ?</p>
-                <button onClick={() => handleDeleteProfil()} className="button">Supprimer le compte</button>
+                <PKCEComponent />
+                <SubmitComponent
+                    btnValue={"Supprimer le compte"}
+                    path={`${process.env.REACT_APP_API_URL}:3001/delete-user`}
+                    method="DELETE"
+                    dataForm={dataForm}
+                />
                 <button className="button btn-danger" onClick={() => setShowDelete(false)}>Annuler</button>
-            </div>
+            </form>
         </div>
     );
 }

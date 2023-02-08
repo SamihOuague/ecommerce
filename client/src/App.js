@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import Shop from "./app/Shop/Shop";
 import Product from "./app/Product/Product";
@@ -9,10 +9,8 @@ import Auth from "./app/Auth/Auth";
 import User from "./app/User/User";
 import Order from "./app/Order/Order";
 import Admin from "./app/Admin/Admin";
-import * as smoothscroll from "smoothscroll-polyfill";
 import './App.css';
 
-smoothscroll.polyfill();
 function App() {
     const [cart, setCart] = useState(JSON.parse(localStorage.getItem("cart") || "[]"));
     const [show, setShow] = useState(null);
@@ -64,9 +62,9 @@ function App() {
                 <Route index path="/" element={<Shop addToCart={addToCart} />} />
                 <Route path="/category/:category/:name" element={<Shop addToCart={addToCart} />} />
                 <Route path="/product/:category/:name" element={<Product addToCart={addToCart} />} />
-                <Route path="/auth/*" element={<Auth token={token} setToken={setToken} />} />
+                <Route path="/auth/*" element={<Auth token={token} />} />
                 <Route path="/order/*" element={<Order token={token} setToken={setToken} />} />
-                <Route path="/user" element={<User token={token} setToken={setToken} />} />
+                <Route path="/user" element={<User token={token} />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/CGU" element={<CGU />} />
                 <Route path="/admin" element={<Admin/>} />

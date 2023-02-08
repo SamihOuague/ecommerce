@@ -2,25 +2,26 @@ import React, { useState } from "react";
 import UserInfos from "./components/UserInfos";
 import EditUser from "./components/EditUser"
 import { Resources, Spinner } from "../Resources/Resources";
+import { Navigate, useSearchParams } from "react-router-dom";
 
-function User({ token, setToken }) {
-    const [ editMode, setEdit ] = useState(false);
-    const logOut = () => {
-        localStorage.removeItem("token");
-        setToken(null);
-    }
-
+function User() {
+    const token = localStorage.getItem("token");
+    const [ URLSearchParams ] = useSearchParams();
+    if (!token) return <Navigate to="/auth"/>
     return (
-        <Resources path={`${process.env.REACT_APP_API_URL}/auth/get-user`} render={(data) => {
+        <Resources path={`${process.env.REACT_APP_API_URL}:3001/get-user`} render={(data) => {
             if (data.loading) return <Spinner/>;
-            else if (!data.payload || data.payload.logged === false) logOut();
-            if (editMode) return <EditUser infosUser={data.payload} setEdit={setEdit} logOut={logOut}/>
-            return <UserInfos infos={data.payload} logOut={logOut} setEdit={setEdit}/>
+            else if (!data.payload || data.payload.success === false) {
+                localStorage.removeItem("token");
+                return <Navigate to="/auth"/>
+            }
+            if (URLSearchParams.get("edit_mode")) return <EditUser infosUser={data.payload}  />
+            return <UserInfos infos={data.payload} />
         }} options={{
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `barear ${token}`
+                "Authorization": `Barear ${token}`
             }
         }}/>
     );

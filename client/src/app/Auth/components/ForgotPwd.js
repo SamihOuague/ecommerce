@@ -1,28 +1,12 @@
 import React, { useState } from "react";
+import { SubmitComponent, PKCEComponent } from "../../PKCE/PKCEComponents";
 import { Link } from "react-router-dom";
 
 function ForgotPwd() {
-    const [ loading, setLoading ] = useState(false);
-    const [ msg, setMsg ] = useState("");
+    const [ dataForm, setDataForm ] = useState();
     const handleSubmit = (e) => {
         e.preventDefault();
-        setLoading(true);
-        fetch(`${process.env.REACT_APP_API_URL}/auth/forgot-password`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({email: e.target.email.value})
-        }).then(async (res) => {
-            let r = await res.json();
-            if (r) setMsg("Un email de recuperation viens d'etre envoyer, verifier vos spam !");
-            else setMsg("Email introuvable ou inexistant.");
-            setLoading(false);
-        }).catch((e) => {
-            console.log(e);
-            setMsg("Email introuvable ou inexistant.");
-            setLoading(false);
-        });
+        setDataForm({email: e.target.email.value});
     }
 
     return (
@@ -33,8 +17,8 @@ function ForgotPwd() {
                 <div>
                     <Link to="/auth">Se connecter</Link>
                 </div>
-                <p>{msg}</p>
-                <button className={`${(loading) ? 'btn-disabled' : 'button'}`} disabled={loading}>{(loading) ? 'Loading...' : 'Reinitialiser'}</button>
+                <PKCEComponent/>
+                <SubmitComponent dataForm={dataForm} path={"http://localhost:3001/forgot-password"} btnValue={"Envoyer"}/>
             </form>
         </div>
     )

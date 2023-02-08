@@ -1,42 +1,30 @@
 import React, { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
+import { PKCEComponent, SubmitComponent } from "../../PKCE/PKCEComponents";
 
-function EditUser({ infosUser, setEdit, logOut }) {
+function EditUser({ infosUser, setEdit }) {
     //eslint-disable-next-line
-    const [ infos, setInfos ] = useState(infosUser);
+    const [infos] = useState(infosUser);
+    const [dataForm, setDataForm] = useState();
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        const { firstname, lastname, phoneNumber, email, token, nonce } = e.target;
         let data = {
-            firstname: e.target.firstname.value,
-            lastname: e.target.lastname.value,
-            phoneNumber: e.target.phoneNumber.value,
-            email: e.target.email.value,
+            firstname: firstname.value,
+            lastname: lastname.value,
+            phoneNumber: phoneNumber.value,
+            email: email.value,
         };
         let nd = []
         for (let i = 0, k = Object.keys(data), d = null; i < k.length; i++) {
             d = data[k[i]]
             if (d) nd.push(d);
         }
-        fetch(`${process.env.REACT_APP_API_URL}/auth/update-user`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Barear ${localStorage.getItem("token")}`
-            },
-            body: JSON.stringify(data),
-        }).then(async (res) => {
-            let r = await res.json();
-            if (r && r._id) setInfos(r);
-            else if (r.logged === false) logOut();
-            setEdit(false);
-        }).catch((e) => {
-            console.log(e);
-            logOut();
-        });
+        setDataForm({ ...data, nonce: nonce.value, token: token.value });
     }
 
-    if (!infos || !infos._id) return <Navigate to="/"/>
+    if (!infos || !infos._id) return <Navigate to="/" />
     return (
         <div className="user">
             <div className="user__container">
@@ -71,9 +59,10 @@ function EditUser({ infosUser, setEdit, logOut }) {
                             </div>
                         </div>
                     </div>
+                    <PKCEComponent />
                     <div className="user__container__infos__btngroup">
-                        <button className="button" type="submit">Editer</button>
-                        <button className="button btn-danger" onClick={() => setEdit(false)}>Annuler</button>
+                        <SubmitComponent path={"http://localhost:3001/update-user"} method={"PUT"} dataForm={dataForm} btnValue={"Editer"} redirectTo={"/user"} />
+                        <Link to="/user" className="button btn-danger">Annuler</Link>
                     </div>
                 </form>
             </div>

@@ -1,52 +1,32 @@
 import React, { useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { PKCEComponent, SubmitComponent } from "../../PKCE/PKCEComponents";
+import { Link } from "react-router-dom";
 
-function Register({ setToken }) {
-    const [ loading, setLoading ] = useState(false);
-    const [ redirect, setRedirect ] = useState(false);
+function Register() {
+    const [ dataForm, setDataForm ] = useState(null);
     const handleSubmit = (e) => {
         e.preventDefault();
+        const { email, password, nonce, token } = e.target;
         let data = {
-            email: e.target.email.value,
-            password: e.target.password.value,
-            firstname: e.target.firstname.value,
-            lastname: e.target.lastname.value,
+            email: email.value,
+            password: password.value,
+            nonce: nonce.value,
+            token: token.value
         }
-        setLoading(true);
-        fetch(`${process.env.REACT_APP_API_URL}/auth/register`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        }).then(async (res) => {
-            let r = await res.json();
-            if (r.success) {
-                localStorage.setItem("token", r.token);
-                setToken(r.token);
-                setRedirect(true);
-            }
-            setLoading(false);
-
-        }).catch((e) => {
-            console.log(e);
-            setLoading(false);
-        });
+        setDataForm(data);
     }
-    if (redirect) return <Navigate to="/user"/>;
     return (
         <div className="auth__container">
             <h2 className="auth--title">S'inscrire</h2>
             <form className="auth__container__form" onSubmit={(e) => handleSubmit(e)}>
-                <input type="text" placeholder="Votre nom" name="lastname" required />
-                <input type="text" placeholder="Votre prenom" name="firstname" required />
                 <input type="email" placeholder="Votre email" name="email" required />
                 <input type="password" placeholder="Votre mot de passe" name="password" required />
                 <input type="password" placeholder="Confirmer votre mot de passe" name="c_password" required />
-                <div>
-                    <Link to="/auth">Se connecter</Link>
+                <div className="auth__container__form__linkgroup">
+                    <Link to="/auth">Se Connecter</Link>
                 </div>
-                <button className={`${(loading) ? 'btn-disabled' : 'button'}`} disabled={loading}>{(loading) ? 'Loading...' : 'S\'Inscrire'}</button>
+                <PKCEComponent/>
+                <SubmitComponent path={"http://localhost:3001/register"} dataForm={dataForm} btnValue={"S'Inscrire"} />
             </form>
         </div>
     );

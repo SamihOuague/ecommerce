@@ -8,6 +8,6 @@ WORKDIR /app
 
 RUN npm install
 
-CMD ["node", "server.js"]
+CMD ["npm", "start"]
 
 EXPOSE 3000
