@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import Shop from "./app/Shop/Shop";
 import Product from "./app/Product/Product";
@@ -8,7 +8,6 @@ import CGU from "./app/CGU/CGU";
 import Auth from "./app/Auth/Auth";
 import User from "./app/User/User";
 import Order from "./app/Order/Order";
-import Admin from "./app/Admin/Admin";
 import './App.css';
 
 function App() {
@@ -67,7 +66,6 @@ function App() {
                 <Route path="/user" element={<User token={token} />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/CGU" element={<CGU />} />
-                <Route path="/admin" element={<Admin/>} />
             </Routes>
             <Cart cart={cart} show={show} setShow={setShow} addToCart={addToCart} />
             <footer className="footer">

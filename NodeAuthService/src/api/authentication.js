@@ -11,6 +11,7 @@ module.exports = {
 			if (!user || !user._id) return res.status(404).send({ message: 'Username does not exist !' });
 			else if (!user.comparePwd(password)) return res.status(401).send({ message: 'Invalid password !' });
 			req.user_id = user._id;
+			req.role = user.role;
 			next();
 		} catch (e) {
 			return res.status(500).send({ success: false, message: e.code });
@@ -31,6 +32,7 @@ module.exports = {
 			user = await user.save();
 			if (!user || !user._id) return res.status(500).send(user);
 			req.user_id = user._id;
+			req.role = user.role;
 			next();
 		} catch (e) {
 			if (e && e.code == 11000) return res.status(401).send({ success: false, message: "Email already used." });

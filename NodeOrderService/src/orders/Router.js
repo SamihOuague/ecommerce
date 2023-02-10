@@ -9,7 +9,7 @@ const {
     deleteOrder,
     confirmOrder,
 } = require("./Controller");
-const { isAuth, isAdmin } = require("../utils/allowedUser");
+const { isAuth, isAdmin } = require("../utils/middleware");
 
 router.get("/", isAdmin, getOrders);
 router.get("/order/:order_id", isAuth, getOrder);

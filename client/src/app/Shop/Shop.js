@@ -6,12 +6,14 @@ import { useParams, useSearchParams } from "react-router-dom";
 
 function Shop({ addToCart }) {
     const { category } = useParams();
-    const [URLSearchParams] = useSearchParams();
+    const [ URLSearchParams ] = useSearchParams();
+
     const prodFilter = { 
         page: URLSearchParams.get("page"), 
         pricemin: URLSearchParams.get("pricemin"), 
         pricemax: URLSearchParams.get("pricemax"),
         available: URLSearchParams.get("available"),
+        sortby: URLSearchParams.get("sortby"),
     };
 
     const handleFilterUri = (f) => {
@@ -42,7 +44,7 @@ function Shop({ addToCart }) {
             return (
                 <div className="shop">
                     <Filter data={{ cat, nb_prod, highestPrice }} prodFilter={prodFilter} handleGetFilterUri={handleFilterUri} />
-                    <Products data={{ prods, rates }} addToCart={addToCart} />
+                    <Products data={{ prods, rates, cat }} addToCart={addToCart} handleGetFilterUri={handleFilterUri} prodFilter={prodFilter} />
                 </div>
             );
         }} />

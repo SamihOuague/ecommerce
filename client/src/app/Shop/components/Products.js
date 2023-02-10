@@ -1,18 +1,68 @@
-import React from "react";
-import { Link, useSearchParams, useParams } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useSearchParams, useParams, useNavigate } from "react-router-dom";
 
-export const Products = ({ data, addToCart }) => {
+export const Products = ({ data, addToCart, handleGetFilterUri, prodFilter }) => {
     const { prods, rates } = data;
-    const [ URLSearchParams ] = useSearchParams();
+    const [URLSearchParams] = useSearchParams();
     const page = Number(URLSearchParams.get("page")) || 1;
     const { name, category } = useParams();
+    const [showCat, setShowCat] = useState();
+    const [show, setShow] = useState(false);
+    const navigate = useNavigate();
+    const handleSortBy = (e) => {
+        let { value } = e.target;
+        let filter = handleGetFilterUri({...prodFilter, sortby: value});
+        let url = `/${filter}`;
+        if (name && category) {
+            url = `/category/${category}/${name}${filter}`;
+        }
+        navigate(url);
+    }
     return (
         <div className="shop__overview">
+            <div className="shop__overview__mobile-category">
+                <div className="shop__overview__mobile-category__btngroup">
+                    <div className="shop__overview__mobile-category__btngroup--button" onClick={() => setShow(!show)}>
+                        <i className="fa-solid fa-bars"></i>
+                    </div>
+                    <select onChange={(e) => handleSortBy(e)} defaultValue={URLSearchParams.get("sortby")}>
+                        <option value={""}>Trier par</option>
+                        <option value={"pricehigh"}>Prix decroissant</option>
+                        <option value={"pricelow"}>Prix croissant</option>
+                        <option value={"alphaz"}>Ordre alphabetique, A - Z</option>
+                        <option value={"zalpha"}>Ordre alphabetique, Z - A</option>
+                    </select>
+                </div>
+                <div className={`shop__overview__mobile-category__section ${(show) ? 'show' : 'hide'}`}>
+                    <ul className="shop__overview__mobile-category__section__category">
+                        {data.cat.map((value, key) => (
+                            <li className="shop__overview__mobile-category__section__category__elt" key={key}>
+                                <div className="shop__overview__mobile-category__section__category__elt__title"
+                                    onClick={() => (value._id === showCat) ? setShowCat(null) : setShowCat(value._id)}>
+                                    <span>{value.category}</span>
+                                    {(value._id !== showCat) ?
+                                        <i className="fas fa-plus"></i> : <i className="fas fa-minus"></i>
+                                    }
+                                </div>
+                                <ul className={`shop__overview__mobile-category__section__category__elt__list ${(value._id === showCat) ? 'showcate' : ''}`}>
+                                    {value.subcategory.map((v, k) => (
+                                        <li className="shop__overview__mobile-category__section__category__elt__list--item" key={k}>
+                                            <Link to={`/category/${value.category.replaceAll(" ", "-").toLowerCase()}/${v.name.replaceAll(" ", "-").toLowerCase()}${handleGetFilterUri(prodFilter)}`}>
+                                                {v.name}
+                                            </Link>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </div>
             <div className="shop__overview__container">
                 {prods.map((value, key) => (
                     <div className="shop__overview__container__card" key={key}>
                         <Link to={`/product/${value.categoryTag.replaceAll(" ", "-").toLowerCase()}/${value.title.replaceAll(" ", "-").toLowerCase()}`} className="shop__overview__container__card__info">
-                            <img className="shop__overview__container__card__info--pic" src={`${process.env.REACT_APP_API_URL}/img/images/${value.img}`} alt="Product pic" />
+                            <img className="shop__overview__container__card__info--pic" src={`${process.env.REACT_APP_API_URL}:3002/images/${value.img}`} alt="Product pic" />
                             <div className="container_sec">
                                 <p className="shop__overview__container__card__info--tag">{value.categoryTag}</p>
                                 <h3 className="shop__overview__container__card__info--title">{value.title}</h3>

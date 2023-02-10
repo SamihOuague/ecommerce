@@ -1,4 +1,3 @@
-const { jwtVerify } = require("../utils/jwt");
 const Model = require("./Model");
 const mongoose = require("mongoose")
 const User = mongoose.model("member", (new mongoose.Schema({ email: { type: String, required: true } }, { collection: "members" })));
@@ -25,8 +24,6 @@ module.exports = {
     newOrder: async (req, res) => {
         const { firstname, lastname, email, phoneNumber, address, zipcode, city, bill } = req.body;
         try {
-            let token = req.headers.authorization.split(" ")[1];
-            let decoded = jwtVerify(token);
             let r_email = /^([a-zA-Z0-9]+)\.{0,1}[a-zA-Z0-9_-]+@{1}([a-zA-Z0-9_-]{3,})(\.[a-zA-Z]{2,5})$/;
             let r_zipcode = /^([0-9]{5})$/;
             if (!firstname || !lastname || !email || !phoneNumber || !address || !zipcode || !city || !bill) return res.sendStatus(400);
@@ -40,7 +37,7 @@ module.exports = {
                 zipcode,
                 city,
                 bill,
-                user_id: decoded.sub,
+                user_id: req.user_id,
                 created_at: Date.now(),
             });
             order = await order.save();
@@ -111,10 +108,7 @@ module.exports = {
     },
     getUserOrders: async (req, res) => {
         try {
-            let token = req.headers.authorization.split(" ")[1];
-            let decoded = jwtVerify(token);
-            if (!decoded) return res.sendStatus(401);
-            let orders = await Model.find({ user_id: decoded.sub });
+            let orders = await Model.find({ user_id: req.user_id, confirmed: true });
             if (!orders) return res.send(404);
             return res.send(orders);
         } catch (e) {
@@ -126,36 +120,31 @@ module.exports = {
         try {
             const { order_id } = req.params;
             const { paymentIntent, paymentClientSecret } = req.body;
-            let token = req.headers.authorization.split(" ")[1];
-            let decoded = jwtVerify(token);
-            if (!decoded) return res.sendStatus(401);
-            else if (!paymentIntent || !paymentClientSecret) return res.sendStatus(400);
+            if (!paymentIntent || !paymentClientSecret) return res.sendStatus(400);
             let p = await stripe.paymentIntents.retrieve(paymentIntent);
-            if (!p) return res.sendStatus(404);
+            if (!p) return res.status(404).send({confirmed: "Failed", message: "Payment not found"});
             else if (p.status != "succeeded") return res.send({ confirmed: p.status });
-            let order = await Model.findOneAndUpdate({ _id: order_id, user_id: decoded.sub }, { confirmed: true }, { new: true });
-            let user = await User.findOne({ _id: decoded.sub });
-            if (!order || !user) return res.sendStatus(404);
-            await sendEmail({
-                from: "souaguen96@gmail.com",
-                to: user.email,
-                subject: "Checkout confirmation",
-                text: `Congratulation ! Your payment order is confirmed.`,
-                html: `<p>Congratulation ! Your payment order is confirmed.</p>`,
-            });
-            await sendEmail({
-                from: "souaguen96@gmail.com",
-                to: "souaguen96@gmail.com",
-                subject: "New Order",
-                text: `email : ${order.email}.\n
-                        fullname : ${order.firstname} ${order.lastname}\n`,
-                html: `<p>email : ${order.email}.</p>
-                        <p>fullname : ${order.firstname} ${order.lastname}</p>`,
-            });
+            let order = await Model.findOneAndUpdate({ _id: order_id, user_id: req.user_id }, { confirmed: true }, { new: true });
+            let user = await User.findOne({ _id: req.user_id });
+            if (!order || !user) return res.status(404).send({confirmed: "Failed", message: "Order or User not found."});
+            //await sendEmail({
+            //    from: "souaguen96@gmail.com",
+            //    to: user.email,
+            //    subject: "Checkout confirmation",
+            //    text: `Congratulation ! Your payment order is confirmed.`,
+            //    html: `<p>Congratulation ! Your payment order is confirmed.</p>`,
+            //});
+            //await sendEmail({
+            //    from: "souaguen96@gmail.com",
+            //    to: "souaguen96@gmail.com",
+            //    subject: "New Order",
+            //    text: `email : ${order.email}.\n
+            //            fullname : ${order.firstname} ${order.lastname}\n`,
+            //    html: `<p>email : ${order.email}.</p>
+            //            <p>fullname : ${order.firstname} ${order.lastname}</p>`,
+            //});
             return res.send(order);
-
         } catch (e) {
-            console.error(e);
             return res.sendStatus(500);
         }
     }

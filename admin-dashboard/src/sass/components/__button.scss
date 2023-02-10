@@ -1,0 +1,57 @@
+.button {
+    background: none;
+    border-radius: none;
+    border: 1px solid #1a3b2a;
+    color: #1a3b2a;
+    display: inline;
+    padding: 8px 16px;
+    font-size: 14px;
+    margin: 16px 0;
+    cursor: pointer;
+    transition-property: color, background-color, font-weight;
+    transition-duration: 500ms;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &:hover {
+        background-color: #1a3b2a;
+        color: #eee6cf;
+    }
+}
+
+.btn-disabled {
+    cursor: not-allowed;
+    background: none;
+    border-radius: none;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    color: rgba(0, 0, 0, 0.6);
+    font-weight: 500;
+    display: inline;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+.btn-group {
+    display: flex;
+    .button, .btn-disabled {
+        &:nth-child(1) {
+            margin-right: 16px;
+        }
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+.btn-danger {
+    border: 1px solid red;
+    color: red;
+    transition-property: color, background-color;
+    transition-duration: 500ms;
+    &:hover {
+        background-color: red;
+        color: #eee6cf;
+    }
+}

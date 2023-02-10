@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import UserInfos from "./components/UserInfos";
 import EditUser from "./components/EditUser"
 import { Resources, Spinner } from "../Resources/Resources";

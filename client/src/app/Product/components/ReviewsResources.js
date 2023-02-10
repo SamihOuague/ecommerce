@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Resources, Spinner } from "../../Resources/Resources";
 
 export const ReviewsResource = ({ id }) => {
-    return <Resources path={`${process.env.REACT_APP_API_URL}/reviews/${id}`} render={(data) => {
+    return <Resources path={`${process.env.REACT_APP_API_URL}:3005/${id}`} render={(data) => {
         if (data.loading) return <Spinner />
         else if (!data.payload || data.errorCode) {
             return (

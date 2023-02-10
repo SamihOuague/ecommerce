@@ -1,17 +1,19 @@
 import React, { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { Elements, PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { Resources, Spinner } from "../../Resources/Resources";
 
 const CheckoutForm = ({ infos }) => {
     const [ loading, setLoading ] = useState(false);
+    const [ message, setMessage ] = useState("");
     const stripe = useStripe();
     const elements = useElements();
+    const navigate = useNavigate();
     const handleSubmit = (e) => {
         e.preventDefault();
         setLoading(true);
-        fetch(`${process.env.REACT_APP_API_URL}/order/`, {
+        fetch(`${process.env.REACT_APP_API_URL}:3004/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -24,18 +26,28 @@ const CheckoutForm = ({ infos }) => {
                 const result = await stripe.confirmPayment({
                     elements,
                     confirmParams: {
-                        return_url: `${process.env.REACT_APP_LOCAL_URL}/order/success/${r._id}`,
+                        return_url: `${process.env.REACT_APP_LOCAL_URL}:3000/order/success/${r._id}`,
                     }
                 });
-                if (result.error) console.log(result.error.message);
-                localStorage.removeItem("cart");
+                if (result.error) { 
+                    setMessage(result.error.message);
+                    setLoading(false);
+                    navigate(`/order/success/${r._id}?payment_intent=${result.error.payment_intent.id}&payment_intent_client_secret=${result.error.payment_intent.client_secret}&message=${result.error.message}&redirect_status=Failed`)
+
+                } else {
+                    setMessage("Payment succeeded.");
+                    localStorage.removeItem("cart");
+                }
             }
+        }).catch((e) => {
+            console.log(e);
         });
     }
     if (!infos) return <Navigate to="/order"/>;
     return (
-        <form className="order__container__form" onSubmit={(e) => handleSubmit(e)}>
+        <form className="order__container__form" onSubmit={(e) => (!loading) && handleSubmit(e)}>
             <PaymentElement />
+            {(message) && <p style={{"color": "red"}}>{message}</p>}
             <button className={`${(loading) ?  'btn-disabled' : 'button'}`} disabled={loading}>{(loading) ? "Loading..." : "Proceder au Paiement"}</button>
         </form>
     );
@@ -45,7 +57,7 @@ const StripeResources = ({ infos, pubKey }) => {
     let stripePromise;
     if (pubKey) stripePromise = loadStripe(pubKey);
     return (
-        <Resources path={`${process.env.REACT_APP_API_URL}/order/create-payment-intent`} render={(data) => {
+        <Resources path={`${process.env.REACT_APP_API_URL}:3004/create-payment-intent`} render={(data) => {
             if (data.loading) return <Spinner />
             else if (!data.payload || !data.payload.amount) return <Navigate to="/" />
             const { amount, cart, clientSecret } = data.payload;

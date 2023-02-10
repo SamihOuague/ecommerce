@@ -14,7 +14,7 @@ const Categories = ({ cat, prodFilter, handleGetFilterUri }) => {
     return (
         <div className="shop__filter__section__body">
             <Link to={"/"} className="shop__filter__section__body__category__elt__title">
-                <span>Tous Nos Produits</span>
+                <span><b>Tous Nos Produits</b></span>
                 <i className="fas fa-plus"></i>
             </Link>
             <ul className="shop__filter__section__body__category">

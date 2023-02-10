@@ -17,7 +17,7 @@ function Cart({ cart, show, setShow, addToCart }) {
                     {cart.map((value, key) => (
                         <div className="cart__elt__container__product" key={key}>
                             <div className="cart__elt__container__product__img">
-                                <img src={`${process.env.REACT_APP_API_URL}/img/images/${value.img}`} alt="Product" className="cart__elt__container__product__img--img" />
+                                <img src={`${process.env.REACT_APP_API_URL}:3002/images/${value.img}`} alt="Product" className="cart__elt__container__product__img--img" />
                             </div>
                             <div className="cart__elt__container__product__body">
                                 <h5 className="cart__elt__container__product__body--title">{value.title}</h5>

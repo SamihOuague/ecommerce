@@ -3,7 +3,7 @@
         &__recommended {
             display: none;
         }
-        
+
         &__container {
             flex-direction: column;
 
@@ -12,49 +12,59 @@
             }
 
             &--title {
-                font-size: 40px;
+                font-size: 32px;
                 font-weight: 300;
                 margin: 0 0 48px 0;
                 color: #1a3b2ae8;
+                text-align: center;
             }
 
             &__details {
                 p {
                     font-size: 14px;
                 }
+
                 .button {
                     font-size: 11px;
                 }
+
                 &--title {
                     display: none;
                 }
+
                 &__btngroup {
                     margin-top: 24px;
+
                     .button {
                         margin-right: 8px;
                         font-size: 12px;
                     }
                 }
-                
+
             }
         }
+
         &__infos {
+            padding-bottom: 48px;
             &__nav {
                 &__btngroup {
                     padding: 8px 24px;
+
                     .button {
                         font-size: 12px;
+
                         &:nth-child(1) {
                             margin-right: 8px;
                         }
                     }
-    
+
                     .active {
                         background-color: #1a3b2a;
                         color: #eee6cf;
                     }
                 }
             }
+
             &__body {
                 margin: 0px 24px 24px 24px;
                 padding: 8px;
@@ -66,37 +76,41 @@
 
 @media screen and (min-width: 800px) {
     .product {
+        padding: 48px;
+
         &__infos {
             &__nav {
                 &__btngroup {
                     padding: 8px 48px;
-    
+
                     .button {
                         &:nth-child(1) {
                             margin-right: 8px;
                         }
                     }
-    
+
                     .active {
                         background-color: #1a3b2a;
                         color: #eee6cf;
                     }
                 }
             }
+
             &__body {
                 margin: 0px 48px 48px 48px;
                 padding: 32px;
+
                 &__reviews {
                     padding: 56px;
-    
+
                     &__review {
                         border-bottom: 1px solid #1a3b2a;
                         margin: 32px 0px;
-    
+
                         &__group {
                             display: flex;
                             align-items: center;
-    
+
                             h5 {
                                 margin-right: 16px;
                             }
@@ -105,14 +119,20 @@
                 }
             }
         }
+
         &__container {
+            &--title {
+                display: none;
+            }
             &__img {
                 margin-right: 48px;
             }
+
             &__details {
                 &__btngroup {
                     display: flex;
                     margin-top: 24px;
+
                     .button {
                         margin-right: 32px;
                         padding: 12px 26px;
@@ -125,9 +145,17 @@
 }
 
 .product {
+
     &__infos {
+        &__nav {
+            &__btngroup {
+                display: flex;
+            }
+        }
+
         &__body {
             border: 1px solid rgba(0, 0, 0, 0.194);
+
             h5 {
                 font-size: 21px;
                 margin: 0;
@@ -177,6 +205,7 @@
 
             &--img {
                 width: 100%;
+                min-width: 140px;
             }
         }
 
@@ -234,9 +263,29 @@
 
                     &__btngroup {
                         display: flex;
+                        align-items: center;
+
                         .button {
                             display: flex;
                             align-items: center;
+                            width: 36px;
+                            height: 36px;
+                            padding: 0;
+                            margin: 0;
+                        }
+
+                        &--qt {
+                            width: 34px;
+                            height: 34px;
+                            border-width: 1px 0 1px 0;
+                            border-style: solid;
+                            border-color: #1a3b2a;
+                            padding: 0;
+                            margin: 0;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            font-size: 13px;
                         }
                     }
 
@@ -266,9 +315,11 @@
         &__container {
             display: grid;
             grid-template-columns: repeat(4, 25%);
+
             .box {
                 padding: 0 16px;
             }
+
             &__card {
                 width: 100%;
                 text-align: center;

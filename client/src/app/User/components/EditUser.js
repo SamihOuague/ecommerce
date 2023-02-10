@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Navigate, Link } from "react-router-dom";
 import { PKCEComponent, SubmitComponent } from "../../PKCE/PKCEComponents";
 
-function EditUser({ infosUser, setEdit }) {
+function EditUser({ infosUser }) {
     //eslint-disable-next-line
     const [infos] = useState(infosUser);
     const [dataForm, setDataForm] = useState();
