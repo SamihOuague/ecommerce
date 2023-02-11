@@ -27,8 +27,8 @@ export const Products = ({ data, addToCart, handleGetFilterUri, prodFilter }) =>
                     </div>
                     <select onChange={(e) => handleSortBy(e)} defaultValue={URLSearchParams.get("sortby")}>
                         <option value={""}>Trier par</option>
-                        <option value={"pricehigh"}>Prix decroissant</option>
                         <option value={"pricelow"}>Prix croissant</option>
+                        <option value={"pricehigh"}>Prix decroissant</option>
                         <option value={"alphaz"}>Ordre alphabetique, A - Z</option>
                         <option value={"zalpha"}>Ordre alphabetique, Z - A</option>
                     </select>

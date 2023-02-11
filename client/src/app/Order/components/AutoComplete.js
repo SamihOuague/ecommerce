@@ -53,8 +53,8 @@ function AutoComplete ({infos, setInfos}) {
         getAddresses();
     }, [getAddresses]);
 
-    if (!infos || !infos._id) return <Navigate to="/user" />;
-    else if (!cart || !cart.length) return <Navigate to="/" />;
+
+    if (!cart || !cart.length) return <Navigate to="/" />;
     else if (redirect) return <Navigate to="/order/payment" />;
     const amount = (cart.length) ? cart.map((v) => (v.price*100) * v.qt).reduce((a, b) => a + b) : 0;
     return (

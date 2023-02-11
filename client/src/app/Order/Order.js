@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Resources, Spinner } from "../Resources/Resources";
-import { Routes, Route, useParams, useSearchParams } from "react-router-dom";
+import { Routes, Route, useParams, useSearchParams, Navigate } from "react-router-dom";
 import AutoComplete from "./components/AutoComplete";
 import OrderContainer from "./components/OrderContainer";
 import Success from "./components/Success";
@@ -9,6 +9,7 @@ const CheckoutResources = ({setInfos}) => {
     return (
         <Resources path={`${process.env.REACT_APP_API_URL}:3001/get-user`} render={(data) => {
             if (data.loading) return <Spinner/>;
+            else if (!data.payload || data.payload.success === false) return <Navigate to="/auth?redirect_url=/order" />;
             return <AutoComplete infos={data.payload} setInfos={setInfos}/>
         }} options={{
             method: "GET",
@@ -56,15 +57,11 @@ const ConfirmationResources = () => {
     }}/>
 }
 
-function Order({ setToken }) {
+function Order() {
     const [ infos, setInfos ] = useState();
-    const logOut = () => {
-        localStorage.removeItem("token");
-        setToken(null);
-    }
     return (
         <Routes>
-            <Route path="/" element={<CheckoutResources logOut={logOut} setInfos={setInfos}/>}/>
+            <Route path="/" element={<CheckoutResources setInfos={setInfos}/>}/>
             <Route path="/payment" element={<PaymentResources infos={infos}/>}/>
             <Route path="/success/:id" element={<ConfirmationResources/>}/>
         </Routes>

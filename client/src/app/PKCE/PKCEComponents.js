@@ -41,7 +41,9 @@ export const SubmitComponent = ({ dataForm, btnValue, path, method, redirectTo }
                 } else if (!data.payload.success) {
                     return (
                         <>
-                            <p>{data.payload.message}</p>
+                            <span className="message">
+                                <p className="message--elt">{data.payload.message}</p>
+                            </span>
                             <button className="button" type="submit">{btnValue}</button>
                         </>
                     )

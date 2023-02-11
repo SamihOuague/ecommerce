@@ -13,7 +13,6 @@ import './App.css';
 function App() {
     const [cart, setCart] = useState(JSON.parse(localStorage.getItem("cart") || "[]"));
     const [show, setShow] = useState(null);
-    const [token, setToken] = useState(localStorage.getItem("token"));
 
     const removeFromCart = (id_prod) => {
         let c = [...cart.filter((v) => v._id !== id_prod)]
@@ -61,9 +60,9 @@ function App() {
                 <Route index path="/" element={<Shop addToCart={addToCart} />} />
                 <Route path="/category/:category/:name" element={<Shop addToCart={addToCart} />} />
                 <Route path="/product/:category/:name" element={<Product addToCart={addToCart} />} />
-                <Route path="/auth/*" element={<Auth token={token} />} />
-                <Route path="/order/*" element={<Order token={token} setToken={setToken} />} />
-                <Route path="/user" element={<User token={token} />} />
+                <Route path="/auth/*" element={<Auth />} />
+                <Route path="/order/*" element={<Order />} />
+                <Route path="/user" element={<User />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/CGU" element={<CGU />} />
             </Routes>
