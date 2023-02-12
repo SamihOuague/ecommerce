@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Resources, Spinner } from "../../Resources/Resources";
+import { useNavigate } from "react-router-dom";
 
 export const ReviewsResource = ({ id }) => {
     return <Resources path={`${process.env.REACT_APP_API_URL}:3005/${id}`} render={(data) => {
@@ -18,6 +19,11 @@ export const ReviewsResource = ({ id }) => {
 
 const ReviewsComponent = ({ payload, id }) => {
     const [ reviews, setReviews ] = useState(payload);
+
+    useEffect(() => {
+        setReviews(payload);
+    }, [payload]);
+
     return (
         <div className="product__infos__body">
             <h5 className="product__infos__body--title">Avis</h5>
@@ -48,12 +54,13 @@ const ReviewsComponent = ({ payload, id }) => {
 const ReviewsForm = ({id, setReviews, reviews}) => {
     const [voteRate, setVoteRate] = useState(0);
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
     const postReview = async (e) => {
         e.preventDefault();
         if (!loading) {
             setLoading(true);
             if (e.target.comment.value && id && voteRate) {
-                let response = await (await fetch(`${process.env.REACT_APP_API_URL}/reviews/`, {
+                let response = await (await fetch(`${process.env.REACT_APP_API_URL}:3005/`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -66,6 +73,7 @@ const ReviewsForm = ({id, setReviews, reviews}) => {
                     }),
                 })).json();
                 if (response._id) setReviews([...reviews, response]);
+                else if (response.success === false) navigate("/auth");
             }
             setVoteRate(0);
             setLoading(false);

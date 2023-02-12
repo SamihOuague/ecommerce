@@ -1,5 +1,5 @@
 const Model = require("./Model");
-const { jwtVerify, jwtPwdReset, jwtEmailConfirm } = require("../utils/jwt");
+const { jwtVerify, jwtPwdReset, jwtEmailConfirm, jwtCustomTokenVerify } = require("../utils/jwt");
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
 
@@ -9,8 +9,8 @@ const sendEmail = async (data) => {
 		port: 465,
 		secure: true,
 		auth: {
-			user: "",
-			pass: "",
+			user: process.env.SMTP_USER,
+			pass: process.env.SMTP_PWD,
 		},
 	});
 	let infos = await transporter.sendMail(data);
@@ -61,7 +61,7 @@ module.exports = {
 			if (!user || !user._id) return res.sendStatus(404);
 			const url_token = jwtPwdReset(user);
 			let msg = await sendEmail({
-				from: "souaguen96@gmail.com",
+				from: process.env.SMTP_USER,
 				to: user.email,
 				subject: "Reset Your Password",
 				text: `Copy this link : https://${process.env.DOMAIN_NAME}/reset-password?url_token=${url_token}`,
@@ -79,7 +79,7 @@ module.exports = {
 	resetPwd: async (req, res) => {
 		const { password, url_token } = req.body;
 		try {
-			let decoded = jwtVerify(url_token);
+			let decoded = jwtCustomTokenVerify(url_token);
 			const limit = decoded.iat+((60*1000) * 15);
 			if (!password || password.length < 8) return res.sendStatus(400);
 			else if (limit < Date.now()) return res.status(403).send({msg: "Token expired !"});
@@ -93,12 +93,12 @@ module.exports = {
 	},
 	getConfirmation: async (req, res) => {
 		try {
-			let user = await Model.findOne({ _id: req.user_id }, {_id: 1, email: 1});
+			let user = await Model.findOne({ _id: req.user_id }, {_id: 1, email: 1, confirmed: 1});
 			if (!user || !user._id) res.sendStatus(404);
-			else if (user.confirmed) return res.status(400).send({msg: "Email already confirmed"});
+			else if (user.confirmed) return res.status(400).send({message: "Email already confirmed", success: false });
 			let url_token = jwtEmailConfirm(user);
 			await sendEmail({
-				from: "souaguen96@gmail.com",
+				from: process.env.SMTP_USER,
 				to: user.email,
 				subject: "Email Confirmation",
 				text: `Copy this link : https://${process.env.DOMAIN_NAME}/verify-email?url_token=${url_token}`,
@@ -107,7 +107,7 @@ module.exports = {
 						</a>
 						<p>Or copy this link : https://${process.env.DOMAIN_NAME}/verify-email?url_token=${url_token}</p>`,
 			});
-			return res.send({msg});
+			return res.send({message: "Confirmation email sended, don't forget to check your spam !", success: true});
 		} catch(e) {
 			console.error(e);
 			return res.sendStatus(500);
@@ -116,16 +116,16 @@ module.exports = {
 	verifyEmail: async (req, res) => {
 		try {
 			const { url_token } = req.query;
-			if (!url_token) return res.sendStatus(400);
-			const decoded = jwtVerify(url_token);
-			if (!decoded) return res.sendStatus(401);
-			else if (decoded.exp < Date.now()) return res.status(403).send({msg: "Token expired !"});
+			if (!url_token) return res.status(400).send({message: "Url token is missing."});
+			const decoded = jwtCustomTokenVerify(url_token);
+			if (!decoded) return res.status(401).send({message: "Invalid token."});
+			else if (decoded.exp < Date.now()) return res.status(403).send({message: "Token expired."});
 			const user = await Model.findByIdAndUpdate({_id: decoded.e_sub}, { confirmed: true }, {new: true});
-			if (!user) return res.sendStatus(404);
-			return res.send({confirmed: user.confirmed});
+			if (!user) return res.status(404).send({message: "User not found."});
+			return res.send({confirmed: user.confirmed, message: "Email confirmation succeeded."});
 		} catch(e) {
 			console.error(e);
-			return res.sendStatus(500);
+			return res.status(500).send({message: "Unexcepted error."});
 		}
 	},
 	ping: (req, res) => {

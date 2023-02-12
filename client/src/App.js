@@ -8,6 +8,7 @@ import CGU from "./app/CGU/CGU";
 import Auth from "./app/Auth/Auth";
 import User from "./app/User/User";
 import Order from "./app/Order/Order";
+import EmailConfirm from "./app/Auth/components/EmailConfirm";
 import './App.css';
 
 function App() {
@@ -65,6 +66,7 @@ function App() {
                 <Route path="/user" element={<User />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/CGU" element={<CGU />} />
+                <Route path="/verify-email" element={<EmailConfirm/>}/>
             </Routes>
             <Cart cart={cart} show={show} setShow={setShow} addToCart={addToCart} />
             <footer className="footer">

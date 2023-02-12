@@ -1,23 +1,26 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useSearchParams, Navigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { verifyEmailThunk } from "./authSlice";
+import { Resources, Spinner } from "../../Resources/Resources";
 
-const VerifyEmail = () => {
+const EmailConfirm = () => {
     const [ URLSearchParams ] = useSearchParams();
     const url_token = URLSearchParams.get("url_token");
-    const { loading, msg, redirect } = useSelector((state) => state.auth);
-    const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(verifyEmailThunk(url_token));
-    }, [dispatch, url_token]);
-    if (!url_token || redirect) return <Navigate to={"/user"}/>
+    console.log(url_token);
+    if (!url_token) return <Navigate to="/" />
     return(
         <div className="verify">
             <h2 className="verify--title">Email Confirmation</h2>
-            {(loading) ? <p>Please wait...</p> : <p>{msg}</p>}
+            <Resources path={`${process.env.REACT_APP_API_URL}:3001/verify-email?url_token=${url_token}`} options={{
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }} render={(data) => {
+                if (data.loading) return <Spinner/>
+                return <p>{data.payload.message}</p>
+            }}/>
         </div>
     );
 }
 
-export default VerifyEmail;
+export default EmailConfirm;

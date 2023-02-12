@@ -10,8 +10,8 @@ const sendEmail = async (data) => {
         port: 465,
         secure: true,
         auth: {
-            user: "",
-            pass: "",
+            user: process.env.SMTP_USER,
+            pass: process.env.SMTP_PWD,
         },
     });
     let infos = await transporter.sendMail(data);
@@ -127,22 +127,22 @@ module.exports = {
             let order = await Model.findOneAndUpdate({ _id: order_id, user_id: req.user_id }, { confirmed: true }, { new: true });
             let user = await User.findOne({ _id: req.user_id });
             if (!order || !user) return res.status(404).send({confirmed: "Failed", message: "Order or User not found."});
-            //await sendEmail({
-            //    from: "souaguen96@gmail.com",
-            //    to: user.email,
-            //    subject: "Checkout confirmation",
-            //    text: `Congratulation ! Your payment order is confirmed.`,
-            //    html: `<p>Congratulation ! Your payment order is confirmed.</p>`,
-            //});
-            //await sendEmail({
-            //    from: "souaguen96@gmail.com",
-            //    to: "souaguen96@gmail.com",
-            //    subject: "New Order",
-            //    text: `email : ${order.email}.\n
-            //            fullname : ${order.firstname} ${order.lastname}\n`,
-            //    html: `<p>email : ${order.email}.</p>
-            //            <p>fullname : ${order.firstname} ${order.lastname}</p>`,
-            //});
+            await sendEmail({
+                from: process.env.SMTP_USER,
+                to: user.email,
+                subject: "Checkout confirmation",
+                text: `Congratulation ! Your payment order is confirmed.`,
+                html: `<p>Congratulation ! Your payment order is confirmed.</p>`,
+            });
+            await sendEmail({
+                from: process.env.SMTP_USER,
+                to: process.env.SMTP_USER,
+                subject: "New Order",
+                text: `email : ${order.email}.\n
+                        fullname : ${order.firstname} ${order.lastname}\n`,
+                html: `<p>email : ${order.email}.</p>
+                        <p>fullname : ${order.firstname} ${order.lastname}</p>`,
+            });
             return res.send(order);
         } catch (e) {
             return res.sendStatus(500);

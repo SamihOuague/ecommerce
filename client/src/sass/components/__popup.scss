@@ -1,3 +1,11 @@
+@media screen and (max-width: 800px) {
+    .popup {
+        &__container--title {
+            font-size: 18px;
+        }
+    }
+}
+
 .popup {
     position: fixed;
     width: 100%;
@@ -23,6 +31,7 @@
             width: 100%;
             span {
                 cursor: pointer;
+                margin-left: 36px;
             }
         }
     }

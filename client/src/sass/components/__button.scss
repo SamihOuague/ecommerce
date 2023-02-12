@@ -1,3 +1,14 @@
+@media screen and (max-width: 799px) {
+    .button, .btn-disabled, input {
+        font-size: 11px;
+    }
+}
+@media screen and (min-width: 800px) {
+    .button {
+        font-size: 14px;
+    }
+}
+
 .button {
     background: none;
     border-radius: none;
@@ -5,7 +16,6 @@
     color: #1a3b2a;
     display: inline;
     padding: 8px 16px;
-    font-size: 14px;
     margin: 16px 0;
     cursor: pointer;
     transition-property: color, background-color, font-weight;
@@ -34,8 +44,10 @@
 }
 
 .btn-group {
+    width: 100%;
+    display: flex;
     .button, .btn-disabled {
-        margin: 8px 0;
+        margin: 8px;
         display: flex;
         flex-direction: column;
         justify-content: center;

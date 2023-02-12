@@ -48,7 +48,7 @@ function EditUser({ infosUser }) {
                             <div className="user__container__infos__elt__box--info">
                                 <div>
                                     <span><b>Email</b></span>
-                                    <input type="text" name="email" placeholder="Your email" defaultValue={infos.email} />
+                                    <input type="text" name="email" placeholder="Your email" defaultValue={infos.email} disabled={infos.confirmed} />
                                 </div>
                             </div>
                             <div className="user__container__infos__elt__box--info">

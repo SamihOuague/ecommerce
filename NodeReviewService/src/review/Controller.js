@@ -1,5 +1,4 @@
 const { Model, UserModel } = require("./Model");
-const { jwtVerify } = require("../utils/jwt");
 
 module.exports = {
     getComments: async (req, res) => {
@@ -15,10 +14,8 @@ module.exports = {
     postComment: async (req, res) => {
         try {
             let { comment, rate, product_id } = req.body;
-            let decoded = jwtVerify(req.headers.authorization.split(" ")[1]);
             if (!comment || !rate || !product_id) return res.sendStatus(400);
-            else if (!decoded) return res.sendStatus(401);
-            let user = await UserModel.findOne({ _id: decoded.sub });
+            let user = await UserModel.findOne({ _id: req.user_id });
             if (!user) return res.sendStatus(404);
             let review = new Model({
                 comment,

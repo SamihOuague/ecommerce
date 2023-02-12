@@ -3,11 +3,11 @@ import { Navigate, Link } from "react-router-dom";
 import { PKCEComponent, SubmitComponent } from "../../PKCE/PKCEComponents";
 import { Resources, Spinner } from "../../Resources/Resources";
 
-function UserInfos({ infos, setEdit }) {
-    // eslint-disable-next-line
-    const [loading] = useState(false);
+function UserInfos({ infos }) {
     const [showDelete, setShowDelete] = useState(false);
     const [redirect, setRedirect] = useState(false);
+    const [showConfirm, setShowConfirm] = useState(false);
+
     const logOut = () => {
         localStorage.removeItem("token");
         setRedirect(true);
@@ -29,8 +29,13 @@ function UserInfos({ infos, setEdit }) {
                                 <p><span><b>Nom</b></span> {infos.lastname}</p>
                             </div>
                             <div className="user__container__infos__elt__box--info">
-                                <p><span><b>Email</b></span> {infos.email}</p>
-                                {(!infos.confirmed) && <button onClick={() => console.log("")} className="button">{(loading) ? "Chargement..." : "Confirmer"}</button>}
+                                <p className="user__container__infos__elt__box--info-email">
+                                    <span><b>Email</b></span>
+                                    <span style={{ color: (infos.confirmed) ? 'black' : 'red' }}>
+                                        {infos.email} {(!infos.confirmed) && <i className="fa-solid fa-circle-exclamation"></i>}
+                                    </span>
+                                </p>
+                                {(!infos.confirmed) && <button onClick={() => setShowConfirm(true)} className="button">Confirmer mon email</button>}
                             </div>
                             <div className="user__container__infos__elt__box--info">
                                 <p><span><b>Tel.</b></span> {infos.phoneNumber}</p>
@@ -80,8 +85,8 @@ function UserInfos({ infos, setEdit }) {
                     }} />
                 </div>
             </div>
-            {(false) &&
-                <PopUpConfirm />
+            {(showConfirm) &&
+                <PopUpConfirm setShowConfirm={setShowConfirm} />
             }
             {(showDelete) &&
                 <PopUpDelete setShowDelete={setShowDelete} logOut={logOut} />
@@ -90,18 +95,37 @@ function UserInfos({ infos, setEdit }) {
     );
 }
 
-const PopUpConfirm = () => {
+const PopUpConfirm = ({ setShowConfirm }) => {
+    const [ getConfirm, setGetConfirm ] = useState(false);
+
     return (
         <div className="popup">
             <div className="popup__container">
                 <h2 className="popup__container--title">
                     Confirmer votre email
-                    <span onClick={() => console.log("")}>
+                    <span onClick={() => setShowConfirm(false)}>
                         <i className="fa-regular fa-circle-xmark"></i>
                     </span>
                 </h2>
-                <button className="button" onClick={() => console.log("")}>Revoyer le mail</button>
-                <button className="button btn-danger" onClick={() => console.log("")}>Annuler</button>
+                {(getConfirm) &&
+                    <Resources path={`${process.env.REACT_APP_API_URL}:3001/confirm-email`} options={{
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Barear ${localStorage.getItem("token")}`,
+                        }
+                    }} render={(data) => {
+                        if (data.loading) return <Spinner />
+                        else if (!data.payload || !data.payload.message) return <p>Bad Request</p>;
+                        return <p>{(data.payload && data.payload.message) && data.payload.message}</p>;
+                    }} />
+                }
+                {(!getConfirm) &&
+                    <div className="btn-group">
+                        <button className="button" onClick={() => setGetConfirm(true)}>Confirmer mon mail</button>
+                        <button className="button btn-danger" onClick={() => setShowConfirm(false)}>Annuler</button>
+                    </div>
+                }
             </div>
         </div>
     );
