@@ -29,7 +29,7 @@ function Shop({ addToCart }) {
         return filterUri;
     }
     
-    const initialUri = `${process.env.REACT_APP_API_URL}:3003${window.location.pathname.replace(`${category}/`, '')}${handleFilterUri(prodFilter)}`;
+    const initialUri = `${process.env.REACT_APP_API_URL}/product${window.location.pathname.replace(`${category}/`, '')}${handleFilterUri(prodFilter)}`;
     return (
         <Resources path={initialUri} render={(data) => {
             if (data.loading) return <Spinner />;

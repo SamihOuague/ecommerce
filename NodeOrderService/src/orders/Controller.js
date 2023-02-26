@@ -26,7 +26,7 @@ module.exports = {
         try {
             let r_email = /^([a-zA-Z0-9]+)\.{0,1}[a-zA-Z0-9_-]+@{1}([a-zA-Z0-9_-]{3,})(\.[a-zA-Z]{2,5})$/;
             let r_zipcode = /^([0-9]{5})$/;
-            if (!firstname || !lastname || !email || !phoneNumber || !address || !zipcode || !city || !bill) return res.sendStatus(400);
+            if (!firstname || !lastname || !email || !phoneNumber || !address || !zipcode || !city || !bill) return res.status(400).send({success: false, message: "Bad formulaire"});
             else if (!r_email.test(email) || !r_zipcode.test(zipcode)) return res.sendStatus(400);
             let order = new Model({
                 firstname,
@@ -41,7 +41,7 @@ module.exports = {
                 created_at: Date.now(),
             });
             order = await order.save();
-            if (!order) return res.sendStatus(400);
+            if (!order) return res.status(400).send({success: false, message: order});
             return res.status(201).send(order);
         } catch (e) {
             console.error(e);
@@ -145,6 +145,7 @@ module.exports = {
             });
             return res.send(order);
         } catch (e) {
+            console.error(e);
             return res.sendStatus(500);
         }
     }

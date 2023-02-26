@@ -16,7 +16,7 @@ module.exports = {
             let { comment, rate, product_id } = req.body;
             if (!comment || !rate || !product_id) return res.sendStatus(400);
             let user = await UserModel.findOne({ _id: req.user_id });
-            if (!user) return res.sendStatus(404);
+            if (!user || !user.firstname) return res.sendStatus(404);
             let review = new Model({
                 comment,
                 rate,

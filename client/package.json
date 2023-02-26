@@ -21,7 +21,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "REACT_APP_LOCAL_URL=http://localhost REACT_APP_API_URL=http://localhost react-scripts start",
+    "start": "REACT_APP_LOCAL_URL=https://ec2-15-188-152-99.eu-west-3.compute.amazonaws.com REACT_APP_API_URL=https://orgde0n2gg.execute-api.eu-west-3.amazonaws.com/api react-scripts start",
     "build": "REACT_APP_LOCAL_URL=https://ec2-15-188-152-99.eu-west-3.compute.amazonaws.com REACT_APP_API_URL=https://orgde0n2gg.execute-api.eu-west-3.amazonaws.com/api react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

@@ -52,7 +52,7 @@ function UserInfos({ infos }) {
             <div className="user__container">
                 <div className="user__container__orders">
                     <h2>Vos Commandes</h2>
-                    <Resources path={`${process.env.REACT_APP_API_URL}:3004/user-orders`} render={(data) => {
+                    <Resources path={`${process.env.REACT_APP_API_URL}/order/user-orders`} render={(data) => {
                         if (data.loading) return <Spinner />
                         else if (data.payload.logged === false || !data.payload) {
                             logOut();
@@ -108,7 +108,7 @@ const PopUpConfirm = ({ setShowConfirm }) => {
                     </span>
                 </h2>
                 {(getConfirm) &&
-                    <Resources path={`${process.env.REACT_APP_API_URL}:3001/confirm-email`} options={{
+                    <Resources path={`${process.env.REACT_APP_API_URL}/auth/confirm-email`} options={{
                         method: "GET",
                         headers: {
                             "Content-Type": "application/json",
@@ -149,7 +149,7 @@ const PopUpDelete = ({ setShowDelete }) => {
                 <PKCEComponent />
                 <SubmitComponent
                     btnValue={"Supprimer le compte"}
-                    path={`${process.env.REACT_APP_API_URL}:3001/delete-user`}
+                    path={`${process.env.REACT_APP_API_URL}/auth/delete-user`}
                     method="DELETE"
                     dataForm={dataForm}
                 />

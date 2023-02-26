@@ -5,12 +5,11 @@ import { Resources, Spinner } from "../../Resources/Resources";
 const EmailConfirm = () => {
     const [ URLSearchParams ] = useSearchParams();
     const url_token = URLSearchParams.get("url_token");
-    console.log(url_token);
     if (!url_token) return <Navigate to="/" />
     return(
         <div className="verify">
             <h2 className="verify--title">Email Confirmation</h2>
-            <Resources path={`${process.env.REACT_APP_API_URL}:3001/verify-email?url_token=${url_token}`} options={{
+            <Resources path={`${process.env.REACT_APP_API_URL}/auth/verify-email?url_token=${url_token}`} options={{
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",

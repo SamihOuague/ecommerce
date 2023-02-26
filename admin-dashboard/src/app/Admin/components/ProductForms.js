@@ -26,7 +26,7 @@ export const ProductForm = ({ setShowForm, categoryList }) => {
                 nonce: nonce.value,
                 token: token.value,
             };
-            fetch("http://localhost:3002/upload", {
+            fetch(`${process.env.REACT_APP_API_URL}/image/upload`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -67,7 +67,7 @@ export const ProductForm = ({ setShowForm, categoryList }) => {
                 editorStyle={{ height: "200px", border: "2px solid black" }} />
             <PKCEComponent />
             <div className="btn-group">
-                <SubmitComponent path={"http://localhost:3003/"} dataForm={dataForm} btnValue={"Add"} redirectTo={"/redirect?url=/"}/>
+                <SubmitComponent path={`${process.env.REACT_APP_API_URL}/product/`} dataForm={dataForm} btnValue={"Add"} redirectTo={"/redirect?url=/"}/>
                 <button className="button btn-danger" onClick={() => setShowForm(false)}>Cancel</button>
             </div>
         </form>

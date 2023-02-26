@@ -1,0 +1,72 @@
+@media screen and (max-width: 799px) {
+    .contact {
+        padding: 48px;
+        &--title {
+            font-size: 28px;
+        }
+        &__container {
+            &__informations {
+                margin-top: 40px;
+                p {
+                    font-size: 13px;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 800px) {
+    .contact {
+        padding: 48px;
+        &--title {
+            font-size: 40px;
+        }
+        &__container {
+            &__informations {
+                p {
+                    font-size: 17px;
+                }
+            }
+        }
+    }
+}
+
+.contact {
+    padding: 48px;
+    &--title {
+        font-weight: 300;
+        color: $primary-color;
+    }
+    &__container {
+        display: flex;
+        flex-wrap: wrap-reverse;
+        &__form {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            input, textarea, button {
+                margin: 8px 0;
+                min-height: 48px;
+            }
+        }
+        &__informations {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            div {
+                flex: 1;
+            }
+            &--title {
+                font-weight: 300;
+                color: $primary-color;
+                text-align: center;
+            }
+            p {
+                span {
+                    display: inline-block;
+                    width: 40px;
+                }
+            }
+        }
+    }
+}

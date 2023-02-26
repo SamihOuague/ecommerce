@@ -9,7 +9,7 @@ function User() {
     const [ URLSearchParams ] = useSearchParams();
     if (!token) return <Navigate to="/auth"/>
     return (
-        <Resources path={`${process.env.REACT_APP_API_URL}:3001/get-user`} render={(data) => {
+        <Resources path={`${process.env.REACT_APP_API_URL}/auth/get-user`} render={(data) => {
             if (data.loading) return <Spinner/>;
             else if (!data.payload || data.payload.success === false) {
                 localStorage.removeItem("token");

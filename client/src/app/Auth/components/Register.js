@@ -28,7 +28,7 @@ function Register() {
                     <Link to={`/auth${(redirectTo) ? `?redirect_url=${redirectTo}` : ''}`}>Se Connecter</Link>
                 </div>
                 <PKCEComponent/>
-                <SubmitComponent path={"http://localhost:3001/register"} dataForm={dataForm} btnValue={"S'Inscrire"} redirectTo={redirectTo || "/"} />
+                <SubmitComponent path={`${process.env.REACT_APP_API_URL}/auth/register`} dataForm={dataForm} btnValue={"S'Inscrire"} redirectTo={redirectTo || "/"} />
             </form>
         </div>
     );

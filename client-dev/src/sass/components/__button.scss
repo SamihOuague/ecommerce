@@ -1,0 +1,77 @@
+@media screen and (max-width: 799px) {
+    .button, .btn-disabled, input {
+        font-size: 11px;
+    }
+}
+@media screen and (min-width: 800px) {
+    .button, .btn-disabled {
+        font-size: 14px;
+    }
+}
+
+.button {
+    background: none;
+    border-radius: none;
+    border: 1px solid $primary-color;
+    color: $primary-color;
+    display: inline;
+    padding: 8px 16px;
+    margin: 16px 0;
+    cursor: pointer;
+    transition-property: color, background-color, font-weight;
+    transition-duration: 500ms;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &:hover {
+        background-color: $primary-color;
+        color: white;
+    }
+}
+
+.btn-disabled {
+    cursor: not-allowed;
+    background: none;
+    border-radius: none;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    color: rgba(0, 0, 0, 0.6);
+    font-weight: 500;
+    display: inline;
+    padding: 8px 16px;
+    text-decoration: none;
+    margin: 16px 0;
+}
+
+.btn-group-sec {
+    .button, .btn-disabled {
+        margin: 8px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+.btn-group {
+    width: 100%;
+    display: flex;
+    .button, .btn-disabled {
+        margin: 8px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+.btn-danger {
+    border: 1px solid red;
+    color: red;
+    transition-property: color, background-color;
+    transition-duration: 500ms;
+    &:hover {
+        background-color: red;
+        color: white;
+    }
+}

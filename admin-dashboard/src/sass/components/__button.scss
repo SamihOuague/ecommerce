@@ -35,9 +35,6 @@
 .btn-group {
     display: flex;
     .button, .btn-disabled {
-        &:nth-child(1) {
-            margin-right: 16px;
-        }
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -50,6 +47,7 @@
     color: red;
     transition-property: color, background-color;
     transition-duration: 500ms;
+    margin-left: 16px;
     &:hover {
         background-color: red;
         color: #eee6cf;

@@ -16,80 +16,31 @@ const sortBySwitch = (sortby) => {
 }
 
 module.exports = {
-    mainPage: async (req, res) => {
+    getProducts: async (req, res) => {
         try {
+            const { categoryTag } = req.params;
+            const { available, pricemin, pricemax, sortby } = req.query;
             let page = 0;
-            let f = {
-                available: req.query.available,
-                priceMin: req.query.pricemin,
-                priceMax: req.query.pricemax,
-                sortby: req.query.sortby
-            };
             let filter = {};
-            if (req.query.page && Number(req.query.page) && Number(req.query.page) > 0) page = (Number(req.query.page) - 1) * 6;
-            if (f.priceMin && Number(f.priceMin)) filter.price = { "$gte": Number(f.priceMin) };
-            if (f.priceMax && Number(f.priceMax)) {
-                if (filter.price) filter.price = { ...filter.price, "$lte": Number(f.priceMax) };
-                else filter.price = { "$lte": Number(f.priceMax) };
-            }
+            if (categoryTag) filter.categoryTag = { $regex: new RegExp(`^${categoryTag}$`, "i") };
             const nb_prod = {
                 in: await ProductModel.find({ ...filter, available: true }).countDocuments(),
                 out: await ProductModel.find({ ...filter, available: false }).countDocuments(),
             };
-            if (f.available == "out") filter.available = false;
-            else if (f.available == "in") filter.available = true;
-            const cat = await CategoriesModel.find({});
-            let prods = sortBySwitch(f.sortby);
-            if (prods) prods = await ProductModel.find(filter).sort(sortBySwitch(f.sortby)).skip(page).limit(6);
-            else prods = await ProductModel.find(filter).skip(page).limit(6);
-            let reviews = await ReviewsModel.find({ product_id: { "$in": prods.map((v) => v._id) } });
-            let rates = {};
-            let highestPrice = await ProductModel.find(filter, { price: 1 }).sort({ price: -1 }).limit(1);
-            for (let i = 0; i < prods.length; i++) {
-                let f = reviews.filter((v) => v.product_id == prods[i]._id).map((v) => v.rate);
-                if (f.length) rates[prods[i]._id] = (f.reduce((a, c) => a + c, 0) / f.length);
-                else rates[prods[i]._id] = 0;
+            if (available == "out") filter.available = false;
+            else if (available == "in") filter.available = true;
+            if (pricemin && Number(pricemin)) filter.price = { "$gte": Number(pricemin) };
+            if (pricemax && Number(pricemax)) {
+                if (filter.price) filter.price = { ...filter.price, "$lte": Number(pricemax) };
+                else filter.price = { "$lte": Number(f.pricemax) };
             }
-            return res.send({ prods, cat, nb_prod, rates, highestPrice: (highestPrice.length > 0) ? highestPrice[0] : { price: 0 } });
-        } catch (e) {
-            console.error(e);
-            return res.sendStatus(500);
-        }
-    },
-    productsByCategory: async (req, res) => {
-        try {
-            let { categoryTag } = req.params;
-            const cat = await CategoriesModel.find({});
-            let page = 0;
-            categoryTag = categoryTag.replaceAll("-", " ").toLowerCase();
-            if (req.query.page && Number(req.query.page) && Number(req.query.page) > 0) page = (Number(req.query.page) - 1) * 6;
-            let f = {
-                available: req.query.available,
-                priceMin: req.query.pricemin,
-                priceMax: req.query.pricemax,
-                sortby: req.query.sortby
-            };
-            const filter = {
-                categoryTag: {
-                    $regex: new RegExp(`^${categoryTag}$`, "i")
-                },
-            };
-            const nb_prod = {
-                in: await ProductModel.find({ ...filter, available: true }).countDocuments(),
-                out: await ProductModel.find({ ...filter, available: false }).countDocuments(),
-            };
-            if (f.available == "out") filter.available = false;
-            else if (f.available == "in") filter.available = true;
-            if (f.priceMin && Number(f.priceMin)) filter.price = { "$gte": Number(f.priceMin) };
-            if (f.priceMax && Number(f.priceMax)) {
-                if (filter.price) filter.price = { ...filter.price, "$lte": Number(f.priceMax) };
-                else filter.price = { "$lte": Number(f.priceMax) };
-            }
-            let prods = sortBySwitch(f.sortby);
-            if (prods) prods = await ProductModel.find(filter).sort(sortBySwitch(f.sortby)).skip(page).limit(6);
+            let prods = sortBySwitch(filter.sortby);
+            if (prods) prods = await ProductModel.find(filter).sort(sortBySwitch(sortby)).skip(page).limit(6);
             else prods = await ProductModel.find(filter).skip(page).limit(6);
+            console.log(prods, filter);
             let reviews = await ReviewsModel.find({ product_id: { "$in": prods.map((v) => v._id) } });
             let highestPrice = await ProductModel.find(filter, { price: 1 }).sort({ price: -1 }).limit(1);
+            let cat = await CategoriesModel.find({});
             let rates = {};
             for (let i = 0; i < prods.length; i++) {
                 let f = reviews.filter((v) => v.product_id == prods[i]._id).map((v) => v.rate);
@@ -97,9 +48,9 @@ module.exports = {
                 else rates[prods[i]._id] = 0;
             }
             return res.send({ prods, cat, rates, nb_prod, highestPrice: (highestPrice.length > 0) ? highestPrice[0] : { price: 0 } });
-        } catch (e) {
-            console.error(e);
-            return res.sendStatus(500);
+        } catch(e) {
+            console.log(e);
+            return res.status(500).send({message: "Server Error."})
         }
     },
     getProduct: async (req, res) => {
@@ -153,9 +104,10 @@ module.exports = {
     deleteProduct: async (req, res) => {
         try {
             const { name } = req.body;
-            if (!name) return res.sendStatus(400);
+            if (!name) return res.status(400).send({success: false});
             let prod = await ProductModel.findOneAndDelete({ title: name });
-            return res.status(200).send(prod);
+            if (!prod) return res.status(404).send({success: false});
+            return res.status(200).send({success: true});
         } catch (e) {
             console.error(e);
             return res.sendStatus(500);

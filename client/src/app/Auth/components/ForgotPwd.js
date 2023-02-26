@@ -18,7 +18,7 @@ function ForgotPwd() {
                     <Link to="/auth">Se connecter</Link>
                 </div>
                 <PKCEComponent/>
-                <SubmitComponent dataForm={dataForm} path={"http://localhost:3001/forgot-password"} btnValue={"Envoyer"}/>
+                <SubmitComponent dataForm={dataForm} path={`${process.env.REACT_APP_API_URL}/auth/forgot-password`} btnValue={"Envoyer"}/>
             </form>
         </div>
     )

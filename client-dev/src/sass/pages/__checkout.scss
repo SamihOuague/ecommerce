@@ -1,0 +1,40 @@
+.checkout {
+    &__container {
+        display: flex;
+        &__check, &__cart {
+            flex: 1;
+            height: 100vh;
+        }
+        &__check {
+            background-color: #1a3b2a;
+            display: flex;
+            justify-content: center;
+            color: bisque;
+            padding: 48px;
+            &__form {
+                flex: 1;
+                &__contact-info, &__shipping-info {
+                    display: flex;
+                    flex-direction: column;
+                    input, select {
+                        margin: 8px 0;
+                        height: 24px;
+                    }
+                    &__group {
+                        display: flex;
+                        justify-content: space-between;
+                        input {
+                            flex: 1;
+                            &:nth-child(1) {
+                                margin-right: 8px;
+                            }
+                            &:nth-child(2) {
+                                margin-left: 8px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { 
-    mainPage,
+    getProducts,
     getProduct,
     addCategory, 
     addSubCategory, 
@@ -9,13 +9,12 @@ const {
     deleteSubCat, 
     deleteCategory,
     deleteProduct,
-    productsByCategory,
 } = require("./Controller");
 const { isAdmin, verifyPKCE } = require("../utils/middleware");
 
-router.get('/', mainPage);
+router.get('/', getProducts);
 router.get('/categories', listCategories);
-router.get('/category/:categoryTag', productsByCategory);
+router.get('/category/:categoryTag', getProducts);
 router.get('/:category/:product', getProduct);
 router.post('/', isAdmin, verifyPKCE, addProduct);
 router.post('/category', isAdmin, verifyPKCE, addCategory);

@@ -1,0 +1,21 @@
+.admin {
+    padding: 48px;
+    border: 2px solid black;
+    &__container {
+        display: flex;
+        justify-content: center;
+        &__categories {
+            flex: 1;
+            max-width: 500px;
+            border-top: 2px solid black;
+            &__category {
+                border-bottom: 2px solid black;
+                border-right: 2px solid black;
+                border-left: 2px solid black;
+                padding: 16px;
+                display: flex;
+                justify-content: space-between;
+            }
+        }
+    }
+}

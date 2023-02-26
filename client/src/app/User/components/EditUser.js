@@ -61,7 +61,7 @@ function EditUser({ infosUser }) {
                     </div>
                     <PKCEComponent />
                     <div className="user__container__infos__btngroup">
-                        <SubmitComponent path={"http://localhost:3001/update-user"} method={"PUT"} dataForm={dataForm} btnValue={"Editer"} redirectTo={"/user"} />
+                        <SubmitComponent path={`${process.env.REACT_APP_API_URL}/auth/update-user`} method={"PUT"} dataForm={dataForm} btnValue={"Editer"} redirectTo={"/user"} />
                         <Link to="/user" className="button btn-danger">Annuler</Link>
                     </div>
                 </form>

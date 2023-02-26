@@ -1,5 +1,5 @@
 const Model = require("./Model");
-const { jwtVerify, jwtPwdReset, jwtEmailConfirm, jwtCustomTokenVerify } = require("../utils/jwt");
+const { jwtPwdReset, jwtEmailConfirm, jwtCustomTokenVerify } = require("../utils/jwt");
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
 
@@ -64,11 +64,11 @@ module.exports = {
 				from: process.env.SMTP_USER,
 				to: user.email,
 				subject: "Reset Your Password",
-				text: `Copy this link : https://${process.env.DOMAIN_NAME}/reset-password?url_token=${url_token}`,
-				html: `<a href=\"https://${process.env.DOMAIN_NAME}/reset-password?url_token=${url_token}\">
+				text: `Copy this link : ${process.env.DOMAIN_NAME}/reset-password?url_token=${url_token}`,
+				html: `<a href=\"${process.env.DOMAIN_NAME}/reset-password?url_token=${url_token}\">
 							Click Here to reset password
 						</a>
-						<p>Or copy this link : https://${process.env.DOMAIN_NAME}/reset-password?url_token=${url_token}</p>`,
+						<p>Or copy this link : ${process.env.DOMAIN_NAME}/reset-password?url_token=${url_token}</p>`,
 			});
 			return res.send({msg});
 		} catch(e) {
@@ -101,11 +101,11 @@ module.exports = {
 				from: process.env.SMTP_USER,
 				to: user.email,
 				subject: "Email Confirmation",
-				text: `Copy this link : https://${process.env.DOMAIN_NAME}/verify-email?url_token=${url_token}`,
-				html: `<a href=\"https://${process.env.DOMAIN_NAME}/verify-email?url_token=${url_token}\">
+				text: `Copy this link : ${process.env.DOMAIN_NAME}/verify-email?url_token=${url_token}`,
+				html: `<a href=\"${process.env.DOMAIN_NAME}/verify-email?url_token=${url_token}\">
 							Click Here to confirm
 						</a>
-						<p>Or copy this link : https://${process.env.DOMAIN_NAME}/verify-email?url_token=${url_token}</p>`,
+						<p>Or copy this link : ${process.env.DOMAIN_NAME}/verify-email?url_token=${url_token}</p>`,
 			});
 			return res.send({message: "Confirmation email sended, don't forget to check your spam !", success: true});
 		} catch(e) {

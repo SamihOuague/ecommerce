@@ -1338,7 +1338,7 @@
   }
 }
 @media screen and (min-width: 800px) {
-  .button {
+  .button, .btn-disabled {
     font-size: 14px;
   }
 }
@@ -1374,6 +1374,14 @@
   padding: 8px 16px;
   text-decoration: none;
   margin: 16px 0;
+}
+
+.btn-group-sec .button, .btn-group-sec .btn-disabled {
+  margin: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .btn-group {

@@ -17,7 +17,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "REACT_APP_LOCAL_URL=http://localhost REACT_APP_API_URL=http://localhost react-scripts start",
+    "start": "REACT_APP_API_URL=https://6m7eht1ck9.execute-api.eu-west-3.amazonaws.com react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

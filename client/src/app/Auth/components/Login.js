@@ -30,7 +30,7 @@ function Login() {
                     <Link to="/auth/forgot-password">Mot de passe oublie ?</Link>
                 </div>
                 <PKCEComponent />
-                <SubmitComponent dataForm={dataForm} btnValue={"Se Connecter"} path={"http://localhost:3001/login"} redirectTo={redirectTo || "/"}/>
+                <SubmitComponent dataForm={dataForm} btnValue={"Se Connecter"} path={`${process.env.REACT_APP_API_URL}/auth/login`} redirectTo={redirectTo || "/"}/>
             </form>
         </div>
     );
