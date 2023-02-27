@@ -1461,4 +1461,73 @@
   font-size: small;
 }
 
+.cookie {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 32px;
+  background-color: rgba(44, 47, 51, 0.7490196078);
+  min-width: 100%;
+  position: fixed;
+  bottom: 0;
+  box-sizing: border-box;
+  color: #D9D9D9;
+}
+.cookie--text {
+  text-align: justify;
+  font-size: 13px;
+}
+.cookie--text a {
+  margin: 0px 16px;
+}
+.cookie__btngroup {
+  display: flex;
+  padding: 0 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.cookie__btngroup--btn {
+  background: none;
+  border: 1px solid white;
+  padding: 8px 0px;
+  width: 120px;
+  color: white;
+  cursor: pointer;
+  transition-property: border, background, color;
+  transition-duration: 500ms;
+  margin: 8px;
+  font-size: 11px;
+}
+.cookie__btngroup--btn:hover {
+  color: #2C2F33;
+  background: white;
+  border: 1px solid #2C2F33;
+}
+
+.disabled {
+  display: none;
+}
+
+@media screen and (max-width: 799px) {
+  .alert__text {
+    font-size: 11px;
+    text-align: justify;
+    margin-right: 32px;
+  }
+}
+.alert {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  background-color: #fff3cd;
+  color: #856404;
+}
+.alert__text--warning {
+  margin-right: 16px;
+}
+.alert--exit {
+  cursor: pointer;
+}
+
 /*# sourceMappingURL=App.css.map */

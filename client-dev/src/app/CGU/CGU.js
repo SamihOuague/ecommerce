@@ -23,14 +23,14 @@ function CGU() {
 
             <p>Pour les personnes morales :</p>
 
-            <p>Le site www.smokr-stuff.fr est édité par la microentreprise "EZ Commerce", dont le siège social est situé au 2 Rue de Rome, 91300 Massy.</p>
+            <p>Le site www.smokr-stuff.fr est édité par la microentreprise "EZ Commerce", dont le siège social est situé au Rue de Rome, 91300 Massy.</p>
 
             <p>La société est représentée par L'Editeur.</p>
 
 
             <p>Pour les personnes physiques : </p>
 
-            <p>Le site www.smokr-stuff.fr est édité par "EZ Commerce", domicilié au 2 Rue de Rome, 91300 Massy.</p>
+            <p>Le site www.smokr-stuff.fr est édité par "EZ Commerce", domicilié au Rue de Rome, 91300 Massy.</p>
 
 
 
@@ -111,22 +111,20 @@ function CGU() {
 
             <p>www.smokr-stuff.fr garantie le respect de la vie privée de l'utilisateur, conformément à la loi n°78 - 17 du 6 janvier 1978 relative à l'informatique, aux fichiers et aux libertés.</p>
 
-            <p>Le site est déclaré auprès de la CNIL sous le numéro suivant: [numéro].</p>
-
             <p>En vertu des articles 39 et 40 de la loi en date du 6 janvier 1978, l'Utilisateur dispose d'un droit d'accès, de rectification, de suppression et d'opposition de ses données personnelles.L'Utilisateur exerce ce droit via :</p>
             <ul>
                 <li>Son espace personnel sur le site</li>
                 <li>Un formulaire de contact</li>
                 <li>Par mail à contact@smokr-stuff.fr</li>
-                <li>Par voie postale au 2 Rue de Rome, 91300 Massy.</li>
+                <li>Par voie postale au Rue de Rome, 91300 Massy.</li>
             </ul>
 
 
             <h2>ARTICLE 8 : Liens hypertextes</h2>
 
-            <p>Les domaines vers lesquels mènent les liens hypertextes présents sur le site n’engagent pas la responsabilité de l’Éditeur de[votre site], qui n’a pas de contrôle sur ces liens.</p>
+            <p>Les domaines vers lesquels mènent les liens hypertextes présents sur le site n’engagent pas la responsabilité de l’Éditeur de smokr-stuff.fr, qui n’a pas de contrôle sur ces liens.</p>
 
-            <p>Il est possible pour un tiers de créer un lien vers une page du site[votre site] sans autorisation expresse de l’éditeur.</p>
+            <p>Il est possible pour un tiers de créer un lien vers une page du site smokr-stuff.fr sans autorisation expresse de l’éditeur.</p>
 
 
             <h2>ARTICLE 9 : Évolution des conditions générales d'utilisation</h2>

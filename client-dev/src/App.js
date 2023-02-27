@@ -9,6 +9,7 @@ import Auth from "./app/Auth/Auth";
 import User from "./app/User/User";
 import Order from "./app/Order/Order";
 import EmailConfirm from "./app/Auth/components/EmailConfirm";
+import CookieComponent from "./app/Cookie/CookieComponent";
 import './App.css';
 
 function App() {
@@ -40,6 +41,17 @@ function App() {
 
     return (
         <div className="main">
+            <div className="alert">
+                <p className="alert__text">
+                    <span className="alert__text--warning">
+                        <i className="fa-solid fa-triangle-exclamation"></i>
+                    </span> 
+                    Ce site internet est en phase demonstrative, aucunes commandes ni payments ne seront pris en compte !
+                </p>
+                <span className="alert--exit">
+                    <i className="fas fa-times"></i>
+                </span>
+            </div>
             <div className="header">
                 <nav className="header__nav">
                     <Link to="/" className="header__nav__logo">
@@ -83,6 +95,7 @@ function App() {
                     </ul>
                 </div>
             </footer>
+            <CookieComponent />
         </div>
     );
 }

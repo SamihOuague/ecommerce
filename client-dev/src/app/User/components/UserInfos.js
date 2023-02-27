@@ -6,12 +6,14 @@ import { Resources, Spinner } from "../../Resources/Resources";
 function UserInfos({ infos }) {
     const [showDelete, setShowDelete] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
+    const [redirect, setRedirect] = useState(false);
 
     const logOut = () => {
+        setRedirect(true);
         localStorage.removeItem("token");
     };
 
-    if (!infos || !infos._id) return (<Navigate to={"/auth"} />);
+    if (!infos || !infos._id || redirect) return (<Navigate to={"/auth"} />);
     return (
         <div className="user">
             <div className="user__container">

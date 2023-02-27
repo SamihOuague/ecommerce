@@ -1,0 +1,23 @@
+@media screen and (max-width: 799px) {
+    .alert__text {
+        font-size: 11px;
+        text-align: justify;
+        margin-right: 32px;
+    }
+}
+.alert {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    background-color: #fff3cd;
+    color: #856404;
+    &__text {
+        &--warning {
+            margin-right: 16px;
+        }
+    }
+    &--exit {
+        cursor: pointer;
+    }
+}

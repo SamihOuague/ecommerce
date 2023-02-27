@@ -26,7 +26,7 @@ const CheckoutForm = ({ infos }) => {
                 const result = await stripe.confirmPayment({
                     elements,
                     confirmParams: {
-                        return_url: `https://localhost:3000/order/success/${r._id}`,
+                        return_url: `https://ec2-15-188-136-188.eu-west-3.compute.amazonaws.com/order/success/${r._id}`,
                     }
                 });
                 if (result.error) { 
