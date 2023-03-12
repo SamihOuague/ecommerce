@@ -95,19 +95,19 @@ const Pagination = ({ page, nbProd, name, category }) => {
     return (
         <div className="shop__overview__pagination">
             {(Number(page) <= 1) ?
-                <div className="disabled">
+                <div className="shop__overview__pagination--disabled">
                     <i className="fas fa-chevron-left"></i>
                 </div> :
-                <Link to={`${(name && category) ? `/category/${category}/${name}` : ''}/?page=${Number(page) - 1}`} className="button">
+                <Link to={`${(name && category) ? `/category/${category}/${name}` : ''}/?page=${Number(page) - 1}`} className="shop__overview__pagination--button">
                     <i className="fas fa-chevron-left"></i>
                 </Link>
             }
-            <div className="button">{page}</div>
+            <div className="shop__overview__pagination--button">{page}</div>
             {(nbProd !== 6) ?
-                <div className="disabled">
+                <div className="shop__overview__pagination--disabled">
                     <i className="fas fa-chevron-right"></i>
                 </div> :
-                <Link to={`${(name && category) ? `/category/${category}/${name}` : ''}/?page=${Number(page) + 1}`} className="button">
+                <Link to={`${(name && category) ? `/category/${category}/${name}` : ''}/?page=${Number(page) + 1}`} className="shop__overview__pagination--button">
                     <i className="fas fa-chevron-right"></i>
                 </Link>
             }

@@ -6,7 +6,7 @@ import { Navigate } from "react-router-dom";
 export const PKCEComponent = () => {
     const nonce = String(Math.floor(Math.random() * (Math.pow(10, 10))));
     return (
-        <Resources path={`${process.env.REACT_APP_API_URL}/auth/get-pkce?nonce=${sha256(nonce)}`} render={(data) => {
+        <Resources path={`${process.env.REACT_APP_API_URL}${process.env.REACT_APP_AUTH}/get-pkce?nonce=${sha256(nonce)}`} render={(data) => {
             if (data.loading) return <Spinner />
             else if (!data.payload || !data.payload.token) {
                 return <p>Error PKCE</p>;

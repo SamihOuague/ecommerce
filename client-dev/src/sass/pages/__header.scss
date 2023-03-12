@@ -49,6 +49,9 @@
         display: flex;
         background-color: $primary-color;
         color: $light-color;
+        &--title {
+            color: $secondary-lighter-color;
+        }
         &__logo {
             display: flex;
             align-items: center;

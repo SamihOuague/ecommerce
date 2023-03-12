@@ -325,7 +325,7 @@
                 margin: 0 4px;
             }
 
-            .disabled {
+            &--disabled {
                 border: 1px solid grey;
                 color: grey;
                 cursor: not-allowed;
@@ -334,6 +334,25 @@
                 display: inline;
                 padding: 8px 16px;
                 margin: 0 4px;
+            }
+
+            &--button {
+                border: 1px solid $primary-color;
+                color: $primary-color;
+                cursor: pointer;
+                font-size: 16px;
+                font-weight: 400;
+                display: inline;
+                padding: 8px 16px;
+                margin: 0 4px;
+                transition-property: background, border, color;
+                transition-duration: 500ms;
+            }
+
+            &--button:hover {
+                border: 1px solid $light-color;
+                color: $light-color;
+                background: $primary-color;
             }
         }
 

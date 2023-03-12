@@ -26,7 +26,7 @@ function Register() {
                     <Link to="/auth">Se Connecter</Link>
                 </div>
                 <PKCEComponent/>
-                <SubmitComponent path={`${process.env.REACT_APP_API_URL}/auth/register`} dataForm={dataForm} btnValue={"S'Inscrire"} />
+                <SubmitComponent path={`${process.env.REACT_APP_API_URL}${process.env.REACT_APP_AUTH}/register`} dataForm={dataForm} btnValue={"S'Inscrire"} />
             </form>
         </div>
     );

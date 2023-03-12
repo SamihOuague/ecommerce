@@ -23,7 +23,7 @@ const DeletePop = ({ setPopup, popup }) => {
                 <PKCEComponent />
                 <SubmitComponent
                     btnValue={"Supprimer"}
-                    path={`${process.env.REACT_APP_API_URL}/product/category`}
+                    path={`${process.env.REACT_APP_API_URL}${process.env.REACT_APP_PRODUCT}/category`}
                     method="DELETE"
                     dataForm={dataForm}
                     redirectTo={"/redirect?url=/"}
@@ -56,7 +56,7 @@ export const DeleteSubPop = ({ setPopup, popup }) => {
                 <PKCEComponent />
                 <SubmitComponent
                     btnValue={"Supprimer"}
-                    path={`${process.env.REACT_APP_API_URL}/product/category/${popup.category.replaceAll(" ", "-")}`}
+                    path={`${process.env.REACT_APP_API_URL}${process.env.REACT_APP_PRODUCT}/category/${popup.category.replaceAll(" ", "-")}`}
                     method="DELETE"
                     dataForm={dataForm}
                     redirectTo={"/redirect?url=/"}
@@ -89,7 +89,7 @@ export const SubCategoryForm = ({ category }) => {
                 <input type="text" placeholder="Category name" name="name" required />
                 <PKCEComponent/>
                 <div className="btn-group">
-                    <SubmitComponent path={`${process.env.REACT_APP_API_URL}/product/category/${category.category.replaceAll(" ", "-")}`} btnValue={"Add"} dataForm={formData} redirectTo={"/redirect?url=/"}/>
+                    <SubmitComponent path={`${process.env.REACT_APP_API_URL}${process.env.REACT_APP_PRODUCT}/category/${category.category.replaceAll(" ", "-")}`} btnValue={"Add"} dataForm={formData} redirectTo={"/redirect?url=/"}/>
                     <button className="button btn-danger" onClick={() => setShowForm(false)}>Cancel</button>
                 </div>
             </form>
@@ -127,7 +127,7 @@ export const CategoryForm = () => {
                 <input type="text" placeholder="Category name" name="name" required />
                 <PKCEComponent/>
                 <div className="btn-group">
-                    <SubmitComponent path={`${process.env.REACT_APP_API_URL}/product/category`} btnValue={"Add"} dataForm={formData} redirectTo={"/redirect?url=/"}/>
+                    <SubmitComponent path={`${process.env.REACT_APP_API_URL}${process.env.REACT_APP_PRODUCT}/category`} btnValue={"Add"} dataForm={formData} redirectTo={"/redirect?url=/"}/>
                     <button className="button btn-danger" onClick={() => setShowForm(false)}>Cancel</button>
                 </div>
             </form>

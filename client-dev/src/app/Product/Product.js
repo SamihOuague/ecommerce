@@ -21,7 +21,7 @@ function Product({ addToCart }) {
                 <div className="product">
                     <ProductContainer prod={prod} addToCart={addToCart}/>
                     <ProductInfos prod={prod} />
-                    <ProductRecommended recommended={recommended} rates={rates}/>
+                    <ProductRecommended recommended={recommended} rates={rates} addToCart={addToCart}/>
                 </div>
             );
         }} />

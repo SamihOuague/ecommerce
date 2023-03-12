@@ -56,7 +56,7 @@ export const ProductContainer = ({ prod, addToCart }) => {
     );
 }
 
-export const ProductRecommended = ({ recommended, rates }) => {
+export const ProductRecommended = ({ recommended, rates, addToCart }) => {
     return (
         <div className="product__recommended">
             <h3 className="product__recommended--title">Produits Recommandes</h3>
@@ -77,7 +77,7 @@ export const ProductRecommended = ({ recommended, rates }) => {
                                     <p>{value.price}$</p>
                                 </div>
                             </Link>
-                            <div className="button">Add to cart</div>
+                            <div className="button" onClick={() => addToCart(value)}>Add to cart</div>
                         </div>
                     </div>
                 ))}

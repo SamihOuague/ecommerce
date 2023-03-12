@@ -7,7 +7,7 @@ function CookieComponent() {
     return (
         <div className={`cookie ${(acceptCookie) ? 'disabled' : ''}`}>
             <p className="cookie--text">
-                Le site smokr-stuff.fr utilise des cookies essentiels ou facultatifs pour ameliorer nos services et votre experience utilisateur.
+                Le site ez-commerce.fr utilise des cookies essentiels ou facultatifs pour ameliorer nos services et votre experience utilisateur.
                 <Link to="/CGU">En savoir plus</Link>
             </p>
 

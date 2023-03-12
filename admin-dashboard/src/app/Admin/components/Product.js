@@ -24,7 +24,7 @@ const DeletePop = ({ setPopup, popup }) => {
                 <PKCEComponent />
                 <SubmitComponent
                     btnValue={"Supprimer"}
-                    path={`${process.env.REACT_APP_API_URL}/product/`}
+                    path={`${process.env.REACT_APP_API_URL}${process.env.REACT_APP_PRODUCT}/`}
                     method="DELETE"
                     dataForm={dataForm}
                     redirectTo={"/redirect?url=/"}
@@ -39,7 +39,7 @@ const ProductComponent = ({ product, setPopup, setProductEdit }) => {
     return (
         <div className="shop__overview__container__card">
             <div className="shop__overview__container__card__info">
-                <img className="shop__overview__container__card__info--pic" src={`${process.env.REACT_APP_API_URL}/image/images/${product.img}`} alt="Product pic" />
+                <img className="shop__overview__container__card__info--pic" src={`${process.env.REACT_APP_API_URL}${process.env.REACT_APP_IMG}/images/${product.img}`} alt="Product pic" />
                 <div className="container_sec">
                     <p className="shop__overview__container__card__info--tag">{product.categoryTag}</p>
                     <h3 className="shop__overview__container__card__info--title">{product.title}</h3>

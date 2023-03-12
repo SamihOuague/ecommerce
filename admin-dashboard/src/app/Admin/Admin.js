@@ -5,7 +5,7 @@ import { Resources, Spinner } from "../Resources/Resources";
 
 function Admin() {
     return (
-            <Resources path={`${process.env.REACT_APP_API_URL}/product/`} render={(data) => {
+            <Resources path={`${process.env.REACT_APP_API_URL}${process.env.REACT_APP_PRODUCT}/`} render={(data) => {
                 if (data.loading) return <Spinner />;
                 else if (!data.payload || data.errCode) {
                     return (

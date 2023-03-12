@@ -3,12 +3,12 @@ import React from "react";
 function CGU() {
     return (
         <div className="CGU">
-            <h1>Conditions générales d'utilisation du site www.smokr-stuff.fr</h1>
+            <h1>Conditions générales d'utilisation du site www.ez-commerce.fr</h1>
 
 
             <h2>ARTICLE 1 : Objet</h2>
 
-            <p>Les présentes « conditions générales d'utilisation » ont pour objet l'encadrement juridique de l'utilisation du site www.smokr-stuff.fr et de ses services.</p>
+            <p>Les présentes « conditions générales d'utilisation » ont pour objet l'encadrement juridique de l'utilisation du site www.ez-commerce.fr et de ses services.</p>
 
             <p>Ce contrat est conclu entre :</p>
 
@@ -23,20 +23,20 @@ function CGU() {
 
             <p>Pour les personnes morales :</p>
 
-            <p>Le site www.smokr-stuff.fr est édité par la microentreprise "EZ Commerce", dont le siège social est situé au Rue de Rome, 91300 Massy.</p>
+            <p>Le site www.ez-commerce.fr est édité par la microentreprise "EZ Commerce", dont le siège social est situé au Rue de Rome, 91300 Massy.</p>
 
             <p>La société est représentée par L'Editeur.</p>
 
 
             <p>Pour les personnes physiques : </p>
 
-            <p>Le site www.smokr-stuff.fr est édité par "EZ Commerce", domicilié au Rue de Rome, 91300 Massy.</p>
+            <p>Le site www.ez-commerce.fr est édité par "EZ Commerce", domicilié au Rue de Rome, 91300 Massy.</p>
 
 
 
             <h2>ARTICLE 3 : accès aux services</h2>
 
-            <p>L'Utilisateur du site www.smokr-stuff.fr a accès aux services suivants:</p>
+            <p>L'Utilisateur du site www.ez-commerce.fr a accès aux services suivants:</p>
                 <ul>
                     <li>Liste des produits disponible en boutique.</li>
                     <li>Ajouter des produits dans un panier.</li>
@@ -63,7 +63,7 @@ function CGU() {
 
             <p>Le mot de passe de l'Utilisateur doit rester secret.En cas de divulgation de mot de passe, l'Éditeur décline toute responsabilité.</p>
 
-            <p>L'Utilisateur assume l'entière responsabilité de l'utilisation qu'il fait des informations et contenus présents sur le site www.smokr-stuff.fr.</p>
+            <p>L'Utilisateur assume l'entière responsabilité de l'utilisation qu'il fait des informations et contenus présents sur le site www.ez-commerce.fr.</p>
 
             <p>Tout usage du service par l'Utilisateur ayant directement ou indirectement pour conséquence des dommages doit faire l'objet d'une indemnisation au profit du site.</p>
 
@@ -86,13 +86,13 @@ function CGU() {
 
             <p>De même, la responsabilité du site ne peut être engagée en cas de force majeure ou du fait imprévisible et insurmontable d'un tiers.</p>
 
-            <p>Le site www.smokr-stuff.fr s'engage à mettre en œuvre tous les moyens nécessaires pour garantir la sécurité et la confidentialité des données. Toutefois, il n'apporte pas une garantie de sécurité totale.</p>
+            <p>Le site www.ez-commerce.fr s'engage à mettre en œuvre tous les moyens nécessaires pour garantir la sécurité et la confidentialité des données. Toutefois, il n'apporte pas une garantie de sécurité totale.</p>
 
             <p>L'Éditeur se réserve la faculté d'une non - garantie de la fiabilité des sources, bien que les informations diffusées su le site soient réputées fiables.</p>
 
             <h2>ARTICLE 6 : Propriété intellectuelle</h2>
 
-            <p>Certains contenus du site www.smokr-stuff.fr (logos, textes, éléments graphiques, vidéos, etc.) sont protégés par le droit d'auteur, en vertu du Code de la propriété intellectuelle.</p>
+            <p>Certains contenus du site www.ez-commerce.fr (logos, textes, éléments graphiques, vidéos, etc.) sont protégés par le droit d'auteur, en vertu du Code de la propriété intellectuelle.</p>
 
             <p>L'Utilisateur devra obtenir l'autorisation de l'éditeur du site avant toute reproduction, copie ou publication de ces différents contenus.</p>
 
@@ -107,29 +107,29 @@ function CGU() {
 
             <p>L'Utilisateur doit obligatoirement fournir des informations personnelles pour procéder à son inscription sur le site.</p>
 
-            <p>L'adresse électronique(e - mail) de l'utilisateur pourra notamment être utilisée par le site www.smokr-stuff.fr pour la communication d'informations diverses et la gestion du compte.</p>
+            <p>L'adresse électronique(e - mail) de l'utilisateur pourra notamment être utilisée par le site www.ez-commerce.fr pour la communication d'informations diverses et la gestion du compte.</p>
 
-            <p>www.smokr-stuff.fr garantie le respect de la vie privée de l'utilisateur, conformément à la loi n°78 - 17 du 6 janvier 1978 relative à l'informatique, aux fichiers et aux libertés.</p>
+            <p>www.ez-commerce.fr garantie le respect de la vie privée de l'utilisateur, conformément à la loi n°78 - 17 du 6 janvier 1978 relative à l'informatique, aux fichiers et aux libertés.</p>
 
             <p>En vertu des articles 39 et 40 de la loi en date du 6 janvier 1978, l'Utilisateur dispose d'un droit d'accès, de rectification, de suppression et d'opposition de ses données personnelles.L'Utilisateur exerce ce droit via :</p>
             <ul>
                 <li>Son espace personnel sur le site</li>
                 <li>Un formulaire de contact</li>
-                <li>Par mail à contact@smokr-stuff.fr</li>
+                <li>Par mail à contact@ez-commerce.fr</li>
                 <li>Par voie postale au Rue de Rome, 91300 Massy.</li>
             </ul>
 
 
             <h2>ARTICLE 8 : Liens hypertextes</h2>
 
-            <p>Les domaines vers lesquels mènent les liens hypertextes présents sur le site n’engagent pas la responsabilité de l’Éditeur de smokr-stuff.fr, qui n’a pas de contrôle sur ces liens.</p>
+            <p>Les domaines vers lesquels mènent les liens hypertextes présents sur le site n’engagent pas la responsabilité de l’Éditeur de ez-commerce.fr, qui n’a pas de contrôle sur ces liens.</p>
 
-            <p>Il est possible pour un tiers de créer un lien vers une page du site smokr-stuff.fr sans autorisation expresse de l’éditeur.</p>
+            <p>Il est possible pour un tiers de créer un lien vers une page du site ez-commerce.fr sans autorisation expresse de l’éditeur.</p>
 
 
             <h2>ARTICLE 9 : Évolution des conditions générales d'utilisation</h2>
 
-            <p>Le site www.smokr-stuff.fr se réserve le droit de modifier les clauses de ces conditions générales d’utilisation à tout moment et sans justification.</p>
+            <p>Le site www.ez-commerce.fr se réserve le droit de modifier les clauses de ces conditions générales d’utilisation à tout moment et sans justification.</p>
 
 
             <h2>ARTICLE 10 : Durée du contrat</h2>

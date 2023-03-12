@@ -12,7 +12,7 @@ function Contact() {
                 <div className="contact__container__informations">
                     <div>
                         <p><span><i className="fa-solid fa-phone"></i></span> 01 02 03 04 05</p>
-                        <p><span><i className="fa-solid fa-at"></i></span> contact@smokr-stuff.com</p>
+                        <p><span><i className="fa-solid fa-at"></i></span> contact@ez-commerce.com</p>
                         <p><span><i className="fa-solid fa-location-dot"></i></span>2 Rue de Rome, 91300, Massy</p>
                         <p><span><i className="fa-solid fa-calendar-week"></i></span> Lun/Ven - 9h/20h </p>
                     </div>
