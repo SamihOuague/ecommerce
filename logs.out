@@ -1,0 +1,580 @@
+Attaching to app_client_1, app_product_1, app_oauthserver_1, app_db_1, app_order_1, app_auth_1, app_imgs_1, app_reviews_1
+auth_1         | 
+auth_1         | > start
+auth_1         | > env-cmd -f ./config/dev.env node index.js
+auth_1         | 
+auth_1         | npm ERR! path /app
+auth_1         | npm ERR! command failed
+auth_1         | npm ERR! signal SIGTERM
+auth_1         | npm ERR! command sh -c env-cmd -f ./config/dev.env node index.js
+auth_1         | 
+auth_1         | npm ERR! A complete log of this run can be found in:
+auth_1         | npm ERR!     /root/.npm/_logs/2023-03-12T06_29_32_337Z-debug-0.log
+auth_1         | 
+auth_1         | > start
+auth_1         | > env-cmd -f ./config/dev.env node index.js
+auth_1         | 
+auth_1         | npm ERR! path /app
+auth_1         | npm ERR! command failed
+auth_1         | npm ERR! signal SIGTERM
+auth_1         | npm ERR! command sh -c env-cmd -f ./config/dev.env node index.js
+auth_1         | 
+auth_1         | npm ERR! A complete log of this run can be found in:
+auth_1         | npm ERR!     /root/.npm/_logs/2023-03-12T07_18_46_539Z-debug-0.log
+auth_1         | 
+auth_1         | > start
+auth_1         | > env-cmd -f ./config/dev.env node index.js
+auth_1         | 
+auth_1         | npm ERR! path /app
+auth_1         | npm ERR! command failed
+auth_1         | npm ERR! signal SIGTERM
+auth_1         | npm ERR! command sh -c env-cmd -f ./config/dev.env node index.js
+auth_1         | 
+auth_1         | npm ERR! A complete log of this run can be found in:
+auth_1         | npm ERR!     /root/.npm/_logs/2023-03-15T00_14_09_117Z-debug-0.log
+auth_1         | 
+auth_1         | > start
+auth_1         | > env-cmd -f ./config/dev.env node index.js
+auth_1         | 
+auth_1         | Error: Invalid login: 535-5.7.8 Username and Password not accepted. Learn more at
+auth_1         | 535 5.7.8  https://support.google.com/mail/?p=BadCredentials p5-20020a5d4e05000000b002d75909c76esm844989wrt.73 - gsmtp
+auth_1         |     at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:790:19)
+auth_1         |     at SMTPConnection._actionAUTHComplete (/app/node_modules/nodemailer/lib/smtp-connection/index.js:1548:34)
+auth_1         |     at SMTPConnection.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:546:26)
+auth_1         |     at SMTPConnection._processResponse (/app/node_modules/nodemailer/lib/smtp-connection/index.js:953:20)
+auth_1         |     at SMTPConnection._onData (/app/node_modules/nodemailer/lib/smtp-connection/index.js:755:14)
+auth_1         |     at SMTPConnection._onSocketData (/app/node_modules/nodemailer/lib/smtp-connection/index.js:193:44)
+auth_1         |     at TLSSocket.emit (node:events:513:28)
+auth_1         |     at addChunk (node:internal/streams/readable:324:12)
+auth_1         |     at readableAddChunk (node:internal/streams/readable:297:9)
+auth_1         |     at Readable.push (node:internal/streams/readable:234:10)
+auth_1         |     at TLSWrap.onStreamRead (node:internal/stream_base_commons:190:23) {
+auth_1         |   code: 'EAUTH',
+auth_1         |   response: '535-5.7.8 Username and Password not accepted. Learn more at\n' +
+auth_1         |     '535 5.7.8  https://support.google.com/mail/?p=BadCredentials p5-20020a5d4e05000000b002d75909c76esm844989wrt.73 - gsmtp',
+auth_1         |   responseCode: 535,
+auth_1         |   command: 'AUTH PLAIN'
+auth_1         | }
+client_1       | URIError: Failed to decode param '/cgi-bin/.%%%%32%%65/.%%%%32%%65/.%%%%32%%65/.%%%%32%%65/.%%%%32%%65/bin/sh'
+client_1       |     at decodeURIComponent (<anonymous>)
+client_1       |     at decode_param (/app/node_modules/express/lib/router/layer.js:172:12)
+client_1       |     at Layer.match (/app/node_modules/express/lib/router/layer.js:123:27)
+client_1       |     at matchLayer (/app/node_modules/express/lib/router/index.js:585:18)
+client_1       |     at next (/app/node_modules/express/lib/router/index.js:226:15)
+client_1       |     at serveStatic (/app/node_modules/serve-static/index.js:75:16)
+client_1       |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+client_1       |     at trim_prefix (/app/node_modules/express/lib/router/index.js:328:13)
+client_1       |     at /app/node_modules/express/lib/router/index.js:286:9
+client_1       |     at Function.process_params (/app/node_modules/express/lib/router/index.js:346:12)
+client_1       | URIError: Failed to decode param '/cgi-bin/.%%%%32%%65/.%%%%32%%65/.%%%%32%%65/.%%%%32%%65/.%%%%32%%65/bin/sh'
+client_1       |     at decodeURIComponent (<anonymous>)
+client_1       |     at decode_param (/app/node_modules/express/lib/router/layer.js:172:12)
+client_1       |     at Layer.match (/app/node_modules/express/lib/router/layer.js:123:27)
+client_1       |     at matchLayer (/app/node_modules/express/lib/router/index.js:585:18)
+client_1       |     at next (/app/node_modules/express/lib/router/index.js:226:15)
+client_1       |     at serveStatic (/app/node_modules/serve-static/index.js:75:16)
+client_1       |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+client_1       |     at trim_prefix (/app/node_modules/express/lib/router/index.js:328:13)
+client_1       |     at /app/node_modules/express/lib/router/index.js:286:9
+client_1       |     at Function.process_params (/app/node_modules/express/lib/router/index.js:346:12)
+client_1       | URIError: Failed to decode param '/cgi-bin/.%%%%32%%65/.%%%%32%%65/.%%%%32%%65/.%%%%32%%65/.%%%%32%%65/bin/sh'
+client_1       |     at decodeURIComponent (<anonymous>)
+client_1       |     at decode_param (/app/node_modules/express/lib/router/layer.js:172:12)
+client_1       |     at Layer.match (/app/node_modules/express/lib/router/layer.js:123:27)
+client_1       |     at matchLayer (/app/node_modules/express/lib/router/index.js:585:18)
+client_1       |     at next (/app/node_modules/express/lib/router/index.js:226:15)
+client_1       |     at serveStatic (/app/node_modules/serve-static/index.js:75:16)
+client_1       |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+client_1       |     at trim_prefix (/app/node_modules/express/lib/router/index.js:328:13)
+client_1       |     at /app/node_modules/express/lib/router/index.js:286:9
+client_1       |     at Function.process_params (/app/node_modules/express/lib/router/index.js:346:12)
+imgs_1         | 
+imgs_1         | > nodeimageservice@1.0.0 start
+imgs_1         | > env-cmd -f ./config/dev.env node index.js
+imgs_1         | 
+imgs_1         | npm ERR! path /app
+imgs_1         | npm ERR! command failed
+imgs_1         | npm ERR! signal SIGTERM
+imgs_1         | npm ERR! command sh -c env-cmd -f ./config/dev.env node index.js
+imgs_1         | 
+imgs_1         | npm ERR! A complete log of this run can be found in:
+imgs_1         | npm ERR!     /root/.npm/_logs/2023-03-12T06_29_32_328Z-debug-0.log
+imgs_1         | 
+imgs_1         | > nodeimageservice@1.0.0 start
+imgs_1         | > env-cmd -f ./config/dev.env node index.js
+imgs_1         | 
+imgs_1         | npm ERR! path /app
+imgs_1         | npm ERR! command failed
+imgs_1         | npm ERR! signal SIGTERM
+imgs_1         | npm ERR! command sh -c env-cmd -f ./config/dev.env node index.js
+imgs_1         | 
+imgs_1         | npm ERR! A complete log of this run can be found in:
+imgs_1         | npm ERR!     /root/.npm/_logs/2023-03-12T07_18_46_551Z-debug-0.log
+imgs_1         | 
+imgs_1         | > nodeimageservice@1.0.0 start
+imgs_1         | > env-cmd -f ./config/dev.env node index.js
+imgs_1         | 
+imgs_1         | npm ERR! path /app
+imgs_1         | npm ERR! command failed
+imgs_1         | npm ERR! signal SIGTERM
+imgs_1         | npm ERR! command sh -c env-cmd -f ./config/dev.env node index.js
+imgs_1         | 
+imgs_1         | npm ERR! A complete log of this run can be found in:
+imgs_1         | npm ERR!     /root/.npm/_logs/2023-03-15T00_14_09_247Z-debug-0.log
+imgs_1         | 
+imgs_1         | > nodeimageservice@1.0.0 start
+imgs_1         | > env-cmd -f ./config/dev.env node index.js
+imgs_1         | 
+oauthserver_1  | 
+oauthserver_1  | > oauthserver@1.0.0 start
+oauthserver_1  | > env-cmd -f ./config/dev.env node index.js
+oauthserver_1  | 
+oauthserver_1  | npm ERR! path /app
+oauthserver_1  | npm ERR! command failed
+oauthserver_1  | npm ERR! signal SIGTERM
+oauthserver_1  | npm ERR! command sh -c env-cmd -f ./config/dev.env node index.js
+oauthserver_1  | 
+oauthserver_1  | npm ERR! A complete log of this run can be found in:
+oauthserver_1  | npm ERR!     /root/.npm/_logs/2023-03-12T06_29_32_339Z-debug-0.log
+oauthserver_1  | 
+oauthserver_1  | > oauthserver@1.0.0 start
+oauthserver_1  | > env-cmd -f ./config/dev.env node index.js
+oauthserver_1  | 
+oauthserver_1  | npm ERR! path /app
+oauthserver_1  | npm ERR! command failed
+oauthserver_1  | npm ERR! signal SIGTERM
+oauthserver_1  | npm ERR! command sh -c env-cmd -f ./config/dev.env node index.js
+oauthserver_1  | 
+oauthserver_1  | npm ERR! A complete log of this run can be found in:
+oauthserver_1  | npm ERR!     /root/.npm/_logs/2023-03-12T07_18_46_544Z-debug-0.log
+oauthserver_1  | 
+oauthserver_1  | > oauthserver@1.0.0 start
+oauthserver_1  | > env-cmd -f ./config/dev.env node index.js
+oauthserver_1  | 
+oauthserver_1  | npm ERR! path /app
+oauthserver_1  | npm ERR! command failed
+oauthserver_1  | npm ERR! signal SIGTERM
+oauthserver_1  | npm ERR! command sh -c env-cmd -f ./config/dev.env node index.js
+oauthserver_1  | 
+oauthserver_1  | npm ERR! A complete log of this run can be found in:
+oauthserver_1  | npm ERR!     /root/.npm/_logs/2023-03-15T00_14_04_511Z-debug-0.log
+oauthserver_1  | 
+oauthserver_1  | > oauthserver@1.0.0 start
+oauthserver_1  | > env-cmd -f ./config/dev.env node index.js
+oauthserver_1  | 
+order_1        | 
+order_1        | > nodeorderservice@1.0.0 start
+order_1        | > env-cmd -f ./config/dev.env node index.js
+order_1        | 
+order_1        | TypeError: Cannot read properties of undefined (reading 'split')
+order_1        |     at isAdmin (/app/src/utils/middleware.js:20:25)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at next (/app/node_modules/express/lib/router/route.js:144:13)
+order_1        |     at Route.dispatch (/app/node_modules/express/lib/router/route.js:114:3)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at /app/node_modules/express/lib/router/index.js:284:15
+order_1        |     at Function.process_params (/app/node_modules/express/lib/router/index.js:346:12)
+order_1        |     at next (/app/node_modules/express/lib/router/index.js:280:10)
+order_1        |     at Function.handle (/app/node_modules/express/lib/router/index.js:175:3)
+order_1        |     at router (/app/node_modules/express/lib/router/index.js:47:12)
+order_1        | TypeError: Cannot read properties of undefined (reading 'split')
+order_1        |     at isAdmin (/app/src/utils/middleware.js:20:25)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at next (/app/node_modules/express/lib/router/route.js:144:13)
+order_1        |     at Route.dispatch (/app/node_modules/express/lib/router/route.js:114:3)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at /app/node_modules/express/lib/router/index.js:284:15
+order_1        |     at Function.process_params (/app/node_modules/express/lib/router/index.js:346:12)
+order_1        |     at next (/app/node_modules/express/lib/router/index.js:280:10)
+order_1        |     at Function.handle (/app/node_modules/express/lib/router/index.js:175:3)
+order_1        |     at router (/app/node_modules/express/lib/router/index.js:47:12)
+order_1        | TypeError: Cannot read properties of undefined (reading 'split')
+order_1        |     at isAdmin (/app/src/utils/middleware.js:20:25)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at next (/app/node_modules/express/lib/router/route.js:144:13)
+order_1        |     at Route.dispatch (/app/node_modules/express/lib/router/route.js:114:3)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at /app/node_modules/express/lib/router/index.js:284:15
+order_1        |     at Function.process_params (/app/node_modules/express/lib/router/index.js:346:12)
+order_1        |     at next (/app/node_modules/express/lib/router/index.js:280:10)
+order_1        |     at Function.handle (/app/node_modules/express/lib/router/index.js:175:3)
+order_1        |     at router (/app/node_modules/express/lib/router/index.js:47:12)
+order_1        | TypeError: Cannot read properties of undefined (reading 'split')
+order_1        |     at isAdmin (/app/src/utils/middleware.js:20:25)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at next (/app/node_modules/express/lib/router/route.js:144:13)
+order_1        |     at Route.dispatch (/app/node_modules/express/lib/router/route.js:114:3)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at /app/node_modules/express/lib/router/index.js:284:15
+order_1        |     at Function.process_params (/app/node_modules/express/lib/router/index.js:346:12)
+order_1        |     at next (/app/node_modules/express/lib/router/index.js:280:10)
+order_1        |     at Function.handle (/app/node_modules/express/lib/router/index.js:175:3)
+order_1        |     at router (/app/node_modules/express/lib/router/index.js:47:12)
+order_1        | TypeError: Cannot read properties of undefined (reading 'split')
+order_1        |     at isAdmin (/app/src/utils/middleware.js:20:25)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at next (/app/node_modules/express/lib/router/route.js:144:13)
+order_1        |     at Route.dispatch (/app/node_modules/express/lib/router/route.js:114:3)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at /app/node_modules/express/lib/router/index.js:284:15
+order_1        |     at Function.process_params (/app/node_modules/express/lib/router/index.js:346:12)
+order_1        |     at next (/app/node_modules/express/lib/router/index.js:280:10)
+order_1        |     at Function.handle (/app/node_modules/express/lib/router/index.js:175:3)
+order_1        |     at router (/app/node_modules/express/lib/router/index.js:47:12)
+order_1        | TypeError: Cannot read properties of undefined (reading 'split')
+order_1        |     at isAdmin (/app/src/utils/middleware.js:20:25)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at next (/app/node_modules/express/lib/router/route.js:144:13)
+order_1        |     at Route.dispatch (/app/node_modules/express/lib/router/route.js:114:3)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at /app/node_modules/express/lib/router/index.js:284:15
+order_1        |     at Function.process_params (/app/node_modules/express/lib/router/index.js:346:12)
+order_1        |     at next (/app/node_modules/express/lib/router/index.js:280:10)
+order_1        |     at Function.handle (/app/node_modules/express/lib/router/index.js:175:3)
+order_1        |     at router (/app/node_modules/express/lib/router/index.js:47:12)
+order_1        | TypeError: Cannot read properties of undefined (reading 'split')
+order_1        |     at isAdmin (/app/src/utils/middleware.js:20:25)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at next (/app/node_modules/express/lib/router/route.js:144:13)
+order_1        |     at Route.dispatch (/app/node_modules/express/lib/router/route.js:114:3)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at /app/node_modules/express/lib/router/index.js:284:15
+order_1        |     at Function.process_params (/app/node_modules/express/lib/router/index.js:346:12)
+order_1        |     at next (/app/node_modules/express/lib/router/index.js:280:10)
+order_1        |     at Function.handle (/app/node_modules/express/lib/router/index.js:175:3)
+order_1        |     at router (/app/node_modules/express/lib/router/index.js:47:12)
+order_1        | TypeError: Cannot read properties of undefined (reading 'split')
+order_1        |     at isAdmin (/app/src/utils/middleware.js:20:25)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at next (/app/node_modules/express/lib/router/route.js:144:13)
+order_1        |     at Route.dispatch (/app/node_modules/express/lib/router/route.js:114:3)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at /app/node_modules/express/lib/router/index.js:284:15
+order_1        |     at Function.process_params (/app/node_modules/express/lib/router/index.js:346:12)
+order_1        |     at next (/app/node_modules/express/lib/router/index.js:280:10)
+order_1        |     at Function.handle (/app/node_modules/express/lib/router/index.js:175:3)
+order_1        |     at router (/app/node_modules/express/lib/router/index.js:47:12)
+order_1        | TypeError: Cannot read properties of undefined (reading 'split')
+order_1        |     at isAdmin (/app/src/utils/middleware.js:20:25)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at next (/app/node_modules/express/lib/router/route.js:144:13)
+order_1        |     at Route.dispatch (/app/node_modules/express/lib/router/route.js:114:3)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at /app/node_modules/express/lib/router/index.js:284:15
+order_1        |     at Function.process_params (/app/node_modules/express/lib/router/index.js:346:12)
+order_1        |     at next (/app/node_modules/express/lib/router/index.js:280:10)
+order_1        |     at Function.handle (/app/node_modules/express/lib/router/index.js:175:3)
+order_1        |     at router (/app/node_modules/express/lib/router/index.js:47:12)
+order_1        | TypeError: Cannot read properties of undefined (reading 'split')
+order_1        |     at isAdmin (/app/src/utils/middleware.js:20:25)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at next (/app/node_modules/express/lib/router/route.js:144:13)
+order_1        |     at Route.dispatch (/app/node_modules/express/lib/router/route.js:114:3)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at /app/node_modules/express/lib/router/index.js:284:15
+order_1        |     at Function.process_params (/app/node_modules/express/lib/router/index.js:346:12)
+order_1        |     at next (/app/node_modules/express/lib/router/index.js:280:10)
+order_1        |     at Function.handle (/app/node_modules/express/lib/router/index.js:175:3)
+order_1        |     at router (/app/node_modules/express/lib/router/index.js:47:12)
+order_1        | TypeError: Cannot read properties of undefined (reading 'split')
+order_1        |     at isAdmin (/app/src/utils/middleware.js:20:25)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at next (/app/node_modules/express/lib/router/route.js:144:13)
+order_1        |     at Route.dispatch (/app/node_modules/express/lib/router/route.js:114:3)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at /app/node_modules/express/lib/router/index.js:284:15
+order_1        |     at Function.process_params (/app/node_modules/express/lib/router/index.js:346:12)
+order_1        |     at next (/app/node_modules/express/lib/router/index.js:280:10)
+order_1        |     at Function.handle (/app/node_modules/express/lib/router/index.js:175:3)
+order_1        |     at router (/app/node_modules/express/lib/router/index.js:47:12)
+order_1        | TypeError: Cannot read properties of undefined (reading 'split')
+order_1        |     at isAdmin (/app/src/utils/middleware.js:20:25)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at next (/app/node_modules/express/lib/router/route.js:144:13)
+order_1        |     at Route.dispatch (/app/node_modules/express/lib/router/route.js:114:3)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at /app/node_modules/express/lib/router/index.js:284:15
+order_1        |     at Function.process_params (/app/node_modules/express/lib/router/index.js:346:12)
+order_1        |     at next (/app/node_modules/express/lib/router/index.js:280:10)
+order_1        |     at Function.handle (/app/node_modules/express/lib/router/index.js:175:3)
+order_1        |     at router (/app/node_modules/express/lib/router/index.js:47:12)
+order_1        | TypeError: Cannot read properties of undefined (reading 'split')
+order_1        |     at isAdmin (/app/src/utils/middleware.js:20:25)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at next (/app/node_modules/express/lib/router/route.js:144:13)
+order_1        |     at Route.dispatch (/app/node_modules/express/lib/router/route.js:114:3)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at /app/node_modules/express/lib/router/index.js:284:15
+order_1        |     at Function.process_params (/app/node_modules/express/lib/router/index.js:346:12)
+order_1        |     at next (/app/node_modules/express/lib/router/index.js:280:10)
+order_1        |     at Function.handle (/app/node_modules/express/lib/router/index.js:175:3)
+order_1        |     at router (/app/node_modules/express/lib/router/index.js:47:12)
+order_1        | TypeError: Cannot read properties of undefined (reading 'split')
+order_1        |     at isAdmin (/app/src/utils/middleware.js:20:25)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at next (/app/node_modules/express/lib/router/route.js:144:13)
+order_1        |     at Route.dispatch (/app/node_modules/express/lib/router/route.js:114:3)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at /app/node_modules/express/lib/router/index.js:284:15
+order_1        |     at Function.process_params (/app/node_modules/express/lib/router/index.js:346:12)
+order_1        |     at next (/app/node_modules/express/lib/router/index.js:280:10)
+order_1        |     at Function.handle (/app/node_modules/express/lib/router/index.js:175:3)
+order_1        |     at router (/app/node_modules/express/lib/router/index.js:47:12)
+order_1        | TypeError: Cannot read properties of undefined (reading 'split')
+order_1        |     at isAdmin (/app/src/utils/middleware.js:20:25)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at next (/app/node_modules/express/lib/router/route.js:144:13)
+order_1        |     at Route.dispatch (/app/node_modules/express/lib/router/route.js:114:3)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at /app/node_modules/express/lib/router/index.js:284:15
+order_1        |     at Function.process_params (/app/node_modules/express/lib/router/index.js:346:12)
+order_1        |     at next (/app/node_modules/express/lib/router/index.js:280:10)
+order_1        |     at Function.handle (/app/node_modules/express/lib/router/index.js:175:3)
+order_1        |     at router (/app/node_modules/express/lib/router/index.js:47:12)
+order_1        | TypeError: Cannot read properties of undefined (reading 'split')
+order_1        |     at isAdmin (/app/src/utils/middleware.js:20:25)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at next (/app/node_modules/express/lib/router/route.js:144:13)
+order_1        |     at Route.dispatch (/app/node_modules/express/lib/router/route.js:114:3)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at /app/node_modules/express/lib/router/index.js:284:15
+order_1        |     at Function.process_params (/app/node_modules/express/lib/router/index.js:346:12)
+order_1        |     at next (/app/node_modules/express/lib/router/index.js:280:10)
+order_1        |     at Function.handle (/app/node_modules/express/lib/router/index.js:175:3)
+order_1        |     at router (/app/node_modules/express/lib/router/index.js:47:12)
+order_1        | TypeError: Cannot read properties of undefined (reading 'split')
+order_1        |     at isAdmin (/app/src/utils/middleware.js:20:25)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at next (/app/node_modules/express/lib/router/route.js:144:13)
+order_1        |     at Route.dispatch (/app/node_modules/express/lib/router/route.js:114:3)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at /app/node_modules/express/lib/router/index.js:284:15
+product_1      | 
+product_1      | > nodeproductservice@1.0.0 start
+product_1      | > env-cmd -f ./config/dev.env node index.js
+product_1      | 
+product_1      | npm ERR! path /app
+product_1      | npm ERR! command failed
+product_1      | npm ERR! signal SIGTERM
+product_1      | npm ERR! command sh -c env-cmd -f ./config/dev.env node index.js
+product_1      | 
+product_1      | npm ERR! A complete log of this run can be found in:
+product_1      | npm ERR!     /root/.npm/_logs/2023-03-12T06_29_32_895Z-debug-0.log
+product_1      | 
+product_1      | > nodeproductservice@1.0.0 start
+product_1      | > env-cmd -f ./config/dev.env node index.js
+product_1      | 
+product_1      | npm ERR! path /app
+product_1      | npm ERR! command failed
+product_1      | npm ERR! signal SIGTERM
+product_1      | npm ERR! command sh -c env-cmd -f ./config/dev.env node index.js
+product_1      | 
+product_1      | npm ERR! A complete log of this run can be found in:
+product_1      | npm ERR!     /root/.npm/_logs/2023-03-12T07_18_46_915Z-debug-0.log
+product_1      | 
+product_1      | > nodeproductservice@1.0.0 start
+product_1      | > env-cmd -f ./config/dev.env node index.js
+product_1      | 
+product_1      | npm ERR! path /app
+product_1      | npm ERR! command failed
+product_1      | npm ERR! signal SIGTERM
+product_1      | npm ERR! command sh -c env-cmd -f ./config/dev.env node index.js
+product_1      | 
+product_1      | npm ERR! A complete log of this run can be found in:
+product_1      | npm ERR!     /root/.npm/_logs/2023-03-15T00_14_09_632Z-debug-0.log
+product_1      | 
+product_1      | > nodeproductservice@1.0.0 start
+product_1      | > env-cmd -f ./config/dev.env node index.js
+product_1      | 
+reviews_1      | 
+reviews_1      | > nodereviewservice@1.0.0 start
+reviews_1      | > env-cmd -f ./config/dev.env node index.js
+reviews_1      | 
+reviews_1      | npm ERR! path /app
+reviews_1      | npm ERR! command failed
+reviews_1      | npm ERR! signal SIGTERM
+reviews_1      | npm ERR! command sh -c env-cmd -f ./config/dev.env node index.js
+reviews_1      | 
+reviews_1      | npm ERR! A complete log of this run can be found in:
+reviews_1      | npm ERR!     /root/.npm/_logs/2023-03-12T06_29_32_407Z-debug-0.log
+reviews_1      | 
+reviews_1      | > nodereviewservice@1.0.0 start
+reviews_1      | > env-cmd -f ./config/dev.env node index.js
+reviews_1      | 
+reviews_1      | npm ERR! path /app
+reviews_1      | npm ERR! command failed
+reviews_1      | npm ERR! signal SIGTERM
+reviews_1      | npm ERR! command sh -c env-cmd -f ./config/dev.env node index.js
+reviews_1      | 
+reviews_1      | npm ERR! A complete log of this run can be found in:
+reviews_1      | npm ERR!     /root/.npm/_logs/2023-03-12T07_18_41_774Z-debug-0.log
+reviews_1      | 
+reviews_1      | > nodereviewservice@1.0.0 start
+reviews_1      | > env-cmd -f ./config/dev.env node index.js
+reviews_1      | 
+reviews_1      | npm ERR! path /app
+reviews_1      | npm ERR! command failed
+reviews_1      | npm ERR! signal SIGTERM
+reviews_1      | npm ERR! command sh -c env-cmd -f ./config/dev.env node index.js
+reviews_1      | 
+reviews_1      | npm ERR! A complete log of this run can be found in:
+reviews_1      | npm ERR!     /root/.npm/_logs/2023-03-15T00_14_09_498Z-debug-0.log
+reviews_1      | 
+reviews_1      | > nodereviewservice@1.0.0 start
+reviews_1      | > env-cmd -f ./config/dev.env node index.js
+reviews_1      | 
+order_1        |     at Function.process_params (/app/node_modules/express/lib/router/index.js:346:12)
+order_1        |     at next (/app/node_modules/express/lib/router/index.js:280:10)
+order_1        |     at Function.handle (/app/node_modules/express/lib/router/index.js:175:3)
+order_1        |     at router (/app/node_modules/express/lib/router/index.js:47:12)
+order_1        | TypeError: Cannot read properties of undefined (reading 'split')
+order_1        |     at isAdmin (/app/src/utils/middleware.js:20:25)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at next (/app/node_modules/express/lib/router/route.js:144:13)
+order_1        |     at Route.dispatch (/app/node_modules/express/lib/router/route.js:114:3)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at /app/node_modules/express/lib/router/index.js:284:15
+order_1        |     at Function.process_params (/app/node_modules/express/lib/router/index.js:346:12)
+order_1        |     at next (/app/node_modules/express/lib/router/index.js:280:10)
+order_1        |     at Function.handle (/app/node_modules/express/lib/router/index.js:175:3)
+order_1        |     at router (/app/node_modules/express/lib/router/index.js:47:12)
+order_1        | TypeError: Cannot read properties of undefined (reading 'split')
+order_1        |     at isAdmin (/app/src/utils/middleware.js:20:25)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at next (/app/node_modules/express/lib/router/route.js:144:13)
+order_1        |     at Route.dispatch (/app/node_modules/express/lib/router/route.js:114:3)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at /app/node_modules/express/lib/router/index.js:284:15
+order_1        |     at Function.process_params (/app/node_modules/express/lib/router/index.js:346:12)
+order_1        |     at next (/app/node_modules/express/lib/router/index.js:280:10)
+order_1        |     at Function.handle (/app/node_modules/express/lib/router/index.js:175:3)
+order_1        |     at router (/app/node_modules/express/lib/router/index.js:47:12)
+order_1        | TypeError: Cannot read properties of undefined (reading 'split')
+order_1        |     at isAdmin (/app/src/utils/middleware.js:20:25)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at next (/app/node_modules/express/lib/router/route.js:144:13)
+order_1        |     at Route.dispatch (/app/node_modules/express/lib/router/route.js:114:3)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at /app/node_modules/express/lib/router/index.js:284:15
+order_1        |     at Function.process_params (/app/node_modules/express/lib/router/index.js:346:12)
+order_1        |     at next (/app/node_modules/express/lib/router/index.js:280:10)
+order_1        |     at Function.handle (/app/node_modules/express/lib/router/index.js:175:3)
+order_1        |     at router (/app/node_modules/express/lib/router/index.js:47:12)
+order_1        | TypeError: Cannot read properties of undefined (reading 'split')
+order_1        |     at isAdmin (/app/src/utils/middleware.js:20:25)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at next (/app/node_modules/express/lib/router/route.js:144:13)
+order_1        |     at Route.dispatch (/app/node_modules/express/lib/router/route.js:114:3)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at /app/node_modules/express/lib/router/index.js:284:15
+order_1        |     at Function.process_params (/app/node_modules/express/lib/router/index.js:346:12)
+order_1        |     at next (/app/node_modules/express/lib/router/index.js:280:10)
+order_1        |     at Function.handle (/app/node_modules/express/lib/router/index.js:175:3)
+order_1        |     at router (/app/node_modules/express/lib/router/index.js:47:12)
+order_1        | TypeError: Cannot read properties of undefined (reading 'split')
+order_1        |     at isAdmin (/app/src/utils/middleware.js:20:25)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at next (/app/node_modules/express/lib/router/route.js:144:13)
+order_1        |     at Route.dispatch (/app/node_modules/express/lib/router/route.js:114:3)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at /app/node_modules/express/lib/router/index.js:284:15
+order_1        |     at Function.process_params (/app/node_modules/express/lib/router/index.js:346:12)
+order_1        |     at next (/app/node_modules/express/lib/router/index.js:280:10)
+order_1        |     at Function.handle (/app/node_modules/express/lib/router/index.js:175:3)
+order_1        |     at router (/app/node_modules/express/lib/router/index.js:47:12)
+order_1        | TypeError: Cannot read properties of undefined (reading 'split')
+order_1        |     at isAdmin (/app/src/utils/middleware.js:20:25)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at next (/app/node_modules/express/lib/router/route.js:144:13)
+order_1        |     at Route.dispatch (/app/node_modules/express/lib/router/route.js:114:3)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at /app/node_modules/express/lib/router/index.js:284:15
+order_1        |     at Function.process_params (/app/node_modules/express/lib/router/index.js:346:12)
+order_1        |     at next (/app/node_modules/express/lib/router/index.js:280:10)
+order_1        |     at Function.handle (/app/node_modules/express/lib/router/index.js:175:3)
+order_1        |     at router (/app/node_modules/express/lib/router/index.js:47:12)
+order_1        | TypeError: Cannot read properties of undefined (reading 'split')
+order_1        |     at isAdmin (/app/src/utils/middleware.js:20:25)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at next (/app/node_modules/express/lib/router/route.js:144:13)
+order_1        |     at Route.dispatch (/app/node_modules/express/lib/router/route.js:114:3)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at /app/node_modules/express/lib/router/index.js:284:15
+order_1        |     at Function.process_params (/app/node_modules/express/lib/router/index.js:346:12)
+order_1        |     at next (/app/node_modules/express/lib/router/index.js:280:10)
+order_1        |     at Function.handle (/app/node_modules/express/lib/router/index.js:175:3)
+order_1        |     at router (/app/node_modules/express/lib/router/index.js:47:12)
+order_1        | TypeError: Cannot read properties of undefined (reading 'split')
+order_1        |     at isAdmin (/app/src/utils/middleware.js:20:25)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at next (/app/node_modules/express/lib/router/route.js:144:13)
+order_1        |     at Route.dispatch (/app/node_modules/express/lib/router/route.js:114:3)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at /app/node_modules/express/lib/router/index.js:284:15
+order_1        |     at Function.process_params (/app/node_modules/express/lib/router/index.js:346:12)
+order_1        |     at next (/app/node_modules/express/lib/router/index.js:280:10)
+order_1        |     at Function.handle (/app/node_modules/express/lib/router/index.js:175:3)
+order_1        |     at router (/app/node_modules/express/lib/router/index.js:47:12)
+order_1        | npm ERR! path /app
+order_1        | npm ERR! command failed
+order_1        | npm ERR! signal SIGTERM
+order_1        | npm ERR! command sh -c env-cmd -f ./config/dev.env node index.js
+order_1        | 
+order_1        | npm ERR! A complete log of this run can be found in:
+order_1        | npm ERR!     /root/.npm/_logs/2023-03-12T06_29_32_431Z-debug-0.log
+order_1        | 
+order_1        | > nodeorderservice@1.0.0 start
+order_1        | > env-cmd -f ./config/dev.env node index.js
+order_1        | 
+order_1        | npm ERR! path /app
+order_1        | npm ERR! command failed
+order_1        | npm ERR! signal SIGTERM
+order_1        | npm ERR! command sh -c env-cmd -f ./config/dev.env node index.js
+order_1        | 
+order_1        | npm ERR! A complete log of this run can be found in:
+order_1        | npm ERR!     /root/.npm/_logs/2023-03-12T07_18_46_547Z-debug-0.log
+order_1        | 
+order_1        | > nodeorderservice@1.0.0 start
+order_1        | > env-cmd -f ./config/dev.env node index.js
+order_1        | 
+order_1        | npm ERR! path /app
+order_1        | npm ERR! command failed
+order_1        | npm ERR! signal SIGTERM
+order_1        | npm ERR! command sh -c env-cmd -f ./config/dev.env node index.js
+order_1        | 
+order_1        | npm ERR! A complete log of this run can be found in:
+order_1        | npm ERR!     /root/.npm/_logs/2023-03-15T00_14_08_374Z-debug-0.log
+order_1        | 
+order_1        | > nodeorderservice@1.0.0 start
+order_1        | > env-cmd -f ./config/dev.env node index.js
+order_1        | 
+order_1        | TypeError: Cannot read properties of undefined (reading 'split')
+order_1        |     at isAdmin (/app/src/utils/middleware.js:20:25)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at next (/app/node_modules/express/lib/router/route.js:144:13)
+order_1        |     at Route.dispatch (/app/node_modules/express/lib/router/route.js:114:3)
+order_1        |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+order_1        |     at /app/node_modules/express/lib/router/index.js:284:15
+order_1        |     at Function.process_params (/app/node_modules/express/lib/router/index.js:346:12)
+order_1        |     at next (/app/node_modules/express/lib/router/index.js:280:10)
+order_1        |     at Function.handle (/app/node_modules/express/lib/router/index.js:175:3)
+order_1        |     at router (/app/node_modules/express/lib/router/index.js:47:12)
+order_1        | Error: Invalid login: 535-5.7.8 Username and Password not accepted. Learn more at
+order_1        | 535 5.7.8  https://support.google.com/mail/?p=BadCredentials j10-20020a5d464a000000b002cea8f07813sm7794746wrs.81 - gsmtp
+order_1        |     at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:790:19)
+order_1        |     at SMTPConnection._actionAUTHComplete (/app/node_modules/nodemailer/lib/smtp-connection/index.js:1548:34)
+order_1        |     at SMTPConnection.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:546:26)
+order_1        |     at SMTPConnection._processResponse (/app/node_modules/nodemailer/lib/smtp-connection/index.js:953:20)
+order_1        |     at SMTPConnection._onData (/app/node_modules/nodemailer/lib/smtp-connection/index.js:755:14)
+order_1        |     at SMTPConnection._onSocketData (/app/node_modules/nodemailer/lib/smtp-connection/index.js:193:44)
+order_1        |     at TLSSocket.emit (node:events:513:28)
+order_1        |     at addChunk (node:internal/streams/readable:324:12)
+order_1        |     at readableAddChunk (node:internal/streams/readable:297:9)
+order_1        |     at Readable.push (node:internal/streams/readable:234:10) {
+order_1        |   code: 'EAUTH',
+order_1        |   response: '535-5.7.8 Username and Password not accepted. Learn more at\n' +
+order_1        |     '535 5.7.8  https://support.google.com/mail/?p=BadCredentials j10-20020a5d464a000000b002cea8f07813sm7794746wrs.81 - gsmtp',
+order_1        |   responseCode: 535,
+order_1        |   command: 'AUTH PLAIN'
+order_1        | }
+
