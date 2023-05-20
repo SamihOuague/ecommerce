@@ -36,6 +36,7 @@ router.post('/register', verifyPKCE, signUp, async (req, res) => {
         return res.status(500).send({success: false, message: "Server error."});
     }
 });
+
 router.post('/forgot-password', verifyPKCE, forgotPwd);
 router.put('/reset-pwd', verifyPKCE, resetPwd);
 router.put('/update-user', isAuth, verifyPKCE, updateProfil);

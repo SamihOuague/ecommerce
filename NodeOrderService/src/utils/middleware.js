@@ -10,7 +10,6 @@ module.exports = {
 			req.user_id = verif.sub;
 			next();
 		} catch (e) {
-			console.error(e);
 			return res.status(403).send({ success: false, message: "Access token is required" });
 		}
 	},
@@ -22,7 +21,6 @@ module.exports = {
 			if (!verif || !verif.role || verif.role != 3) return res.status(401).send({ success: false, is_admin: false, message: verif.message });
 			next();
 		} catch (e) {
-			console.error(e);
 			return res.status(403).send({ success: false, is_admin: false, message: "Access token is required" });
 		}
 	},
@@ -41,7 +39,6 @@ module.exports = {
 			if (!r || !r.success) return res.status(401).send(r);
 			next();
 		} catch (e) {
-			console.error(e);
 			return res.status(500).send({ success: false });
 		}
 	}
